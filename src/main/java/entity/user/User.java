@@ -8,10 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 public abstract class User extends Entity {
     @Getter @Setter
-    private long id;
-    @Getter @Setter
     private String userName;
     @Getter @Setter
     private String eMail;
-
 }

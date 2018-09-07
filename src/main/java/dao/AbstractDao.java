@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 public abstract class AbstractDao {
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
     public abstract void create(Entity entity);
-    public abstract void getById(long id);
+    public abstract Entity getById(int id);
     public abstract void update(Entity entity);
     public abstract void delete(Entity entity);
 

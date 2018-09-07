@@ -17,7 +17,7 @@ public class Drug extends Entity {
     @Getter @Setter
     private String inn;
     @Getter @Setter
-    private String composition;
+    private String composite;
     @Getter @Setter
     private DrugForm form;
     @Getter @Setter
