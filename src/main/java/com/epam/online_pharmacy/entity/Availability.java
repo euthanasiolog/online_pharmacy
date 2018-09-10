@@ -1,4 +1,4 @@
-package entity.entity_enum;
+package com.epam.online_pharmacy.entity;
 
 public enum Availability {
     STOCK("stock"),
