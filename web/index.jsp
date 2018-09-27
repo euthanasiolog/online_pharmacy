@@ -11,6 +11,7 @@
     <title>$Title$</title>
   </head>
   <body>
-  <jsp:forward page="pages/startPage.jsp"/>
+    <%--<jsp:forward page="${sessionScope.pageForward.name}"/>--%>
+   <jsp:forward page="pages/startPage.jsp"/>
   </body>
 </html>

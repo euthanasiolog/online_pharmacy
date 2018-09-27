@@ -13,18 +13,4 @@ public interface AbstractDao {
     void update(Entity entity);
     void delete(Entity entity);
 
-    default Connection getConnection(){
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        return connectionPool.takeConnection();
-    }
-
-    default void closeConnection(Connection connection, PreparedStatement statement){
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        connectionPool.closeConnection(connection, statement);
-    }
-
-    default void closeConnection(Connection connection, PreparedStatement statement, ResultSet resultSet) {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        connectionPool.closeConnection(connection, statement, resultSet);
-    }
 }

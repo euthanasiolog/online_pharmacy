@@ -1,4 +1,4 @@
-package com.epam.online_pharmacy.entity;
+package com.epam.online_pharmacy.entity.recipe;
 
 public enum  RecipeType {
     WITHOUT("without"),
