@@ -7,12 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<fmt:setLocale value="${locale}"/>
-<fmt:setBundle basename="pagecontent" var="bundle"/>
+<fmt:setLocale value="en_US"/>
+<fmt:setBundle basename="prop.pagecontent" var="bundle"/>
 <html>
 <head>
-    <%--<title><fmt:message key="startpage.title" var="${bundle}"/></title>--%>
-    <title>Hi!</title>
+    <title><fmt:message key="startpage.title" var="${bundle}"/></title>
+    <%--<title>Hi!</title>--%>
 </head>
 <body>
 <form action="/main" method="post">
