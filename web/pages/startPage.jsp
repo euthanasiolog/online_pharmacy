@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.ResourceBundle" %><%--
   Created by IntelliJ IDEA.
   User: piatr
   Date: 13.09.18
@@ -7,12 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<fmt:setLocale value="en_US"/>
-<fmt:setBundle basename="prop.pagecontent" var="bundle"/>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="prop.pagecontent"/>
 <html>
 <head>
-    <title><fmt:message key="startpage.title" var="${bundle}"/></title>
-    <%--<title>Hi!</title>--%>
+    <title><fmt:message key="startpage.title"/></title>
 </head>
 <body>
 <form action="/main" method="post">

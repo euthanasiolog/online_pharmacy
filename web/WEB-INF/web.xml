@@ -16,4 +16,8 @@
         <!--<filter-name>encodingfilter</filter-name>-->
         <!--<url-pattern>/*</url-pattern>-->
     <!--</filter-mapping>-->
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>prop.pagecontent</param-value>
+    </context-param>
 </web-app>
