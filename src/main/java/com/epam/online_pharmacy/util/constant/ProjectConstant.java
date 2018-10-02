@@ -12,4 +12,8 @@ public class ProjectConstant {
     public static final String PHARMACIST = "pharmacist";
     public static final String ROLE = "role";
     public static final String ID = "id";
+
+    private ProjectConstant(){
+        throw new IllegalStateException("Utility class");
+    }
 }

@@ -1,6 +1,5 @@
 package com.epam.online_pharmacy.util.listener;
 
-import com.epam.online_pharmacy.util.constant.PagePass;
 import com.epam.online_pharmacy.util.constant.ProjectConstant;
 import com.epam.online_pharmacy.util.constant.Role;
 

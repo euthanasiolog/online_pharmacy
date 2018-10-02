@@ -33,7 +33,7 @@ public class MainServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        ConnectionPool.getInstance();
     }
 
     @Override
