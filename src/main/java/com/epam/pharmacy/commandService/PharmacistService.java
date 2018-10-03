@@ -1,4 +1,4 @@
 package com.epam.pharmacy.commandService;
 
-public interface PharmacistService {
+public interface PharmacistService extends AbstractService{
 }
