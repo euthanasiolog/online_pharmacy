@@ -7,7 +7,7 @@
 </head>
 <body>
 <%@ include file="jspf/header.jspf"%>
-<div class="">
+<div class="container">
     <form action="/main" method="post">
         <input type="hidden" name="command" value="signIn">
         <label for="login"><fmt:message key="startpage.label.login"/> </label><br>
