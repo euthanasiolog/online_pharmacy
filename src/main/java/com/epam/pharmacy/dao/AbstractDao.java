@@ -1,12 +1,12 @@
 package com.epam.pharmacy.dao;
 
-import com.epam.pharmacy.entity.Entity;
+import com.epam.pharmacy.model.Entity;
+import com.epam.pharmacy.exception.ApplicationException;
 
-import java.sql.SQLException;
+public interface AbstractDao<T extends Entity> {
+    boolean create(T entity, String password) throws ApplicationException;
+    T findById(int id);
+    void update(T entity);
+    void delete(T entity);
 
-public interface AbstractDao {
-    boolean create(Entity entity, String password) throws SQLException;
-    Entity findById(int id);
-    void update(Entity entity);
-    void delete(Entity entity);
 }

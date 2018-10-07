@@ -1,11 +1,10 @@
 package com.epam.pharmacy.dao;
 
 
-import com.epam.pharmacy.entity.user.Client;
+import com.epam.pharmacy.model.user.Client;
+import com.epam.pharmacy.exception.ApplicationException;
 
-import java.sql.SQLException;
-
-public interface ClientDao extends UserDao {
+public interface ClientDao extends UserDao<Client> {
     @Override
-    Client signIn(String login, String password) throws SQLException;
+    Client signIn(String login, String password) throws ApplicationException;
 }

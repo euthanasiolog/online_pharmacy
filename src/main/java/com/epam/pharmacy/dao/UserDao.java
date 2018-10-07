@@ -2,16 +2,17 @@ package com.epam.pharmacy.dao;
 
 import com.epam.pharmacy.dao.impl.ClientDaoImpl;
 import com.epam.pharmacy.dao.impl.PharmacistDaoImpl;
-import com.epam.pharmacy.entity.user.User;
+import com.epam.pharmacy.model.user.User;
 import com.epam.pharmacy.util.constant.Role;
+import com.epam.pharmacy.exception.ApplicationException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public interface UserDao extends AbstractDao {
-    static User signIn(String login, String password, Role role) throws SQLException {
+public interface UserDao<T extends User> extends AbstractDao<T> {
+    static User signIn(String login, String password, Role role) throws ApplicationException {
                     switch (role) {
                         case CLIENT:
                             return new ClientDaoImpl().signIn(login, password);
@@ -22,12 +23,13 @@ public interface UserDao extends AbstractDao {
                         default: return null;
                     }
     }
-    User signIn(String login, String password) throws SQLException;
+
+    T signIn(String login, String password) throws ApplicationException;
 
     default void readUserAttributes(User user, ResultSet resultSet) throws SQLException {
         if (resultSet.next()) {
             user.setEMail(resultSet.getString("email"));
-            user.setUserName(resultSet.getString("username"));
+            user.setNickName(resultSet.getString("nickname"));
             user.setFirstName(resultSet.getString("firstname"));
             user.setLastName(resultSet.getString("lastname"));
             if (resultSet.getString("patronymic")!=null){
@@ -38,7 +40,7 @@ public interface UserDao extends AbstractDao {
     }
 
     default void createUserAttributes(User user, PreparedStatement preparedStatement, String password) throws SQLException {
-        preparedStatement.setString(1,user.getUserName());
+        preparedStatement.setString(1,user.getNickName());
         preparedStatement.setString(2, password);
         preparedStatement.setString(3, user.getEMail());
         preparedStatement.setString(4, user.getFirstName());

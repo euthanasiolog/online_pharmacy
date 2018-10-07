@@ -12,6 +12,10 @@ public final class ProjectConstant {
     public static final String PHARMACIST = "pharmacist";
     public static final String ROLE = "role";
     public static final String ID = "id";
+    public static final String USER = "user";
+    public static final String PASS1 = "pass1";
+    public static final String PASS2 = "pass2";
+    public static final String LOCALE = "locale";
 
     private ProjectConstant(){
         throw new IllegalStateException("Utility class");
