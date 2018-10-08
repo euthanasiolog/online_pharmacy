@@ -17,14 +17,4 @@ public interface AbstractService {
     CommandResult update(RequestContent requestContent);
     CommandResult delete(RequestContent requestContent);
 
-    default Validator getValidator(){
-        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-        return validatorFactory.getValidator();
-    }
-
-    default boolean isEntityValid (Entity entity){
-        Validator validator = getValidator();
-        Set<ConstraintViolation<Entity>> violations = validator.validate(entity);
-        return violations.isEmpty();
-    }
 }

@@ -1,8 +1,11 @@
 package com.epam.pharmacy.web.controller;
 
-import com.epam.pharmacy.web.command.*;
 import com.epam.pharmacy.dao.connection.ConnectionPool;
+import com.epam.pharmacy.dao.connection.ConnectionPoolException;
+import com.epam.pharmacy.web.command.*;
+import com.epam.pharmacy.dao.connection.ConnectionPoolImpl;
 import com.epam.pharmacy.exception.ApplicationException;
+import lombok.extern.log4j.Log4j2;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Log4j2
 @WebServlet("/main")
 public class MainServlet extends HttpServlet {
     @Override
@@ -27,9 +31,10 @@ public class MainServlet extends HttpServlet {
         try {
             result = command.execute(requestContent);
         } catch (ApplicationException e) {
-            e.printStackTrace();
+            log.error("application error", e);
+            resp.sendError(500);
         }
-        if (result.getResponseType()== ResponseType.FORWARD){
+        if (ResponseType.FORWARD.equals(result.getResponseType())){
             req.getRequestDispatcher(result.getPage()).forward(req, resp);
         } else {
             resp.sendRedirect(result.getPage());
@@ -39,13 +44,21 @@ public class MainServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        ConnectionPool.getInstance();
+        try {
+            ConnectionPoolImpl.getInstance();
+        } catch (ConnectionPoolException e) {
+            log.error("error get pool");
+        }
     }
 
     @Override
     public void destroy() {
         super.destroy();
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        connectionPool.closePool();
+        try {
+            ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
+            connectionPool.closePool();
+        } catch (ConnectionPoolException e) {
+            log.error("error close pool", e);
+        }
     }
 }

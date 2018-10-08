@@ -67,17 +67,6 @@ public interface UserService extends AbstractService{
             }
     }
 
-    default boolean isPasswordValid(RequestContent requestContent){
-        @NotBlank @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$")
-        String pass1 = requestContent.getRequestParameter(ProjectConstant.PASS1);
-        @NotBlank @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$")
-        String pass2 = requestContent.getRequestParameter(ProjectConstant.PASS2);
-        if (!pass1.equals(pass2)){
-            return false;
-        }
-        Set<ConstraintViolation<String>> violations = getValidator().validate(pass1);
-        return violations.isEmpty();
-    }
 
     default void insertUserSessionAttributes(RequestContent requestContent, User user, Role role){
         requestContent.insertSessionAtribute(ProjectConstant.USER, user);

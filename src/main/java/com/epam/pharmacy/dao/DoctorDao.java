@@ -5,5 +5,5 @@ import com.epam.pharmacy.exception.ApplicationException;
 
 public interface DoctorDao extends UserDao<Doctor> {
     @Override
-    Doctor signIn(String login, String password) throws ApplicationException;
+    Doctor signIn(String login, String password) throws DaoException;
 }
