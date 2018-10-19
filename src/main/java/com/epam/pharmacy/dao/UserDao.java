@@ -1,17 +1,30 @@
 package com.epam.pharmacy.dao;
 
+import com.epam.pharmacy.dao.connection.ResultSetWrapper;
 import com.epam.pharmacy.model.user.User;
+import org.apache.logging.log4j.core.Logger;
+
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public interface UserDao<T extends User> extends AbstractDao<T> {
 
     T signIn(String login, String password) throws DaoException;
 
-    default ResultSet signInUser (String login, String password, String query) throws DaoException {
+    @Override
+    default boolean delete(T user) throws DaoException {
+        int id = user.getId();
+        List<Object> param = new ArrayList<>();
+        param.add(id);
+        return executeQuery("UPDATE user SET `archive`='1' WHERE id=?", param);
+    }
+
+    default ResultSetWrapper signInUser (String login, String password, String query) throws DaoException {
         List<Object> userParams = new ArrayList<>();
         userParams.add(login);
         userParams.add(password);
@@ -19,22 +32,22 @@ public interface UserDao<T extends User> extends AbstractDao<T> {
         return executeQueryResult(query, userParams);
     }
 
-    default void readUserAttributes(User user, ResultSet resultSet) throws DaoException {
-        try {
-            if (resultSet.next()) {
-                user.setId(resultSet.getInt("id"));
-                user.setEMail(resultSet.getString("email"));
-                user.setNickName(resultSet.getString("nickname"));
-                user.setFirstName(resultSet.getString("firstname"));
-                user.setLastName(resultSet.getString("lastname"));
-                if (resultSet.getString("patronymic")!=null){
-                    user.setPatronymic(resultSet.getString("patronymic"));
-                }
-                user.setDateOfBirth(resultSet.getDate("dateofbirth"));
+    default void readUserAttributes(User user, ResultSetWrapper resultSetWrapper) {
+        List<Map<String, Object>> result = resultSetWrapper.getResult();
+        if (!result.isEmpty()) {
+            Map<String, Object> resultSet = result.get(0);
+
+            user.setId((Integer) resultSet.get("id"));
+            user.setEMail((String) resultSet.get("email"));
+            user.setNickName((String) resultSet.get("nickname"));
+            user.setFirstName((String) resultSet.get("firstname"));
+            user.setLastName((String) resultSet.get("lastname"));
+            if (resultSet.get("patronymic")!=null){
+                user.setPatronymic((String) resultSet.get("patronymic"));
             }
-        } catch (SQLException e) {
-            throw new DaoException("error read user attributes", e);
+            user.setDateOfBirth((Date) resultSet.get("dateofbirth"));
         }
+
 
     }
 
@@ -53,5 +66,28 @@ public interface UserDao<T extends User> extends AbstractDao<T> {
         params.add(user.getDateOfBirth());
 
         return params;
+    }
+
+    default boolean isNickNameNotExist (String nickName) throws DaoException {
+        List<Object> userParams = new ArrayList<>();
+        userParams.add(nickName);
+
+        ResultSetWrapper resultSet = executeQueryResult("select u.nickname from user u where u.nickname=?", userParams);
+        List<Map<String, Object>> result = resultSet.getResult();
+
+        return result.isEmpty();
+    }
+
+    default boolean isEmailNotExist (String email) throws DaoException {
+
+        List<Object> userParams = new ArrayList<>();
+        userParams.add(email);
+
+        ResultSetWrapper resultSet = executeQueryResult("select u.id, u.nickname, u.email\n" +
+                "from user u where u.email=?", userParams);
+
+        List<Map<String, Object>> result = resultSet.getResult();
+
+        return result.isEmpty();
     }
 }

@@ -1,0 +1,72 @@
+<div>
+<c:if test="${drugs != null}">
+    <c:set var="totalCount" value="${fn:length(drugs)}"/>
+    <c:set var="step" value="${5}" scope="page"/>
+    <c:set var="start" value="${0}" scope="page"/>
+    <c:if test="${param.start > 0}">
+        <c:set var="start" scope="page" value="${param.start}"/>
+    </c:if>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">N%</th>
+            <th scope="col"><fmt:message key="drug.name"/> </th>
+            <th scope="col"><fmt:message key="drug.inn"/> </th>
+            <th scope="col"><fmt:message key="drug.dose"/> </th>
+            <th scope="col"><fmt:message key="drug.form"/> </th>
+            <th scope="col"><fmt:message key="drug.composite"/> </th>
+            <th scope="col"><fmt:message key="drug.number"/> </th>
+            <th scope="col"><fmt:message key="drug.price"/> </th>
+            <th scope="col"><fmt:message key="drug.recipe"/> </th>
+            <th scope="col"><fmt:message key="drug.availability"/> </th>
+            <th scope="col"><fmt:message key="drug.ordertime"/> </th>
+                <c:choose>
+                    <c:when test="${role == 'CLIENT'}">
+                        <th scope="col"><fmt:message key="drug.addtocart"/> </th>
+                    </c:when>
+                    <c:when test="${role == 'DOCTOR' && role == 'PHARMACIST'}">
+                        <th scope="col"><fmt:message key="drug.choose"/> </th>
+                    </c:when>
+                </c:choose>
+        </tr>
+        </thead>
+        <tbody>
+<c:forEach var="drug" items="${drugs}" varStatus="drugCount" begin="${start}" end="${start + step - 1}">
+    <tr>
+        <th scope="row">${drugCount.index}</th>
+        <td>${e:forHtml(drug.name)}</td>
+        <td>${e:forHtml(drug.inn)}</td>
+        <td>${e:forHtml(drug.dose)}</td>
+        <td>${e:forHtml(drug.form)}</td>
+        <td>${e:forHtml(drug.composite)}</td>
+        <td>${e:forHtml(drug.number)}</td>
+        <td>${e:forHtml(drug.price)}</td>
+        <td>${e:forHtml(drug.recipeType)}</td>
+        <td>${e:forHtml(drug.availability)}</td>
+        <td>${e:forHtml(drug.orderTime)}</td>
+    </tr>
+</c:forEach>
+        </tbody>
+    </table>
+    <div>
+        <c:if test="${totalCount > step}">
+            <c:forEach begin="0" step="${step}" end="${totalCount - 1}" varStatus="page">
+                <c:choose>
+                    <c:when test="${start==(page.count*step - step)}">
+                        <a class="btn btn-dark"
+                           href="${pageContext.request.contextPath}/main?command=refresh&start=${page.count*step - step}&page=${pagePass}"
+                           role="button">
+                                ${page.count}</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="btn btn-primary"
+                           href="${pageContext.request.contextPath}/main?command=refresh&start=${page.count*step - step}&page=${pagePass}"
+                           role="button">
+                                ${page.count}</a>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </c:if>
+    </div>
+</c:if>
+</div>

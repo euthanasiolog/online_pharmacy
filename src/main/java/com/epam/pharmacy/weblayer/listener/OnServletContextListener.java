@@ -1,4 +1,4 @@
-package com.epam.pharmacy.web.listener;
+package com.epam.pharmacy.weblayer.listener;
 
 
 import javax.servlet.ServletContextEvent;

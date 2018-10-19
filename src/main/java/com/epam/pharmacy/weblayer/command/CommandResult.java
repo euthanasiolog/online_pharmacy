@@ -1,8 +1,7 @@
-package com.epam.pharmacy.web.command;
+package com.epam.pharmacy.weblayer.command;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter

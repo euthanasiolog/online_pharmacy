@@ -16,36 +16,11 @@
 <body>
 <%@include file="../jspf/header.jspf"%>
 <div class="container">
-    <form name="client" id="client" method="post">
-        <input type="hidden" name="command" value="registerclient">
-        <div class="form-group">
-            <label for="usernickname"></label>
-            <input class="form-control" name="nickname" type="text" id="nickname">
-            <small id="nickname-helper" class="small"></small>
-        </div>
-        <div class="form-group">
-            <label for="email"></label>
-            <input type="email" class="form-control" name="email" id="email">
-        </div>
-        <div class="form-group">
-            <label for="firstname"></label>
-            <input class="form-control" type="text" name="firstname" id="firstname">
-        </div>
-        <div class="form-group">
-            <label for="lastname"></label>
-            <input class="form-control" type="text" name="lastname" id="lastname">
-        </div>
-        <div class="form-group">
-            <label for="patronymic"></label>
-            <input type="text" class="form-control" name="patronymic" id="patronymic">
-        </div>
-        <div class="form-group">
-            <label for="day"></label>
-            <input class="form-control" type="text" name="day" id="day">
-            <input class="form-control" type="text" name="month" id="month">
-            <input class="form-control" type="text" name="year" id="year">
-        </div>
-        <button type="submit" class="button"></button>
+    <label for="registrationclient"><fmt:message key="clientregistrationpage.registrationform.label"/> </label>
+    <form name="registrationclient" id="registrationclient" method="get">
+        <input type="hidden" name="role" value="client">
+    <%@include file="../jspf/registratinUserForm.jspf"%>
+        <button type="submit" class="btn btn-primary"><fmt:message key="registrationuserform.submit"/></button>
     </form>
 </div>
 </body>

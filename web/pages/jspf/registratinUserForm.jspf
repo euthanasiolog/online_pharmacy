@@ -1,0 +1,62 @@
+<input type="hidden" name="command" value="registrationuser">
+<input type="hidden" name="page" value="${pagePass}">
+<div class="form-group">
+    <label for="nickname"><fmt:message key="registrationuserform.input.nickname"/> </label>
+    <input class="form-control" name="nickname" type="text" id="nickname">
+    <small id="nickname-helper" class="small"></small>
+    <small class="small"><c:if test="${requestScope.nickNameError != null && requestScope.nickNameError != ''}">
+        <c:out value="${requestScope.nickNameError}"/>
+    </c:if></small><br>
+    <small class="small"><c:if test="${requestScope.nickNameExistError != null && requestScope.nickNameExistError != ''}">
+        <c:out value="${requestScope.nickNameExistError}"/>
+    </c:if></small>
+</div>
+<div class="form-group">
+    <label for="email"><fmt:message key="registrationuserform.input.email"/> </label>
+    <input type="email" class="form-control" name="email" id="email">
+    <small class="small"><c:if test="${requestScope.eMailError != null && requestScope.eMailError != ''}">
+        <c:out value="${requestScope.eMailError}"/>
+    </c:if></small>
+    <small class="small"><c:if test="${requestScope.eMailExistError != null && requestScope.eMailExistError != ''}">
+        <c:out value="${requestScope.eMailExistError}"/>
+    </c:if></small>
+</div>
+<div class="form-group">
+    <label for="firstname"><fmt:message key="registrationuserform.input.firstname"/></label>
+    <input class="form-control" type="text" name="firstname" id="firstname">
+    <small class="small"><c:if test="${requestScope.firstNameError != null && requestScope.firstNameError != ''}">
+        <c:out value="${requestScope.firstNameError}"/>
+    </c:if></small>
+</div>
+<div class="form-group">
+    <label for="lastname"><fmt:message key="registrationuserform.input.lastname"/> </label>
+    <input class="form-control" type="text" name="lastname" id="lastname">
+    <small class="small"><c:if test="${requestScope.lastNameError != null && requestScope.lastNameError != ''}">
+        <c:out value="${requestScope.lastNameError}"/>
+    </c:if></small>
+</div>
+<div class="form-group">
+    <label for="patronymic"><fmt:message key="registrationuserform.input.patronimyc"/> </label>
+    <input type="text" class="form-control" name="patronymic" id="patronymic">
+    <small class="small"><c:if test="${requestScope.patronymicError != null && requestScope.patronymicError != ''}">
+        <c:out value="${requestScope.patronymicError}"/>
+    </c:if></small>
+</div>
+<label for="dateofbirth"><fmt:message key="registrationuserform.input.dateofbirth"/> </label>
+<small class="small"><c:if test="${requestScope.dateOfBirthError != null && requestScope.dateOfBirthError != ''}">
+    <c:out value="${requestScope.dateOfBirthError}"/>
+</c:if></small>
+<div class="form-group" id="dateofbirth">
+<%@include file="dateInputForm.jspf"%>
+<div class="form-group">
+    <label for="pass1"><fmt:message key="registrationuserform.input.passs1"/> </label>
+    <input class="form-control" type="password" name="pass1" id="pass1">
+    <small class="small"><c:if test="${requestScope.pass1Error != null && requestScope.pass1Error != ''}">
+        <c:out value="${requestScope.pass1Error}"/>
+    </c:if></small><br>
+    <label for="pass2"><fmt:message key="registrationuserform.input.pass2"/> </label>
+    <input class="form-control" type="password" name="pass2" id="pass2">
+    <small class="small"><c:if test="${requestScope.pass2Error != null && requestScope.pass2Error != ''}">
+        <c:out value="${requestScope.pass2Error}"/>
+    </c:if></small><br>
+</div>

@@ -1,8 +1,8 @@
-package com.epam.pharmacy.web.controller;
+package com.epam.pharmacy.weblayer.controller;
 
 import com.epam.pharmacy.dao.connection.ConnectionPool;
 import com.epam.pharmacy.dao.connection.ConnectionPoolException;
-import com.epam.pharmacy.web.command.*;
+import com.epam.pharmacy.weblayer.command.*;
 import com.epam.pharmacy.dao.connection.ConnectionPoolImpl;
 import com.epam.pharmacy.exception.ApplicationException;
 import lombok.extern.log4j.Log4j2;
@@ -19,6 +19,7 @@ import java.io.IOException;
 public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         doPost(req, resp);
     }
 
@@ -26,18 +27,28 @@ public class MainServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestContent requestContent = new RequestContent(req);
         CommandFactory factory = CommandFactory.getInstance();
-        Command command = factory.getCommand(requestContent);
-        CommandResult result = null;
-        try {
-            result = command.execute(requestContent);
-        } catch (ApplicationException e) {
-            log.error("application error", e);
-            resp.sendError(500);
-        }
-        if (ResponseType.FORWARD.equals(result.getResponseType())){
-            req.getRequestDispatcher(result.getPage()).forward(req, resp);
+        if (factory.getCommand(requestContent) != null) {
+            Command command = factory.getCommand(requestContent);
+            CommandResult result = null;
+            try {
+                result = command.execute(requestContent);
+            } catch (ApplicationException e) {
+                log.error("application error", e);
+                resp.sendError(500);
+            }
+            if (result != null) {
+                if (ResponseType.FORWARD.equals(result.getResponseType())){
+                    req.getRequestDispatcher(result.getPage()).forward(req, resp);
+                } else {
+                    resp.sendRedirect(result.getPage());
+                }
+            } else {
+                log.error("service return null!!! Need to fix immediately!!!");
+                resp.sendError(500);
+            }
         } else {
-            resp.sendRedirect(result.getPage());
+            log.error("request has no command!");
+            resp.sendError(500);
         }
     }
 
@@ -45,7 +56,7 @@ public class MainServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         try {
-            ConnectionPoolImpl.getInstance();
+            ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
         } catch (ConnectionPoolException e) {
             log.error("error get pool");
         }

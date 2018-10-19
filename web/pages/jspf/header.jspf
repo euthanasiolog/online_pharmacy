@@ -17,9 +17,9 @@
                     <fmt:message key="navbar.changelang"/>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="${pageContext.request.contextPath}/main?command=changeLocale&locale=en_US&page=${pagePass}">EN</a>
-                    <a class="dropdown-item" href="${pageContext.request.contextPath}/main?command=changeLocale&locale=be_BY&page=${pagePass}">BE</a>
-                    <a class="dropdown-item" href="${pageContext.request.contextPath}/main?command=changeLocale&locale=ru_RU&page=${pagePass}">RU</a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/main?command=changeLocale&locale=en&page=${pagePass}">EN</a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/main?command=changeLocale&locale=be&page=${pagePass}">BE</a>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/main?command=changeLocale&locale=ru&page=${pagePass}">RU</a>
                 </div>
             </li>
             <li class="nav-item">
@@ -27,7 +27,7 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <input class="form-control mr-sm-2" type="search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><fmt:message key="navbar.search"/></button>
         </form>
     </div>

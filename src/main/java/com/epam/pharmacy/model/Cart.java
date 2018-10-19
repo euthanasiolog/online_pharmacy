@@ -12,8 +12,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Cart extends Entity {
+
     @Required
     private Client client;
+
     private List<Drug> drugsInCart = new LinkedList<>();
 
     public void addDrugInCart (Drug drug){

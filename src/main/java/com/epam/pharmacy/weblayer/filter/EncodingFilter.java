@@ -1,4 +1,4 @@
-package com.epam.pharmacy.web.filter;
+package com.epam.pharmacy.weblayer.filter;
 
 public class EncodingFilter  {
 //    private String encoding;

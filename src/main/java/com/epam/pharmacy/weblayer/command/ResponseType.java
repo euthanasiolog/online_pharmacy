@@ -1,4 +1,4 @@
-package com.epam.pharmacy.web.command;
+package com.epam.pharmacy.weblayer.command;
 
 public enum ResponseType {
     FORWARD,

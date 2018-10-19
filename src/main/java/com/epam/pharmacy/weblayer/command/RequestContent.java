@@ -1,4 +1,4 @@
-package com.epam.pharmacy.web.command;
+package com.epam.pharmacy.weblayer.command;
 
 import lombok.Getter;
 
@@ -51,7 +51,7 @@ public class RequestContent {
         }
     }
 
-    public void insertAttributes(String attrName, Object attr) {
+    public void insertAttribute(String attrName, Object attr) {
         request.setAttribute(attrName, attr);
     }
 
