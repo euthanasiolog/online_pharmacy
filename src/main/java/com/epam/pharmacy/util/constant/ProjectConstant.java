@@ -21,9 +21,13 @@ public final class ProjectConstant {
     public static final String LOCALE = "locale";
     public static final String REDIRECT_PATH = "redirectPath";
     public static final String DRUGS = "drugs";
+    public static final String DRUG = "drug";
     public static final String PAGE = "page";
     public static final String INDEX = "index";
     public static final String SECURITY_REDIRECT = "securityRedirect";
+    public static final String CART = "cart";
+    public static final String NUMBER = "number";
+    public static final String ORDER = "order";
 
     private ProjectConstant(){
         throw new IllegalStateException("Utility class");

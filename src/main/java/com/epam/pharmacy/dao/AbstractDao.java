@@ -18,7 +18,7 @@ public interface AbstractDao<T extends Entity> {
 
     boolean delete(T entity) throws DaoException;
 
-    default boolean executeQuery(String query) throws DaoException {
+    default boolean executeQuery (String query) throws DaoException {
         boolean result;
         try {
             ConnectionPool connectionPool = ConnectionPoolImpl.getInstance();
@@ -31,24 +31,90 @@ public interface AbstractDao<T extends Entity> {
         return result;
     }
 
-    default boolean executeQuery(String query, List<Object> params) throws DaoException {
+    default boolean executeQuery (String query, List<Object> params) throws DaoException {
         boolean result;
         try (Connection connection = ConnectionPoolImpl.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             setQueryParams(params, preparedStatement);
             result = preparedStatement.execute();
+
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("error execute", e);
         }
         return result;
     }
 
-    default void executeQueryTransaction(String query, List<Object> params, Connection connection) throws DaoException {
+    default boolean executeQuery (String query, List<Object> params, Connection connection) throws DaoException {
+        boolean result;
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             setQueryParams(params, preparedStatement);
+            result = preparedStatement.execute();
+
         } catch (SQLException e) {
             throw new DaoException("error execute", e);
         }
+        return result;
+    }
+
+    default boolean executeQuery (String query, Connection connection) throws DaoException {
+        boolean result;
+        try (Statement statement = connection.createStatement()) {
+
+            result = statement.execute(query);
+
+        } catch (SQLException e) {
+            throw new DaoException("error execute", e);
+        }
+        return result;
+    }
+
+    default boolean executeQueryUpdate (String query, List<Object> params) throws DaoException {
+        boolean result = false;
+        try (Connection connection = ConnectionPoolImpl.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            setQueryParams(params, preparedStatement);
+            int i = preparedStatement.executeUpdate();
+            if (i>0) {
+                result = true;
+            }
+
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("error execute", e);
+        }
+        return result;
+    }
+
+    default boolean executeQueryUpdate (String query, List<Object> params, Connection connection) throws DaoException {
+        boolean result = false;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            setQueryParams(params, preparedStatement);
+            int i = preparedStatement.executeUpdate();
+            if (i>0) {
+                result = true;
+            }
+
+        } catch (SQLException e) {
+            throw new DaoException("error execute", e);
+        }
+        return result;
+    }
+
+    default ResultSetWrapper executeQueryResult (String query, List<Object> params, Connection connection) throws DaoException {
+        ResultSetWrapper result;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            setQueryParams(params, preparedStatement);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            result = new ResultSetWrapper(resultSet);
+
+        } catch (SQLException e) {
+            throw new DaoException("error execute", e);
+        }
+        return result;
     }
 
     default void setQueryParams(List<Object> params, PreparedStatement preparedStatement) throws SQLException {
@@ -81,11 +147,7 @@ public interface AbstractDao<T extends Entity> {
         ResultSetWrapper result;
         try (Connection connection = ConnectionPoolImpl.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            int i = 1;
-            for (Object param : params) {
-                preparedStatement.setObject(i, param);
-                i++;
-            }
+            setQueryParams(params, preparedStatement);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             result = new ResultSetWrapper(resultSet);

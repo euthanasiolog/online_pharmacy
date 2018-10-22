@@ -4,12 +4,17 @@ import com.epam.pharmacy.service.impl.*;
 
 public enum CommandType {
     START(new UserServiceImpl()::start),
-    SIGNIN(new UserServiceImpl()::signIn),
-    CHANGELOCALE(new ApplicationServiceImpl()::changeLocale),
+    SIGN_IN(new UserServiceImpl()::signIn),
+    CHANGE_LOCALE(new ApplicationServiceImpl()::changeLocale),
     REGISTRATION(new UserServiceImpl()::registration),
-    REGISTRATIONUSER(new UserServiceImpl()::create),
+    REGISTRATION_USER(new UserServiceImpl()::create),
     REFRESH(new ApplicationServiceImpl()::refresh),
-    SHOWALLDRUGS(new DrugServiceImpl()::showAllDrugs);
+    SAVE_CART(new CartServiceImpl()::create),
+    PUT_DRUG_IN_CART(new CartServiceImpl()::putDrugInCart),
+    PAYMENT(new CartServiceImpl()::payment),
+    DELETE_FROM_CART(new CartServiceImpl()::delete),
+    GET_CLIENT_CARD(new CartServiceImpl()::findById),
+    SHOW_ALL_DRUGS(new DrugServiceImpl()::showAllDrugs);
 
     private Command command;
     CommandType (Command command){

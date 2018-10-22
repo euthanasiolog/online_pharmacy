@@ -7,7 +7,6 @@ import com.epam.pharmacy.dao.connection.ResultSetWrapper;
 import com.epam.pharmacy.model.Cart;
 import com.epam.pharmacy.model.item.Drug;
 import com.epam.pharmacy.model.item.Order;
-
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
@@ -25,14 +24,14 @@ public class CartDaoImpl implements CartDao {
     public boolean deleteOrderFromCart(int id) throws DaoException {
         List<Object> params = putParameters(id);
 
-        return executeQuery(SQLQueries.DELETE_DRUG_FROM_CART, params);
+        return executeQueryUpdate(SQLQueries.DELETE_DRUG_FROM_CART, params);
     }
 
     @Override
     public boolean payment(int id) throws DaoException {
         List<Object> params = putParameters(id);
 
-        return executeQuery(SQLQueries.DO_PAYMENT, params);
+        return executeQueryUpdate(SQLQueries.DO_PAYMENT, params);
     }
 
 
@@ -47,32 +46,42 @@ public class CartDaoImpl implements CartDao {
             if (order.isPayment()) {
                 payment = 1;
             }
-            List<Object> params = putParameters(cart.getClientId(), order.getDrug().getId(), order.getNumber(),
-                    payment);
-            executeQueryTransaction(SQLQueries.PUT_DRUG_IN_CART, params, connection);
-        }
 
+            int id = order.getId();
+            if (id == 0) {
+                List<Object> params = putParameters(cart.getClientId(), order.getDrug().getId(), order.getNumber(),
+                        payment);
+                executeQuery(SQLQueries.PUT_DRUG_IN_CART, params, connection);
+            } else {
+                List<Object> params = putParameters(order.getNumber(),
+                        payment, id);
+                executeQueryUpdate(SQLQueries.UPDATE_DRUG_IN_CART, params, connection);
+            }
+        }
         return commitTransaction(connection);
     }
 
     @Override
     public Cart findById(int id) throws DaoException {
-        List<Object> params = putParameters(id);
-
         Cart cart = new Cart(id);
 
+        List<Object> params = putParameters(id);
         ResultSetWrapper resultSet = executeQueryResult(SQLQueries.GET_CLIENT_CART, params);
 
         if (!resultSet.isEmpty()) {
             for (Map<String, Object> res:resultSet.getResult()) {
                 int idDrug = (int) res.get("id_drug");
+
                 DrugDao drugDao = new DrugDaoImpl();
                 Drug drug = drugDao.findById(idDrug);
+
                 if (drug != null) {
+                    int idOrder = (int) res.get("id");
                     int number = (int) res.get("number");
                     int payment = (int) res.get("payment");
 
                     Order order = new Order();
+                    order.setId(idOrder);
                     order.setDrug(drug);
                     order.setNumber(number);
                     if (payment == 1) {

@@ -10,11 +10,11 @@ final class SQLQueries {
     static final String CLIENT_SIGN_IN_SQL = "SELECT c.`discount` FROM CLIENT c WHERE c.`id`=?";
     static final String CREATE_USER = "INSERT INTO USER \n" +
             "(nickname, PASSWORD, email, firstname, lastname, patronymic, TYPE, birthdate) \n" +
-            "VALUE (?, SHA2(?, 512), ?, ?, ?, ?, ?, ?)";
+            "VALUE (?, SHA2(?, 512), ?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID()";
     static final String CREATE_CLIENT = "INSERT INTO CLIENT (id, discount)\n" +
-            "VALUES (LAST_INSERT_ID, ?)";
+            "VALUES (LAST_INSERT_ID(), ?)";
     static final String CREATE_DOCTOR = "INSERT INTO doctor (`id`, `specialization`, `workplace`)\n" +
-            "VALUES (LAST_INSERT_ID, ?, ?)";
+            "VALUES (LAST_INSERT_ID(), ?, ?)";
     static final String CREATE_DRUG = "INSERT INTO drug (name, inn, composition, form, dose, number, shelflife," +
             " price, recipe, availability, ordertime, archive) " +
             "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -30,6 +30,7 @@ final class SQLQueries {
             "            \" d.recipe, d.availability, d.ordertime  WHERE d.name LIKE '%?%' OR d.inn LIKE ?";
     static final String PUT_DRUG_IN_CART = "insert into cart (id_client, id_drug, number, payment) \n" +
             "values (?, ?, ?, ?)";
+    static final String UPDATE_DRUG_IN_CART = "UPDATE cart SET number=?, payment=? WHERE id=?";
     static final String DO_PAYMENT = "update cart set payment='1' where id=?";
     static final String DELETE_DRUG_FROM_CART = "update cart set archive='1' where \n" +
             "id_client=? and id_drug=?";
@@ -42,7 +43,7 @@ final class SQLQueries {
             "WHERE r.`patient_id`=?";
     static final String DELETE_RECIPE = "UPDATE recipe r ON r.`archive`='1'\n" +
             "WHERE r.`patient_id`=?";
-    static final String GET_CLIENT_CART = "SELECT c.`id_drug`, c.`number`, c.`payment`\t\n" +
+    static final String GET_CLIENT_CART = "SELECT c.`id`, c.`id_drug`, c.`number`, c.`payment`\t\n" +
             "FROM cart c WHERE c.`id_client`=?";
 
 
