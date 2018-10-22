@@ -19,6 +19,12 @@ public class CartDaoImpl implements CartDao {
     }
 
     @Override
+    public boolean deleteOrderFromCart(int id) {
+        return false;
+    }
+
+
+    @Override
     public boolean create(Cart cart, String password) throws DaoException {
         return false;
     }

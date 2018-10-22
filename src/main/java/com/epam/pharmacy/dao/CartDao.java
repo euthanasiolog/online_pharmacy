@@ -6,5 +6,5 @@ public interface CartDao extends AbstractDao <Cart> {
 
     boolean putDrugInCart (int idClient, int idDrug, int number);
 
-    boolean deleteDrugFromCart ()
+    boolean deleteOrderFromCart (int id);
 }
