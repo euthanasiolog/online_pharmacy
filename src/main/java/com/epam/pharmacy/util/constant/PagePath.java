@@ -1,6 +1,7 @@
 package com.epam.pharmacy.util.constant;
 
 public final class PagePath {
+    public static final String INDEX = "index.jsp";
     public static final String START_PAGE = "pages/startPage.jsp";
     public static final String START_DOCTOR_PAGE = "pages/client/clientStartPage.jsp";
     public static final String START_CLIENT_PAGE = "pages/client/clientStartPage.jsp";

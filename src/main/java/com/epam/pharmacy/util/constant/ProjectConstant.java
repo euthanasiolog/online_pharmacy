@@ -22,6 +22,8 @@ public final class ProjectConstant {
     public static final String REDIRECT_PATH = "redirectPath";
     public static final String DRUGS = "drugs";
     public static final String PAGE = "page";
+    public static final String INDEX = "index";
+    public static final String SECURITY_REDIRECT = "securityRedirect";
 
     private ProjectConstant(){
         throw new IllegalStateException("Utility class");

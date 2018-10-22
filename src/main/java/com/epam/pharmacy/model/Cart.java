@@ -1,33 +1,42 @@
 package com.epam.pharmacy.model;
 
 import com.epam.pharmacy.model.item.Drug;
-import com.epam.pharmacy.model.user.Client;
+import com.epam.pharmacy.model.item.Order;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+
+import java.util.*;
 
 @RequiredArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Cart extends Entity {
 
-    @Required
-    private Client client;
+    @NonNull
+    @Getter
+    private int clientId;
 
-    private List<Drug> drugsInCart = new LinkedList<>();
+    private List<Order> orders = new ArrayList<>();
 
-    public void addDrugInCart (Drug drug){
-        drugsInCart.add(drug);
+    public List<Order> getOrders () {
+        return Collections.unmodifiableList(orders);
     }
 
-    public void removeDrugFromCart (Drug drug){
-        drugsInCart.remove(drug);
+    public void addOrder (Drug drug, int number) {
+        orders.add(new Order(drug, number));
     }
 
-    public List<Drug> getDrugList (){
-        return Collections.unmodifiableList(drugsInCart);
+    public void payment (Order order) {
+        order.setPayment(true);
+    }
+
+    public void deleteOrder (Order order) {
+        orders.remove(order);
+    }
+
+    public boolean isEmpty () {
+        return orders.isEmpty();
     }
 
 }
