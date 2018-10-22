@@ -17,17 +17,15 @@ public interface UserDao<T extends User> extends AbstractDao<T> {
     T signIn(String login, String password) throws DaoException;
 
     @Override
-    default boolean delete(T user) throws DaoException {
+    default boolean delete(User user) throws DaoException {
         int id = user.getId();
-        List<Object> param = new ArrayList<>();
-        param.add(id);
+        List<Object> param = putParameters(id);
+
         return executeQuery("UPDATE user SET `archive`='1' WHERE id=?", param);
     }
 
     default ResultSetWrapper signInUser (String login, String password, String query) throws DaoException {
-        List<Object> userParams = new ArrayList<>();
-        userParams.add(login);
-        userParams.add(password);
+        List<Object> userParams = putParameters(login, password);
 
         return executeQueryResult(query, userParams);
     }
@@ -47,25 +45,12 @@ public interface UserDao<T extends User> extends AbstractDao<T> {
             }
             user.setDateOfBirth((Date) resultSet.get("dateofbirth"));
         }
-
-
     }
 
     default List<Object> createUserAttributes(User user, String password) {
 
-        List<Object> params = new ArrayList<>();
-
-        params.add(user.getNickName());
-        params.add(password);
-        params.add(user.getEMail());
-        params.add(user.getFirstName());
-        params.add(user.getLastName());
-        if (user.getPatronymic()!=null){
-            params.add(user.getPatronymic());
-        }
-        params.add(user.getDateOfBirth());
-
-        return params;
+        return putParameters(user.getNickName(), password, user.getEMail(), user.getFirstName(),
+                user.getLastName(), user.getPatronymic(), user.getDateOfBirth());
     }
 
     default boolean isNickNameNotExist (String nickName) throws DaoException {

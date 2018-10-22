@@ -8,31 +8,57 @@ import com.epam.pharmacy.model.Cart;
 import com.epam.pharmacy.model.item.Drug;
 import com.epam.pharmacy.model.item.Order;
 
-import java.util.ArrayList;
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
 public class CartDaoImpl implements CartDao {
+
     @Override
-    public boolean putDrugInCart(int idClient, int idDrug, int number) {
-        return false;
+    public boolean putDrugInCart(int idClient, int idDrug, int number, int payment) throws DaoException {
+        List<Object> params = putParameters(idClient, idDrug, number, payment);
+
+        return executeQuery(SQLQueries.PUT_DRUG_IN_CART, params);
     }
 
     @Override
-    public boolean deleteOrderFromCart(int id) {
-        return false;
+    public boolean deleteOrderFromCart(int id) throws DaoException {
+        List<Object> params = putParameters(id);
+
+        return executeQuery(SQLQueries.DELETE_DRUG_FROM_CART, params);
+    }
+
+    @Override
+    public boolean payment(int id) throws DaoException {
+        List<Object> params = putParameters(id);
+
+        return executeQuery(SQLQueries.DO_PAYMENT, params);
     }
 
 
     @Override
     public boolean create(Cart cart, String password) throws DaoException {
-        return false;
+        List<Order> orders = cart.getOrders();
+
+        Connection connection = startTransaction();
+
+        for (Order order : orders) {
+            int payment = 0;
+            if (order.isPayment()) {
+                payment = 1;
+            }
+            List<Object> params = putParameters(cart.getClientId(), order.getDrug().getId(), order.getNumber(),
+                    payment);
+            executeQueryTransaction(SQLQueries.PUT_DRUG_IN_CART, params, connection);
+        }
+
+        return commitTransaction(connection);
     }
 
     @Override
     public Cart findById(int id) throws DaoException {
-        List<Object> params = new ArrayList<>();
-        params.add(id);
+        List<Object> params = putParameters(id);
+
         Cart cart = new Cart(id);
 
         ResultSetWrapper resultSet = executeQueryResult(SQLQueries.GET_CLIENT_CART, params);
@@ -57,8 +83,6 @@ public class CartDaoImpl implements CartDao {
         }
         return cart;
     }
-
-
 
     @Override
     public boolean update(Cart cart) throws DaoException {

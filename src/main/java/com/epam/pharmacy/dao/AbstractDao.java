@@ -5,8 +5,6 @@ import com.epam.pharmacy.dao.connection.ConnectionPoolException;
 import com.epam.pharmacy.dao.connection.ConnectionPoolImpl;
 import com.epam.pharmacy.dao.connection.ResultSetWrapper;
 import com.epam.pharmacy.model.Entity;
-import com.epam.pharmacy.exception.ApplicationException;
-import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
 import java.util.*;
@@ -45,15 +43,12 @@ public interface AbstractDao<T extends Entity> {
         return result;
     }
 
-    default boolean executeQueryTransaction(String query, List<Object> params, Connection connection) throws DaoException {
-        boolean result;
+    default void executeQueryTransaction(String query, List<Object> params, Connection connection) throws DaoException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             setQueryParams(params, preparedStatement);
-            result = preparedStatement.execute();
         } catch (SQLException e) {
             throw new DaoException("error execute", e);
         }
-        return result;
     }
 
     default void setQueryParams(List<Object> params, PreparedStatement preparedStatement) throws SQLException {
@@ -123,19 +118,21 @@ public interface AbstractDao<T extends Entity> {
                 throw new DaoException("error rollback transaction", e);
             }
         } finally {
-            finalizeTransaction(connection);
+            try {
+                if (connection != null) {
+                    connection.setAutoCommit(true);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("set autocommit 'true' failed", e);
+            }
         }
         return false;
     }
 
-    default void finalizeTransaction (Connection connection) throws DaoException {
-        try {
-            if (connection != null) {
-                connection.setAutoCommit(true);
-            }
-        } catch (SQLException e) {
-            throw new DaoException("set autocommit 'true' failed", e);
-        }
+    default List<Object> putParameters (Object... params) {
+        List<Object> paramList = new ArrayList<>();
+        paramList.addAll(Arrays.asList(params));
+        return paramList;
     }
 
 }

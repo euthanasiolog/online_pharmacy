@@ -28,10 +28,9 @@ final class SQLQueries {
     static final String SEARCH_DRUG = "SELECT d.id, d.name, d.inn, d.form, d.composition, d.dose, d.number FROM drug d\n" +
             "d.shelflife, d.price,\" +\n" +
             "            \" d.recipe, d.availability, d.ordertime  WHERE d.name LIKE '%?%' OR d.inn LIKE ?";
-    static final String PUT_DRUG_IN_CART = "insert into cart (id_client, id_drug, number) \n" +
-            "values (?, ?, ?)";
-    static final String DO_PAYMENT = "update cart set payment='1' where \n" +
-            "id_client=? and id_drug=?";
+    static final String PUT_DRUG_IN_CART = "insert into cart (id_client, id_drug, number, payment) \n" +
+            "values (?, ?, ?, ?)";
+    static final String DO_PAYMENT = "update cart set payment='1' where id=?";
     static final String DELETE_DRUG_FROM_CART = "update cart set archive='1' where \n" +
             "id_client=? and id_drug=?";
     static final String CREATE_RECIPE = "insert into recipe  (recipe.patient_id, recipe.drug_id, recipe.doctor_id, \n" +
