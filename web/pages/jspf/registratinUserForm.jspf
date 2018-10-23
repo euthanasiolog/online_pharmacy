@@ -1,4 +1,4 @@
-<input type="hidden" name="command" value="registrationuser">
+<input type="hidden" name="command" value="registration_user">
 <input type="hidden" name="page" value="${pagePass}">
 <div class="form-group">
     <label for="nickname"><fmt:message key="registrationuserform.input.nickname"/> </label>

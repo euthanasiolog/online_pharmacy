@@ -22,9 +22,18 @@
             <th scope="col"><fmt:message key="drug.ordertime"/> </th>
                 <c:choose>
                     <c:when test="${role == 'CLIENT'}">
-                        <th scope="col"><fmt:message key="drug.addtocart"/> </th>
+                        <th scope="col">
+                            <c:if test="${!e:forHtml(drug.drug.availability).equalsIgnoreCase('not')}">
+                                <form action="${pageContext.request.contextPath}/main">
+                                    <input type="hidden" name="command" value="put_drug_in_cart">
+                                    <input type="hidden" name="page" value="${pagePass}">
+                                    <input type="number" name="number" min="1" max="100" placeholder="1">
+                                    <button type="submit" class="button"><fmt:message key="drug.addtocart"/></button>
+                                </form>
+                            </c:if>
+                        </th>
                     </c:when>
-                    <c:when test="${role == 'DOCTOR' && role == 'PHARMACIST'}">
+                    <c:when test="${role == 'DOCTOR' || role == 'PHARMACIST'}">
                         <th scope="col"><fmt:message key="drug.choose"/> </th>
                     </c:when>
                 </c:choose>
@@ -33,17 +42,58 @@
         <tbody>
 <c:forEach var="drug" items="${drugs}" varStatus="drugCount" begin="${start}" end="${start + step - 1}">
     <tr>
-        <th scope="row">${drugCount.index}</th>
+        <th scope="row">${drugCount.index+1}</th>
         <td>${e:forHtml(drug.name)}</td>
         <td>${e:forHtml(drug.inn)}</td>
-        <td>${e:forHtml(drug.dose)}</td>
-        <td>${e:forHtml(drug.form)}</td>
+        <td><fmt:formatNumber value="${e:forHtml(drug.dose)}" type="number"/> </td>
+        <td>
+                <c:choose>
+                    <c:when test="${e:forHtml(drug.form).equalsIgnoreCase('pill')}" >
+                        <fmt:message key="drug.form.pill"/>
+                    </c:when>
+                    <c:when test="${e:forHtml(drug.form).equalsIgnoreCase('solution')}" >
+                        <fmt:message key="drug.form.solution"/>
+                    </c:when>
+                    <c:when test="${e:forHtml(drug.form).equalsIgnoreCase('powder')}" >
+                        <fmt:message key="drug.form.powder"/>
+                    </c:when>
+                    <c:when test="${e:forHtml(drug.form).equalsIgnoreCase('cream')}" >
+                        <fmt:message key="drug.form.cream"/>
+                    </c:when>
+                    <c:when test="${e:forHtml(drug.form).equalsIgnoreCase('gel')}" >
+                        <fmt:message key="drug.form.gel"/>
+                    </c:when>
+                </c:choose>
+                </td>
         <td>${e:forHtml(drug.composite)}</td>
         <td>${e:forHtml(drug.number)}</td>
-        <td>${e:forHtml(drug.price)}</td>
-        <td>${e:forHtml(drug.recipeType)}</td>
-        <td>${e:forHtml(drug.availability)}</td>
-        <td>${e:forHtml(drug.orderTime)}</td>
+        <td><fmt:formatNumber value="${e:forHtml(drug.price)}" type="currency"/></td>
+        <td>
+            <c:choose>
+                <c:when test="${e:forHtml(drug.recipeType).equalsIgnoreCase('without')}" >
+                    <fmt:message key="drug.recipe.without"/>
+                </c:when>
+                <c:when test="${e:forHtml(drug.recipeType).equalsIgnoreCase('regular')}" >
+                    <fmt:message key="drug.recipe.regular"/>
+                </c:when>
+                <c:when test="$${e:forHtml(drug.recipeType).equalsIgnoreCase('narcotic')}" >
+                    <strong><fmt:message key="drug.recipe.narcotic"/></strong>
+                </c:when>
+            </c:choose>
+                ${e:forHtml(drug.recipeType)}</td>
+        <td>
+            <c:choose>
+                <c:when test="${e:forHtml(drug.availability).equalsIgnoreCase('stock')}" >
+                    <fmt:message key="drug.availability.stock"/>
+                </c:when>
+                <c:when test="${e:forHtml(drug.availability).equalsIgnoreCase('order')}" >
+                    <fmt:message key="drug.availability.order"/>
+                </c:when>
+                <c:when test="${e:forHtml(drug.availability).equalsIgnoreCase('not')}" >
+                    <fmt:message key="drug.availability.not"/>
+                </c:when>
+            </c:choose>
+        <td>${e:forHtml(drug.orderTime)} <fmt:message key="drug.availability.order.time"/> </td>
     </tr>
 </c:forEach>
         </tbody>

@@ -28,6 +28,7 @@ public final class ProjectConstant {
     public static final String CART = "cart";
     public static final String NUMBER = "number";
     public static final String ORDER = "order";
+    public static final String DRUG_SEARCH = "drugsearch";
 
     private ProjectConstant(){
         throw new IllegalStateException("Utility class");

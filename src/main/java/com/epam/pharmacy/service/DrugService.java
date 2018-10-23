@@ -5,5 +5,8 @@ import com.epam.pharmacy.weblayer.command.CommandResult;
 import com.epam.pharmacy.weblayer.command.RequestContent;
 
 public interface DrugService extends AbstractService{
+
     CommandResult showAllDrugs (RequestContent requestContent) throws ApplicationException;
+
+    CommandResult searchDrug (RequestContent requestContent) throws ApplicationException;
 }

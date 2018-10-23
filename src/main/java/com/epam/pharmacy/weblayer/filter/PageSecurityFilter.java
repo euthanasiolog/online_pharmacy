@@ -32,4 +32,7 @@ public class PageSecurityFilter implements Filter {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
+    @Override
+    public void destroy() {
+    }
 }

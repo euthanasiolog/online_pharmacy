@@ -25,9 +25,10 @@ final class SQLQueries {
             " recipe, availability, ordertime " +
             " FROM drug WHERE archive='0'";
     static final String DELETE_USER = "UPDATE user SET `archive`='1' WHERE id=?";
-    static final String SEARCH_DRUG = "SELECT d.id, d.name, d.inn, d.form, d.composition, d.dose, d.number FROM drug d\n" +
-            "d.shelflife, d.price,\" +\n" +
-            "            \" d.recipe, d.availability, d.ordertime  WHERE d.name LIKE '%?%' OR d.inn LIKE ?";
+    static final String SEARCH_DRUG_1 = "SELECT d.id, d.name, d.inn, d.form, d.composition, d.dose, d.number, d.shelflife, d.price,\n" +
+            "d.recipe, d.availability, d.ordertime FROM drug d   WHERE d.name LIKE '%";
+    static final String SEARCH_DRUG_2 = "%' OR d.inn LIKE '%";
+    static final String SEARCH_DRUG_3 = "%'";
     static final String PUT_DRUG_IN_CART = "insert into cart (id_client, id_drug, number, payment) \n" +
             "values (?, ?, ?, ?)";
     static final String UPDATE_DRUG_IN_CART = "UPDATE cart SET number=?, payment=? WHERE id=?";

@@ -14,6 +14,7 @@ public enum CommandType {
     PAYMENT(new CartServiceImpl()::payment),
     DELETE_FROM_CART(new CartServiceImpl()::delete),
     GET_CLIENT_CARD(new CartServiceImpl()::findById),
+    SEARCH_DRUG(new DrugServiceImpl()::searchDrug),
     SHOW_ALL_DRUGS(new DrugServiceImpl()::showAllDrugs);
 
     private Command command;

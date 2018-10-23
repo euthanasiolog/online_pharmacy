@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-md">
             <form action="${pageContext.request.contextPath}/main" method="post">
-                <input type="hidden" name="command" value="signIn">
+                <input type="hidden" name="command" value="sign_in">
                 <label for="login"><fmt:message key="startpage.label.login"/> </label><br>
                 <input type="text" id="login" name="login"><br>
                 <label for="password"><fmt:message key="startpage.label.password"/> </label><br>
@@ -38,15 +38,10 @@
                 <input type="submit">
             </form>
         </div>
-        <div class="col-md-auto>
-            <form action="${pageContext.request.contextPath}/main" class="form-inline my-2 my-lg-0">
-                <input type="hidden" name="command" value="searchdrug">
-                <input type="hidden" name="page" value="${pagePass}">
-                <input class="form-control mr-sm-2" type="text" name="drugsearch" id="drugsearch" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><fmt:message key="drug.search"/></button>
-            </form>
+        <div class="col-md-auto">
+
             <form action="${pageContext.request.contextPath}/main" name="showalldrugs">
-                <input type="hidden" name="command" value="showalldrugs">
+                <input type="hidden" name="command" value="show_all_drugs">
                 <input type="hidden" name="page" value="${pagePass}">
                 <button type="submit" class="btn btn-primary"><fmt:message key="drug.showalldrugs"/></button>
             </form>
