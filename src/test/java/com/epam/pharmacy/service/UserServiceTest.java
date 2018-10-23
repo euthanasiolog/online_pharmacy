@@ -32,7 +32,7 @@ public class UserServiceTest {
 
         System.out.println(dateFormat.format(dateOfBirth));
 
-        assertEquals(new Date(user.getDateOfBirth()), dateOfBirth);
+        assertEquals(user.getDateOfBirth(), dateOfBirth);
 
     }
 
