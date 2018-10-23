@@ -1,0 +1,29 @@
+    <table class="table-bordered">
+        <thead>
+        <tr>
+            <th>
+                <strong><fmt:message key=""/></strong>
+            </th>
+            <th>
+                <strong>${e:forHtml(user.firstName)} ${e:forHtml(user.lastName)}
+                    <c:if test="${user.patronymic != null}">${e:forHtml(user.patronymic)}</c:if></strong>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <fmt:message key=""/>
+            </td>
+            <td>
+                ${e:forHtml(user.eMail)}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <fmt:message key=""/>
+            </td>
+            <td>
+                <fmt:formatDate value="${user.dateOfBirth}" type="date" dateStyle="medium"/>
+            </td>
+        </tr>

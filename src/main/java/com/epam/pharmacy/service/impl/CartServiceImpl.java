@@ -9,6 +9,7 @@ import com.epam.pharmacy.model.item.Drug;
 import com.epam.pharmacy.model.item.Order;
 import com.epam.pharmacy.model.user.Client;
 import com.epam.pharmacy.service.CartService;
+import com.epam.pharmacy.util.constant.PagePath;
 import com.epam.pharmacy.util.constant.ProjectConstant;
 import com.epam.pharmacy.weblayer.command.CommandResult;
 import com.epam.pharmacy.weblayer.command.RequestContent;
@@ -62,7 +63,8 @@ public class CartServiceImpl implements CartService {
 
         cart.deleteOrder(order);
 
-        return new CommandResult(ResponseType.FORWARD, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 
     @Override
@@ -75,14 +77,17 @@ public class CartServiceImpl implements CartService {
 
         cart.addOrder(order);
 
-        return new CommandResult(ResponseType.FORWARD, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 
     @Override
-    public CommandResult payment(RequestContent requestContent) throws ApplicationException {
+    public CommandResult payment(RequestContent requestContent) {
         Order order = (Order) requestContent.getSessionAtribute(ProjectConstant.ORDER);
         order.setPayment(true);
 
-        return new CommandResult(ResponseType.FORWARD, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
+
 }

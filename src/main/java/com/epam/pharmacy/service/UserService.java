@@ -26,6 +26,13 @@ public interface UserService extends AbstractService{
 
     CommandResult registration (RequestContent requestContent);
 
+    CommandResult goToCabinet (RequestContent requestContent);
+
+    CommandResult exit (RequestContent requestContent);
+
+    CommandResult endSignIn (User user, RequestContent requestContent, Role role) throws ApplicationException;
+
+
     default boolean isEmailNotExist (RequestContent requestContent) throws ApplicationException {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("ValidationMessages",
                 (Locale) requestContent.getSessionAtribute(ProjectConstant.LOCALE));

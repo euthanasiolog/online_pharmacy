@@ -1,0 +1,126 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
+<div>
+<table class="table-sm table-hover">
+    <c:set var="totalCount" value="${fn:length(orders)}"/>
+    <c:set var="step" value="${20}" scope="page"/>
+    <c:set var="start" value="${0}" scope="page"/>
+    <c:if test="${param.start > 0}">
+        <c:set var="start" scope="page" value="${param.start}"/>
+    </c:if>
+    <thead>
+    <tr>
+        <th scope="col">N%</th>
+        <th scope="col"><fmt:message key="drug.name"/> </th>
+        <th scope="col"><fmt:message key="drug.inn"/> </th>
+        <th scope="col"><fmt:message key="drug.dose"/> </th>
+        <th scope="col"><fmt:message key="drug.form"/> </th>
+        <th scope="col"><fmt:message key="drug.composite"/> </th>
+        <th scope="col"><fmt:message key="drug.number"/> </th>
+        <th scope="col"><fmt:message key="drug.price"/> </th>
+        <th scope="col"><fmt:message key="drug.recipe"/> </th>
+        <th scope="col"><fmt:message key="drug.availability"/> </th>
+        <th scope="col"><fmt:message key="drug.ordertime"/> </th>
+        <th scope="col"><fmt:message key="cart.table.number"/> </th>
+        <th scope="col"><fmt:message key="cart.table.payment"/> </th>
+    </tr>
+    </thead>
+    <c:forEach  var="order" items="${orders}" varStatus="orderCount" begin="${start}" end="${start + step - 1}">
+        <tr>
+            <th scope="row">${orderCount.index+1}</th>
+            <td>${e:forHtml(order.drug.name)}</td>
+            <td>${e:forHtml(order.drug.inn)}</td>
+            <td><fmt:formatNumber value="${e:forHtml(order.drug.dose)}" type="number"/> </td>
+            <td>
+                <c:choose>
+                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('pill')}" >
+                        <fmt:message key="drug.form.pill"/>
+                    </c:when>
+                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('solution')}" >
+                        <fmt:message key="drug.form.solution"/>
+                    </c:when>
+                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('powder')}" >
+                        <fmt:message key="drug.form.powder"/>
+                    </c:when>
+                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('cream')}" >
+                        <fmt:message key="drug.form.cream"/>
+                    </c:when>
+                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('gel')}" >
+                        <fmt:message key="drug.form.gel"/>
+                    </c:when>
+                </c:choose>
+            </td>
+            <td>${e:forHtml(order.drug.composite)}</td>
+            <td>${e:forHtml(order.drug.number)}</td>
+            <td><fmt:formatNumber value="${e:forHtml(order.drug.price)}" type="currency"/></td>
+            <td>
+                <c:choose>
+                    <c:when test="${e:forHtml(order.drug.recipeType).equalsIgnoreCase('without')}" >
+                        <fmt:message key="drug.recipe.without"/>
+                    </c:when>
+                    <c:when test="${e:forHtml(order.drug.recipeType).equalsIgnoreCase('regular')}" >
+                        <fmt:message key="drug.recipe.regular"/>
+                    </c:when>
+                    <c:when test="$${e:forHtml(order.drug.recipeType).equalsIgnoreCase('narcotic')}" >
+                        <strong><fmt:message key="drug.recipe.narcotic"/></strong>
+                    </c:when>
+                </c:choose>
+                    ${e:forHtml(order.drug.recipeType)}</td>
+            <td>
+                <c:choose>
+                <c:when test="${e:forHtml(order.drug.availability).equalsIgnoreCase('stock')}" >
+                    <fmt:message key="drug.availability.stock"/>
+                </c:when>
+                <c:when test="${e:forHtml(order.drug.availability).equalsIgnoreCase('order')}" >
+                    <fmt:message key="drug.availability.order"/>
+                </c:when>
+                <c:when test="${e:forHtml(order.drug.availability).equalsIgnoreCase('not')}" >
+                    <fmt:message key="drug.availability.not"/>
+                </c:when>
+                </c:choose>
+            <td>${e:forHtml(order.drug.orderTime)} <fmt:message key="drug.availability.order.time"/> </td>
+            <td>
+                <fmt:formatNumber type="number" value="${order.number}"/>
+            </td>
+            <td>
+                <c:choose>
+                    <c:when test="${order.payment}">
+                        <form action="${pageContext.request.contextPath}/main">
+                            <input type="hidden" name="command" value="delete_from_cart">
+                            <button type="submit" class="button"><fmt:message key="cart.table.delete"/> </button>
+                        </form>
+                    </c:when>
+                    <c:otherwise>
+                        <form action="${pageContext.request.contextPath}/main">
+                            <input type="hidden" name="command" value="payment">
+                            <button type="submit" class="button"><fmt:message key="cart.table.do.payment"/> </button>
+                        </form>
+                    </c:otherwise>
+                </c:choose>
+            </td>
+        </tr>
+    </c:forEach>
+</table>
+<div>
+    <c:if test="${totalCount > step}">
+        <c:forEach begin="0" step="${step}" end="${totalCount - 1}" varStatus="page">
+            <c:choose>
+                <c:when test="${start==(page.count*step - step)}">
+                    <a class="btn btn-dark"
+                       href="${pageContext.request.contextPath}/main?command=refresh&start=${page.count*step - step}&page=${pagePass}"
+                       role="button">
+                            ${page.count}</a>
+                </c:when>
+                <c:otherwise>
+                    <a class="btn btn-primary"
+                       href="${pageContext.request.contextPath}/main?command=refresh&start=${page.count*step - step}&page=${pagePass}"
+                       role="button">
+                            ${page.count}</a>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </c:if>
+</div>
+</div>

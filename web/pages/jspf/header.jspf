@@ -8,11 +8,11 @@
         <ul class="navbar-nav mr-auto">
             <c:if test="${role == 'CLIENT' || role == 'DOCTOR' || role == 'PHARMACIST' }">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#"><fmt:message key="navbar.cabinet"/><span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/main?command=go_to_cabinet"><fmt:message key="navbar.cabinet"/><span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><fmt:message key="navbar.profile"/></a>
-                </li>
+                <%--<li class="nav-item">--%>
+                    <%--<a class="nav-link" href="#"><fmt:message key="navbar.profile"/></a>--%>
+                <%--</li>--%>
             </c:if>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -25,8 +25,9 @@
                 </div>
             </li>
             <c:if test="${role == 'CLIENT' || role == 'DOCTOR' || role == 'PHARMACIST' }">
+                <fmt:message key="navbar.sign.in.as"/> ${e:forHtml(user.nickName)}
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><fmt:message key="navbar.exit"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/main?command=exit"><fmt:message key="navbar.exit"/></a>
                 </li>
             </c:if>
         </ul>

@@ -29,4 +29,9 @@ public class ApplicationServiceImpl implements ApplicationService {
     public CommandResult refresh(RequestContent requestContent) {
         return new CommandResult(ResponseType.FORWARD, requestContent.getRequestParameter(ProjectConstant.PAGE));
     }
+
+    @Override
+    public CommandResult goToStart(RequestContent requestContent) {
+        return new CommandResult(ResponseType.FORWARD, PagePath.START_PAGE);
+    }
 }

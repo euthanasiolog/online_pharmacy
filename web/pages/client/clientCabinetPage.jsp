@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
     <%@include file="../jspf/import.jspf"%>
@@ -15,7 +14,40 @@
 </head>
 <body>
 <%@include file="../jspf/header.jspf"%>
-
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <%@include file="../jspf/userTable.jspf"%>
+            <c:if test="${user.discount != 0}">
+                <tr>
+                    <td>
+                        <fmt:message key=""/>
+                    </td>
+                    <td>
+                        ${user.discount}
+                    </td>
+                </tr>
+            </c:if>
+            </tbody>
+            </table>
+        </div>
+        <div class="col-md-auto">
+            <c:choose>
+                <c:when test="${orders == null}">
+                    <fmt:message key=""/>
+                </c:when>
+                <c:otherwise>
+                    <%@include file="../jspf/cartTable.jspf"%>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <%@include file="../jspf/drugTable.jspf"%>
+        </div>
+    </div>
+</div>
 </body>
 </html>
 

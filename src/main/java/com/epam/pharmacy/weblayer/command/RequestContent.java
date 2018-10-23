@@ -22,6 +22,7 @@ public class RequestContent {
         extractValues(request);
     }
 
+
     private void extractValues(HttpServletRequest request) {
         requestParameters = new HashMap<>();
         if (request.getParameterNames()!=null) {

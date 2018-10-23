@@ -15,6 +15,9 @@ public enum CommandType {
     DELETE_FROM_CART(new CartServiceImpl()::delete),
     GET_CLIENT_CARD(new CartServiceImpl()::findById),
     SEARCH_DRUG(new DrugServiceImpl()::searchDrug),
+    GO_TO_START(new ApplicationServiceImpl()::goToStart),
+    GO_TO_CABINET(new UserServiceImpl()::goToCabinet),
+    EXIT(new UserServiceImpl()::exit),
     SHOW_ALL_DRUGS(new DrugServiceImpl()::showAllDrugs);
 
     private Command command;

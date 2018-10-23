@@ -6,7 +6,7 @@
     <c:if test="${param.start > 0}">
         <c:set var="start" scope="page" value="${param.start}"/>
     </c:if>
-    <table class="table">
+    <table class="table-bordered">
         <thead>
         <tr>
             <th scope="col">N%</th>

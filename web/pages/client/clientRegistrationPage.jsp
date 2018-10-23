@@ -17,7 +17,7 @@
 <%@include file="../jspf/header.jspf"%>
 <div class="container">
     <label for="registrationclient"><fmt:message key="clientregistrationpage.registrationform.label"/> </label>
-    <form action="${pageContext.request.contextPath}/main" name="registrationclient" id="registrationclient" method="post">
+    <form action="${pageContext.request.contextPath}/main" name="registration_client" id="registrationclient" method="post">
         <input type="hidden" name="role" value="client">
     <%@include file="../jspf/registratinUserForm.jspf"%>
         <button type="submit" class="btn btn-primary"><fmt:message key="registrationuserform.submit"/></button>
