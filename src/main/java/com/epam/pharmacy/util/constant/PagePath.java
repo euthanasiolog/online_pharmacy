@@ -15,8 +15,8 @@ public final class PagePath {
     public static final String CABINET_CLIENT_PAGE = "pages/client/clientCabinetPage.jsp";
     public static final String CABINET_DOCTOR_PAGE = "pages/doctor/doctorCabinetPage.jsp";
     public static final String CABINET_PHARMACIST_PAGE = "pages/pharmacist/pharmacistCabinetPage.jsp";
-    public static final String REGISTRATION_SUCCESSFULL_PAGE = "pages/registrationSuccessfulPage.jsp";
-    public static final String PRG_PAGE = "pages/registrationSuccessfulPage.jsp";
+    public static final String REGISTRATION_SUCCESSFUL_PAGE = "pages/registrationSuccessfulPage.jsp";
+    public static final String PRG_PAGE = "pages/prg.jsp";
     private PagePath(){
         throw new IllegalStateException("Utility class");
     }

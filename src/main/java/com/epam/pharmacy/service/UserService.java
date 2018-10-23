@@ -20,8 +20,6 @@ import java.util.ResourceBundle;
 
 public interface UserService extends AbstractService{
 
-    CommandResult start(RequestContent requestContent);
-
     CommandResult signIn (RequestContent requestContent) throws ApplicationException;
 
     CommandResult registration (RequestContent requestContent);

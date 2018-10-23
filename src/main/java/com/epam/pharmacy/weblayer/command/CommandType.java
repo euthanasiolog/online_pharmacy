@@ -1,21 +1,23 @@
 package com.epam.pharmacy.weblayer.command;
 
 import com.epam.pharmacy.service.impl.*;
+import com.epam.pharmacy.util.constant.PagePath;
+import com.epam.pharmacy.util.constant.ProjectConstant;
 
 public enum CommandType {
-    START(new UserServiceImpl()::start),
+    START(requestContent -> new CommandResult(ResponseType.FORWARD, PagePath.START_PAGE)),
     SIGN_IN(new UserServiceImpl()::signIn),
     CHANGE_LOCALE(new ApplicationServiceImpl()::changeLocale),
     REGISTRATION(new UserServiceImpl()::registration),
     REGISTRATION_USER(new UserServiceImpl()::create),
-    REFRESH(new ApplicationServiceImpl()::refresh),
+    REFRESH(requestContent -> new CommandResult(ResponseType.FORWARD, requestContent.getRequestParameter(ProjectConstant.PAGE))),
     SAVE_CART(new CartServiceImpl()::create),
     PUT_DRUG_IN_CART(new CartServiceImpl()::putDrugInCart),
     PAYMENT(new CartServiceImpl()::payment),
     DELETE_FROM_CART(new CartServiceImpl()::delete),
     GET_CLIENT_CARD(new CartServiceImpl()::findById),
     SEARCH_DRUG(new DrugServiceImpl()::searchDrug),
-    GO_TO_START(new ApplicationServiceImpl()::goToStart),
+    GO_TO_START(requestContent -> new CommandResult(ResponseType.FORWARD, PagePath.START_PAGE)),
     GO_TO_CABINET(new UserServiceImpl()::goToCabinet),
     EXIT(new UserServiceImpl()::exit),
     SHOW_ALL_DRUGS(new DrugServiceImpl()::showAllDrugs);
