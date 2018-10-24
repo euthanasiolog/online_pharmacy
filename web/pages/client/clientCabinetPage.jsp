@@ -21,7 +21,7 @@
             <c:if test="${user.discount != 0}">
                 <tr>
                     <td>
-                        <fmt:message key=""/>
+                        discount
                     </td>
                     <td>
                         ${user.discount}
@@ -34,7 +34,8 @@
         <div class="col-md-auto">
             <c:choose>
                 <c:when test="${orders == null}">
-                    <fmt:message key=""/>
+                    <%--<fmt:message key=""/>--%>
+                    Orders:
                 </c:when>
                 <c:otherwise>
                     <%@include file="../jspf/cartTable.jspf"%>

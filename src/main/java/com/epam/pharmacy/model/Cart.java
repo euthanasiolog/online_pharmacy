@@ -24,7 +24,10 @@ public class Cart extends Entity {
     }
 
     public void addOrder (Drug drug, int number) {
-        orders.add(new Order(drug, number));
+        Order order = new Order();
+        order.setDrug(drug);
+        order.setNumber(number);
+        orders.add(order);
     }
 
     public void addOrder (Order order) {

@@ -51,7 +51,7 @@ public class RequestValidator {
 
         String login = requestContent.getRequestParameter(ProjectConstant.LOGIN);
 
-        LoginAndPasswordValidator validator = new LoginAndPasswordValidator(login, password);
+        LoginAndPasswordValidator validator = new LoginAndPasswordValidator(password, login);
 
         Set<ConstraintViolation<LoginAndPasswordValidator>> violations = getValidator(requestContent).validate(validator);
 

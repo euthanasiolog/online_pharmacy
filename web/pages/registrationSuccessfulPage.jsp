@@ -12,9 +12,10 @@
     <title>Title</title>
 </head>
 <body>
-<h1>
+<%@include file="jspf/header.jspf"%>
+<h3>
     <fmt:message key="registration.succesfull"/> ${e:forHtml(user.nickName)}!
-</h1>
+</h3>
 <form action="${pageContext.request.contextPath}/main">
     <input type="hidden" name="command" value="go_to_start">
     <button type="submit"><fmt:message key="go.to.start"/> </button>

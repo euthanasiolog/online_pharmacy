@@ -8,9 +8,10 @@ final class SQLQueries {
     static final String DOCTOR_SIGN_IN_SQL = "Select d.`specialization`, d.`workplace` from doctor d\n" +
             "where d.`id`=?";
     static final String CLIENT_SIGN_IN_SQL = "SELECT c.`discount` FROM CLIENT c WHERE c.`id`=?";
-    static final String CREATE_USER = "INSERT INTO USER \n" +
-            "(nickname, PASSWORD, email, firstname, lastname, patronymic, TYPE, birthdate) \n" +
-            "VALUE (?, SHA2(?, 512), ?, ?, ?, ?, ?, ?); SELECT LAST_INSERT_ID()";
+    static final String CREATE_USER = "INSERT INTO USER " +
+            "(nickname, PASSWORD, email, firstname, lastname, patronymic, TYPE, birthdate) " +
+            "VALUE (?, sha2(?, 512), ?, ?, ?, ?, ?, ?)";
+    static final String GET_LAST_ID = "SELECT LAST_INSERT_ID()";
     static final String CREATE_CLIENT = "INSERT INTO CLIENT (id, discount)\n" +
             "VALUES (LAST_INSERT_ID(), ?)";
     static final String CREATE_DOCTOR = "INSERT INTO doctor (`id`, `specialization`, `workplace`)\n" +

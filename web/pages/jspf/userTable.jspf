@@ -2,7 +2,7 @@
         <thead>
         <tr>
             <th>
-                <strong><fmt:message key=""/></strong>
+                <strong><fmt:message key="user.table.fullname"/></strong>
             </th>
             <th>
                 <strong>${e:forHtml(user.firstName)} ${e:forHtml(user.lastName)}
@@ -13,15 +13,15 @@
         <tbody>
         <tr>
             <td>
-                <fmt:message key=""/>
+                <fmt:message key="user.table.email"/>
             </td>
             <td>
-                ${e:forHtml(user.eMail)}
+                <%--${user.eMail}--%>
             </td>
         </tr>
         <tr>
             <td>
-                <fmt:message key=""/>
+                <fmt:message key="user.table.dateofbirth"/>
             </td>
             <td>
                 <fmt:formatDate value="${user.dateOfBirth}" type="date" dateStyle="medium"/>

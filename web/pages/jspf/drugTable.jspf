@@ -20,23 +20,11 @@
             <th scope="col"><fmt:message key="drug.recipe"/> </th>
             <th scope="col"><fmt:message key="drug.availability"/> </th>
             <th scope="col"><fmt:message key="drug.ordertime"/> </th>
-                <c:choose>
-                    <c:when test="${role == 'CLIENT'}">
-                        <th scope="col">
-                            <c:if test="${!e:forHtml(drug.drug.availability).equalsIgnoreCase('not')}">
-                                <form action="${pageContext.request.contextPath}/main">
-                                    <input type="hidden" name="command" value="put_drug_in_cart">
-                                    <input type="hidden" name="page" value="${pagePass}">
-                                    <input type="number" name="number" min="1" max="100" placeholder="1">
-                                    <button type="submit" class="button"><fmt:message key="drug.addtocart"/></button>
-                                </form>
-                            </c:if>
-                        </th>
-                    </c:when>
-                    <c:when test="${role == 'DOCTOR' || role == 'PHARMACIST'}">
-                        <th scope="col"><fmt:message key="drug.choose"/> </th>
-                    </c:when>
-                </c:choose>
+            <c:if test="${role == 'CLIENT'}">
+                <th scope="col">
+
+                </th>
+            </c:if>
         </tr>
         </thead>
         <tbody>
@@ -80,7 +68,7 @@
                     <strong><fmt:message key="drug.recipe.narcotic"/></strong>
                 </c:when>
             </c:choose>
-                ${e:forHtml(drug.recipeType)}</td>
+        </td>
         <td>
             <c:choose>
                 <c:when test="${e:forHtml(drug.availability).equalsIgnoreCase('stock')}" >
@@ -94,6 +82,23 @@
                 </c:when>
             </c:choose>
         <td>${e:forHtml(drug.orderTime)} <fmt:message key="drug.availability.order.time"/> </td>
+        <c:choose>
+            <c:when test="${role == 'CLIENT'}">
+                <td scope="col">
+                    <c:if test="${!e:forHtml(drug.availability).equalsIgnoreCase('not')}">
+                        <form action="${pageContext.request.contextPath}/main">
+                            <input type="hidden" name="command" value="put_drug_in_cart">
+                            <input type="hidden" name="page" value="${pagePass}">
+                            <input type="number" name="number" min="1" max="100" placeholder="1">
+                            <button type="submit" class="button"><fmt:message key="drug.addtocart"/></button>
+                        </form>
+                    </c:if>
+                </td>
+            </c:when>
+            <c:when test="${role == 'DOCTOR' || role == 'PHARMACIST'}">
+                <td scope="col"><fmt:message key="drug.choose"/> </td>
+            </c:when>
+        </c:choose>
     </tr>
 </c:forEach>
         </tbody>

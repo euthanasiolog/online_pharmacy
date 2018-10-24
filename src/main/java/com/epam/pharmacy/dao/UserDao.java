@@ -2,6 +2,7 @@ package com.epam.pharmacy.dao;
 
 import com.epam.pharmacy.dao.connection.ResultSetWrapper;
 import com.epam.pharmacy.model.user.User;
+import com.epam.pharmacy.util.constant.Role;
 import org.apache.logging.log4j.core.Logger;
 
 import java.sql.Date;
@@ -47,10 +48,10 @@ public interface UserDao<T extends User> extends AbstractDao<T> {
         }
     }
 
-    default List<Object> createUserAttributes(User user, String password) {
+    default List<Object> createUserAttributes(User user, String password, Role role) {
 
         return putParameters(user.getNickName(), password, user.getEMail(), user.getFirstName(),
-                user.getLastName(), user.getPatronymic(), user.getDateOfBirth());
+                user.getLastName(), user.getPatronymic(), role.toString().toLowerCase(), user.getDateOfBirth());
     }
 
     default boolean isNickNameNotExist (String nickName) throws DaoException {
