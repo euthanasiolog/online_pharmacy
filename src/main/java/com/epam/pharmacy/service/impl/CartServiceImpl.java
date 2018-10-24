@@ -72,10 +72,11 @@ public class CartServiceImpl implements CartService {
         Cart cart = (Cart) requestContent.getSessionAtribute(ProjectConstant.CART);
 
         Order order = new Order();
-        order.setDrug((Drug) requestContent.getRequestAttribute(ProjectConstant.DRUG));
-        order.setNumber(Integer.parseInt(requestContent.getRequestParameter(ProjectConstant.NUMBER)));
-
-        cart.addOrder(order);
+        if (requestContent.getRequestParameter(ProjectConstant.NUMBER) != null && !requestContent.getRequestParameter(ProjectConstant.NUMBER).equals("")) {
+            order.setDrug((Drug) requestContent.getRequestAttribute(ProjectConstant.DRUG));
+            order.setNumber(Integer.parseInt(requestContent.getRequestParameter(ProjectConstant.NUMBER)));
+            cart.addOrder(order);
+        }
 
         requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);

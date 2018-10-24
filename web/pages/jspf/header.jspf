@@ -27,7 +27,7 @@
             <c:if test="${role == 'CLIENT' || role == 'DOCTOR' || role == 'PHARMACIST' }">
                 <fmt:message key="navbar.sign.in.as"/> ${e:forHtml(user.nickName)}
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/main?command=exit"><fmt:message key="navbar.exit"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/main?command=exit&page=${pagePass}"><fmt:message key="navbar.exit"/></a>
                 </li>
             </c:if>
         </ul>
