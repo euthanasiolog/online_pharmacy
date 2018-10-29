@@ -17,36 +17,54 @@ final class SQLQueries {
     static final String CREATE_DOCTOR = "INSERT INTO doctor (`id`, `specialization`, `workplace`)\n" +
             "VALUES (LAST_INSERT_ID(), ?, ?)";
     static final String CREATE_DRUG = "INSERT INTO drug (name, inn, composition, form, dose, number, shelflife," +
-            " price, recipe, availability, ordertime, archive) " +
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+            " price, recipe, availability, amount, ordertime, archive, annotation) " +
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    static  final String UPDATE_DRUG = "update drug d set d.name=?, d.inn=?, d.composition=?, d.form=?, d.dose=?, d.number=?, d.shelflife=?, d.price=?, \n" +
+            "d.recipe=?, d.availability=?, d.amount=?, d.ordertime=?, d.archive=?, d.annotation=? where d.id=?";
     static final String FIND_DRUG_BY_ID = "SELECT id, name, inn, composition, form, dose, number, shelflife, price," +
-            " recipe, availability, ordertime, archive" +
-            "FROM drud WHERE id=?";
+            " recipe, availability, ordertime, amount, archive, annotation " +
+            " FROM drug WHERE id=?";
     static final String SHOW_ALL_DRUGS = "SELECT id, name, inn, composition, form, dose, number, shelflife, price," +
-            " recipe, availability, ordertime " +
+            " recipe, availability, amount, ordertime, annotation " +
             " FROM drug WHERE archive='0'";
     static final String DELETE_USER = "UPDATE user SET `archive`='1' WHERE id=?";
     static final String SEARCH_DRUG_1 = "SELECT d.id, d.name, d.inn, d.form, d.composition, d.dose, d.number, d.shelflife, d.price,\n" +
-            "d.recipe, d.availability, d.ordertime FROM drug d   WHERE d.name LIKE '%";
+            "d.recipe, d.availability, d.amount, d.ordertime, d.annotation FROM drug d   WHERE d.name LIKE '%";
     static final String SEARCH_DRUG_2 = "%' OR d.inn LIKE '%";
     static final String SEARCH_DRUG_3 = "%'";
     static final String PUT_DRUG_IN_CART = "insert into cart (id_client, id_drug, number, payment) \n" +
             "values (?, ?, ?, ?)";
-    static final String UPDATE_DRUG_IN_CART = "UPDATE cart SET number=?, payment=? WHERE id=?";
+    static final String UPDATE_DRUG_IN_CART = "UPDATE cart SET number=?, payment=?, archive=? WHERE id=?";
     static final String DO_PAYMENT = "update cart set payment='1' where id=?";
     static final String DELETE_DRUG_FROM_CART = "update cart set archive='1' where \n" +
             "id_client=? and id_drug=?";
     static final String CREATE_RECIPE = "insert into recipe  (recipe.patient_id, recipe.drug_id, recipe.doctor_id, \n" +
             "recipe.serialnumber, recipe.type, recipe.from, recipe.to) values (?,?,?,?,?,?,?)";
-    static final String GET_CLIENT_RECIPIES = "SELECT r.`id`, r.serialnumber, r.`doctor_id`, r.`drug_id`, r.`patient_id`, r.`type`, r.`from`, r.`to` \n" +
+    static final String GET_CLIENT_RECIPES = "SELECT r.`id`, r.`patient_id`, r.`drug_id`, r.`doctor_id`, r.serialnumber, r.`type`, r.`from`, r.`to`, r.`used` \n" +
             "FROM recipe r \n" +
-            "WHERE r.`patient_id`=?";
-    static final String USE_RECIPE = "UPDATE recipe r ON r.`used`='1'\n" +
-            "WHERE r.`patient_id`=?";
-    static final String DELETE_RECIPE = "UPDATE recipe r ON r.`archive`='1'\n" +
-            "WHERE r.`patient_id`=?";
-    static final String GET_CLIENT_CART = "SELECT c.`id`, c.`id_drug`, c.`number`, c.`payment`\t\n" +
+            "WHERE r.`patient_id`=? AND r.`archive`=0";
+    static final String USE_RECIPE = "UPDATE recipe r ON r.`used`='1' \n" +
+            "WHERE r.`id`=?";
+    static final String DELETE_RECIPE = "UPDATE recipe r ON r.`archive`='1' \n" +
+            "WHERE r.`id`=?";
+    static final String GET_CLIENT_CART = "SELECT c.`id`, c.`id_drug`, c.`number`, c.`payment` \n" +
             "FROM cart c WHERE c.`id_client`=?";
+    static final String GET_ORDER_BY_ID = "SELECT c.`id_client`cart, c.`id_drug`, c.`number`, c.`payment` FROM cart c WHERE c.id=?";
+    static final String CHECK_USER_ROLE ="SELECT u.`type` FROM USER u WHERE u.`nickname`=? AND u.`password`=sha2(?,512) and u.`archive`='0'";
+    static final String FIND_DOCTOR_EMPTY_RECIPES = "SELECT r.`id`, r.`patient_id`, r.`drug_id`, r.`doctor_id`, r.serialnumber, r.`type`, r.`from`, r.`to`, r.`used` \n" +
+            "FROM recipe r WHERE r.`doctor_id`=? AND r.`from`=NULL AND r.`to`=NULL";
+    static final String FIND_ALL_DOCTOR_RECIPES = "SELECT r.`id`, r.`patient_id`, r.`doctor_id`, r.`drug_id`, r.`type`, r.`serialnumber`, \n" +
+            "r.`from`, r.`to`, r.`used`\n" +
+            "FROM recipe r WHERE r.`doctor_id`=? AND r.`archive`=0";
+    static final String SELECT_ALL_CLIENT_RECIPES = "SELECT r.`id`, r.`patient_id`,r.`drug_id`, r.`doctor_id`, r.`serialnumber`,  r.`type`, \n" +
+            "r.`from`, r.`to`, r.`used`\n" +
+            "FROM recipe r WHERE r.`patient_id`=?";
+    static final String UPDATE_RECIPE = "UPDATE recipe r SET r.`patient_id`=?,  r.`drug_id`=?, r.`doctor_id`=?, r.`serialnumber`=?, r.`type`=?,  \n" +
+            "r.`from`=?, r.`to`=?, r.`used`=? WHERE r.`id`=?";
+    static final String FIND_RECIPE_BY_ID = "SELECT r.`id`, r.`patient_id`, r.`drug_id`, r.`doctor_id`, r.serialnumber, r.`type`, " +
+            "r.`from`, r.`to`, r.`used` FROM recipe r WHERE r.`id`=?";
+    static final String DELETE_DRUG = "UPDATE drug d SET d.`archive`=1 WHERE d.`id`=?";
+    static final String RESET_DATE_IN_RECIPE = "UPDATE recipe r SET r.`from`=NULL, r.`to`=NULL WHERE r.`id`=?";
 
 
     private SQLQueries(){

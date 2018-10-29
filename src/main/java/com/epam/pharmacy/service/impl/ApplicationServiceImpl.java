@@ -13,7 +13,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public CommandResult changeLocale(RequestContent requestContent) {
 
-        requestContent.insertSessionAtribute(ProjectConstant.LOCALE,
+        requestContent.insertSessionAttribute(ProjectConstant.LOCALE,
                 LocaleFactory.getLocale(requestContent.getRequestParameter(ProjectConstant.LOCALE)));
 
         String page = requestContent.getRequestParameter(ProjectConstant.PAGE);

@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public interface UserService extends AbstractService{
+public interface UserService extends AbstractService {
 
     CommandResult signIn (RequestContent requestContent) throws ApplicationException;
 
@@ -33,7 +33,7 @@ public interface UserService extends AbstractService{
 
     default boolean isEmailNotExist (RequestContent requestContent) throws ApplicationException {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("ValidationMessages",
-                (Locale) requestContent.getSessionAtribute(ProjectConstant.LOCALE));
+                (Locale) requestContent.getSessionAttribute(ProjectConstant.LOCALE));
         String email;
 
             if (requestContent.getRequestParameter("email") != null) {
@@ -57,7 +57,7 @@ public interface UserService extends AbstractService{
     default boolean isNickNameNotExist (RequestContent requestContent) throws ApplicationException {
         String nickName;
         ResourceBundle resourceBundle = ResourceBundle.getBundle("ValidationMessages",
-                (Locale) requestContent.getSessionAtribute(ProjectConstant.LOCALE));
+                (Locale) requestContent.getSessionAttribute(ProjectConstant.LOCALE));
 
         if (requestContent.getRequestParameter("nickname") != null) {
             nickName = requestContent.getRequestParameter("nickname");
@@ -92,7 +92,7 @@ public interface UserService extends AbstractService{
 
         if (requestContent.getRequestParameter("email") != null) {
             String email = requestContent.getRequestParameter("email");
-            user.setEMail(email);
+            user.setEmail(email);
         }
 
         if (requestContent.getRequestParameter("firstname") != null) {
@@ -167,7 +167,7 @@ public interface UserService extends AbstractService{
     }
 
     default void insertUserSessionAttributes(RequestContent requestContent, User user, Role role){
-        requestContent.insertSessionAtribute(ProjectConstant.USER, user);
-        requestContent.insertSessionAtribute(ProjectConstant.ROLE, role.toString());
+        requestContent.insertSessionAttribute(ProjectConstant.USER, user);
+        requestContent.insertSessionAttribute(ProjectConstant.ROLE, role);
     }
 }

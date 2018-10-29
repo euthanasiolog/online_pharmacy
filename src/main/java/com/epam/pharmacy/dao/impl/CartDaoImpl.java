@@ -7,10 +7,15 @@ import com.epam.pharmacy.dao.connection.ResultSetWrapper;
 import com.epam.pharmacy.model.Cart;
 import com.epam.pharmacy.model.item.Drug;
 import com.epam.pharmacy.model.item.Order;
+import com.epam.pharmacy.util.constant.ProjectConstant;
+import com.epam.pharmacy.weblayer.command.RequestContent;
+import lombok.extern.log4j.Log4j2;
+
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+@Log4j2
 public class CartDaoImpl implements CartDao {
 
     @Override
@@ -28,12 +33,33 @@ public class CartDaoImpl implements CartDao {
     }
 
     @Override
-    public boolean payment(int id) throws DaoException {
-        List<Object> params = putParameters(id);
+    public boolean doPayment(int...idOrder) throws DaoException {
+        Connection connection = startTransaction();
+        for (int id : idOrder) {
+            Order order = findOrderById(id);
+            int amount = order.getDrug().getAmount();
+            if (amount > order.getNumber()) {
+                List<Object> params = putParameters(id);
+                executeQueryUpdate(SQLQueries.DO_PAYMENT, params);
 
-        return executeQueryUpdate(SQLQueries.DO_PAYMENT, params);
+                DrugDao drugDao = new DrugDaoImpl();
+                Drug drug = drugDao.findById(order.getDrug().getId());
+                drug.setAmount(amount - order.getNumber());
+                drugDao.update(drug);
+            } else {
+                log.debug("no such drugs in pharmacy");
+             //TODO:  no such drugs in pharmacy
+            }
+        }
+        return commitTransaction(connection);
     }
 
+    @Override
+    public boolean updateOrder(int number, int payment, int archive, int idOrder) throws DaoException {
+        List<Object> params = putParameters(number, payment, archive, idOrder);
+
+        return executeQueryUpdate(SQLQueries.UPDATE_DRUG_IN_CART, params);
+    }
 
     @Override
     public boolean create(Cart cart, String password) throws DaoException {
@@ -46,6 +72,10 @@ public class CartDaoImpl implements CartDao {
             if (order.isPayment()) {
                 payment = 1;
             }
+            int archive = 0;
+            if (order.isArchive()) {
+                archive = 1;
+            }
 
             int id = order.getId();
             if (id == 0) {
@@ -54,11 +84,36 @@ public class CartDaoImpl implements CartDao {
                 executeQuery(SQLQueries.PUT_DRUG_IN_CART, params, connection);
             } else {
                 List<Object> params = putParameters(order.getNumber(),
-                        payment, id);
+                        payment, archive, id);
                 executeQueryUpdate(SQLQueries.UPDATE_DRUG_IN_CART, params, connection);
             }
         }
         return commitTransaction(connection);
+    }
+
+    @Override
+    public Order findOrderById(int id) throws DaoException {
+        List<Object> params = putParameters(id);
+        Order order = null;
+        ResultSetWrapper resultSet = executeQueryResult(SQLQueries.GET_ORDER_BY_ID, params);
+
+
+        if (!resultSet.isEmpty()) {
+            Map<String, Object> res = resultSet.getResult().get(0);
+            int clientId = (int) res.get(ProjectConstant.ID_CLIENT);
+            int drugId = (int) res.get(ProjectConstant.ID_DRUG);
+            int number = (int) res.get(ProjectConstant.NUMBER);
+            boolean payment = (boolean) res.get(ProjectConstant.PAYMENT);
+
+            DrugDao drugDao = new DrugDaoImpl();
+
+            order = new Order();
+            order.setDrug(drugDao.findById(drugId));
+            order.setNumber(number);
+            order.setPayment(payment);
+        }
+
+        return order;
     }
 
     @Override
@@ -69,7 +124,7 @@ public class CartDaoImpl implements CartDao {
         ResultSetWrapper resultSet = executeQueryResult(SQLQueries.GET_CLIENT_CART, params);
 
         if (!resultSet.isEmpty()) {
-            for (Map<String, Object> res:resultSet.getResult()) {
+            for (Map<String, Object> res : resultSet.getResult()) {
                 int idDrug = (int) res.get("id_drug");
 
                 DrugDao drugDao = new DrugDaoImpl();
@@ -78,15 +133,14 @@ public class CartDaoImpl implements CartDao {
                 if (drug != null) {
                     int idOrder = (int) res.get("id");
                     int number = (int) res.get("number");
-                    int payment = (int) res.get("payment");
+                    boolean payment = (boolean)res.get("payment");
 
                     Order order = new Order();
                     order.setId(idOrder);
                     order.setDrug(drug);
                     order.setNumber(number);
-                    if (payment == 1) {
-                        order.setPayment(true);
-                    }
+                    order.setPayment(payment);
+                    cart.addOrder(order);
                 }
             }
         }

@@ -1,4 +1,18 @@
 package com.epam.pharmacy.dao;
 
-public interface RecipeDao extends AbstractDao{
+import com.epam.pharmacy.model.recipe.Recipe;
+
+import java.util.List;
+
+public interface RecipeDao extends AbstractDao<Recipe>{
+
+    boolean useRecipe (int id) throws DaoException;
+
+    List<Recipe> findClientRecipes (int clientId) throws DaoException;
+
+    List<Recipe> findDoctorEmptyRecipes (int doctorId) throws DaoException;
+
+    List<Recipe> findAllDoctorRecipes (int doctorId) throws DaoException;
+
+    boolean resetDateInRecipe (int id) throws DaoException;
 }

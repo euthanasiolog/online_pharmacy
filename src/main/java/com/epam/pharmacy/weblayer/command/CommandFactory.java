@@ -18,7 +18,7 @@ public class CommandFactory {
                 CommandType commandType = CommandType.valueOf(name);
                 return commandType.getCommand();
             } catch (EnumConstantNotPresentException | IllegalArgumentException e){
-                log.error("Can't define command");
+                log.error("Can't define command "+"'"+name+"'");
                 return CommandType.START.getCommand();
             }
         }

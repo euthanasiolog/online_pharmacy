@@ -8,5 +8,9 @@ public interface CartService extends AbstractService {
 
     CommandResult putDrugInCart (RequestContent requestContent) throws ApplicationException;
 
+    CommandResult putOrderInDb (RequestContent requestContent) throws ApplicationException;
+
     CommandResult payment (RequestContent requestContent) throws ApplicationException;
+
+    CommandResult doPayment (RequestContent requestContent) throws ApplicationException;
 }

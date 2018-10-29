@@ -33,19 +33,22 @@
         </div>
         <div class="col-md-auto">
             <c:choose>
-                <c:when test="${orders == null}">
-                    <%--<fmt:message key=""/>--%>
-                    Orders:
+                <c:when test="${cart.orders == null || cart.orders.isEmpty()}">
+                    <fmt:message key="cart.is.empty"/>
                 </c:when>
                 <c:otherwise>
+                    <fmt:message key="cart.orders"/>:
                     <%@include file="../jspf/cartTable.jspf"%>
                 </c:otherwise>
             </c:choose>
         </div>
     </div>
     <div class="row">
-        <div class="col">
+        <div class="col-md">
             <%@include file="../jspf/drugTable.jspf"%>
+        </div>
+        <div class="col-md">
+
         </div>
     </div>
 </div>

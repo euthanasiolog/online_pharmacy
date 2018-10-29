@@ -1,10 +1,10 @@
 <div>
 <table class="table-sm table-hover">
-    <c:set var="totalCount" value="${fn:length(orders)}"/>
-    <c:set var="step" value="${20}" scope="page"/>
-    <c:set var="start" value="${0}" scope="page"/>
-    <c:if test="${param.start > 0}">
-        <c:set var="start" scope="page" value="${param.start}"/>
+    <c:set var="totalCountOrder" value="${fn:length(cart.orders)}"/>
+    <c:set var="stepOrder" value="${20}" scope="page"/>
+    <c:set var="startOrder" value="${0}" scope="page"/>
+    <c:if test="${param.startOrder > 0}">
+        <c:set var="startOrder" scope="page" value="${param.startOrder}"/>
     </c:if>
     <thead>
     <tr>
@@ -23,7 +23,7 @@
         <th scope="col"><fmt:message key="cart.table.payment"/> </th>
     </tr>
     </thead>
-    <c:forEach  var="order" items="${orders}" varStatus="orderCount" begin="${start}" end="${start + step - 1}">
+    <c:forEach  var="order" items="${cart.orders}" varStatus="orderCount" begin="${startOrder}" end="${startOrder + stepOrder - 1}">
         <tr>
             <th scope="row">${orderCount.index+1}</th>
             <td>${e:forHtml(order.drug.name)}</td>
@@ -84,13 +84,18 @@
                 <c:choose>
                     <c:when test="${order.payment}">
                         <form action="${pageContext.request.contextPath}/main">
+                            <input name="order" value="${order.id}" type="hidden">
+                            <input name="drug" type="hidden" value="${order.drug.id}">
                             <input type="hidden" name="command" value="delete_from_cart">
                             <button type="submit" class="button"><fmt:message key="cart.table.delete"/> </button>
                         </form>
                     </c:when>
                     <c:otherwise>
                         <form action="${pageContext.request.contextPath}/main">
+                            <input name="order" value="${order.id}" type="hidden">
+                            <input name="drug" type="hidden" value="${order.drug.id}">
                             <input type="hidden" name="command" value="payment">
+                            <c:set var="thisOrder" value="${order}" scope="request"/>
                             <button type="submit" class="button"><fmt:message key="cart.table.do.payment"/> </button>
                         </form>
                     </c:otherwise>
@@ -100,18 +105,18 @@
     </c:forEach>
 </table>
 <div>
-    <c:if test="${totalCount > step}">
-        <c:forEach begin="0" step="${step}" end="${totalCount - 1}" varStatus="page">
+    <c:if test="${totalCountOrder > step}">
+        <c:forEach begin="0" step="${stepOrder}" end="${totalCountOrder - 1}" varStatus="page">
             <c:choose>
-                <c:when test="${start==(page.count*step - step)}">
+                <c:when test="${startOrder==(page.count*stepOrder - stepOrder)}">
                     <a class="btn btn-dark"
-                       href="${pageContext.request.contextPath}/main?command=refresh&start=${page.count*step - step}&page=${pagePass}"
+                       href="${pageContext.request.contextPath}/main?command=refresh&startOrder=${page.count*stepOrder - stepOrder}&page=${pagePass}"
                        role="button">
                             ${page.count}</a>
                 </c:when>
                 <c:otherwise>
                     <a class="btn btn-primary"
-                       href="${pageContext.request.contextPath}/main?command=refresh&start=${page.count*step - step}&page=${pagePass}"
+                       href="${pageContext.request.contextPath}/main?command=refresh&startOrder=${page.count*stepOrder - stepOrder}&page=${pagePass}"
                        role="button">
                             ${page.count}</a>
                 </c:otherwise>

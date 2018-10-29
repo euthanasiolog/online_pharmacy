@@ -66,7 +66,7 @@ public class RequestValidator {
 
     private Validator getValidator(RequestContent requestContent){
         ContextualMessageInterpolator contextualMessageInterpolator =
-                new ContextualMessageInterpolator((Locale) requestContent.getSessionAtribute(ProjectConstant.LOCALE));
+                new ContextualMessageInterpolator((Locale) requestContent.getSessionAttribute(ProjectConstant.LOCALE));
 
         ValidatorFactory validatorFactory = Validation.byDefaultProvider().configure().
                 messageInterpolator(contextualMessageInterpolator).buildValidatorFactory();

@@ -20,6 +20,11 @@ public enum CommandType {
     GO_TO_START(requestContent -> new CommandResult(ResponseType.FORWARD, PagePath.START_PAGE)),
     GO_TO_CABINET(new UserServiceImpl()::goToCabinet),
     EXIT(new UserServiceImpl()::exit),
+    DO_PAYMENT(new CartServiceImpl()::doPayment),
+    ADD_DRUG_PAGE(requestContent -> new CommandResult(ResponseType.FORWARD, PagePath.ADD_DRUG)),
+    ADD_DRUG(new DrugServiceImpl()::create),
+    REQUEST_TO_EXTEND_RECIPE(new RecipeServiceImpl()::requestToExtendRecipe),
+    DELETE_RECIPE(new RecipeServiceImpl()::delete),
     SHOW_ALL_DRUGS(new DrugServiceImpl()::showAllDrugs);
 
     private Command command;

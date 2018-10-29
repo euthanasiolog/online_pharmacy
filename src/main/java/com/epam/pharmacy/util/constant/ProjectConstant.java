@@ -29,6 +29,20 @@ public final class ProjectConstant {
     public static final String NUMBER = "number";
     public static final String ORDER = "order";
     public static final String DRUG_SEARCH = "drugsearch";
+    public static final String PAYMENT = "payment";
+    public static final String ID_CLIENT = "id_client";
+    public static final String ID_DRUG = "id_drug";
+    public static final String PATIENT_ID = "patient_id";
+    public static final String DOCTOR_ID = "doctor_id";
+    public static final String DRUG_ID = "drug_id";
+    public static final String TYPE = "type";
+    public static final String FROM = "from";
+    public static final String TO = "to";
+    public static final String SERIALNUMBER = "serialnumber";
+    public static final String USED = "used";
+    public static final String RECIPE = "recipe";
+    public static final String RECIPES = "recipes";
+    public static final String NO_SUCH_DRUG = "no_such_drug";
 
     private ProjectConstant(){
         throw new IllegalStateException("Utility class");

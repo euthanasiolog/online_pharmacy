@@ -3,6 +3,7 @@ package com.epam.pharmacy.weblayer.command;
 import lombok.Getter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 import java.util.HashMap;
 
@@ -56,8 +57,10 @@ public class RequestContent {
         request.setAttribute(attrName, attr);
     }
 
-    public void insertSessionAtribute (String name, Object attr){
-        request.getSession().setAttribute(name, attr);
+    public void insertSessionAttribute (String name, Object attr){
+        if (request.getSession(false) != null) {
+            request.getSession(false).setAttribute(name, attr);
+        }
     }
 
     public Object getRequestAttribute (String name){
@@ -68,12 +71,20 @@ public class RequestContent {
         return requestParameters.get(name);
     }
 
-    public Object getSessionAtribute(String name){
+    public Object getSessionAttribute(String name){
         return sessionAttributes.get(name);
     }
 
     public String getHeader(String name){
         return headers.get(name);
+    }
+
+    public HttpSession getSession () {
+        return request.getSession(false);
+    }
+
+    public String[] getRequestParameters (String name) {
+        return request.getParameterValues(name);
     }
 
 }

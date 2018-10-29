@@ -30,6 +30,46 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/main?command=exit&page=${pagePass}"><fmt:message key="navbar.exit"/></a>
                 </li>
             </c:if>
+            <c:if test="${role == 'GUEST'}">
+                <li class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sign in
+                    </button>
+                    <div class="dropdown-menu">
+                        <form action="${pageContext.request.contextPath}/main" method="post" class="px-4 py-3">
+                            <div class="form-group">
+                                <input type="hidden" name="command" value="sign_in">
+                                <label for="login"><fmt:message key="startpage.label.login"/> </label><br>
+                                <input type="text" id="login" name="login"><br>
+                                <small class="small"><c:if test="${requestScope.loginError != null && requestScope.loginError != ''}">
+                                    <c:out value="${requestScope.loginError}"/>
+                                </c:if></small><br>
+                            </div>
+                            <div class="form-group">
+                                <label for="password"><fmt:message key="startpage.label.password"/> </label><br>
+                                <input type="password" id="password" name="password"><br>
+                                <small class="small"><c:if test="${requestScope.passwordError != null && requestScope.passwordError != ''}">
+                                    <c:out value="${requestScope.passwordError}"/>
+                                </c:if></small>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sign in</button>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                        <form action="${pageContext.request.contextPath}/main" method="get">
+                            <div class="form-group">
+                                <input type="hidden" name="command" value="registration">
+                                <label for="roleReg"><fmt:message key="startpage.label.register"/></label><br>
+                                <select id="roleReg" name="role">
+                                    <option name="client" value="client"><fmt:message key="startpage.label.role.client"/> </option>
+                                    <option name="doctor" value="doctor"><fmt:message key="startpage.label.role.doctor" /></option>
+                                    <option name="pharmacist" value="pharmacist"><fmt:message key="startpage.label.role.pharmacist"/> </option>
+                                </select><br>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Registration</button>
+                        </form>
+                    </div>
+                </li>
+            </c:if>
         </ul>
         <form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/main" method="get">
             <input type="hidden" name="command" value="search_drug">

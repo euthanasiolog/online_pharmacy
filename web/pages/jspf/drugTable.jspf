@@ -54,7 +54,7 @@
                 </c:choose>
                 </td>
         <td>${e:forHtml(drug.composite)}</td>
-        <td>${e:forHtml(drug.number)}</td>
+        <td><fmt:formatNumber value="${drug.number}" type="number"/> </td>
         <td><fmt:formatNumber value="${e:forHtml(drug.price)}" type="currency"/></td>
         <td>
             <c:choose>
@@ -89,7 +89,8 @@
                         <form action="${pageContext.request.contextPath}/main">
                             <input type="hidden" name="command" value="put_drug_in_cart">
                             <input type="hidden" name="page" value="${pagePass}">
-                            <input type="number" name="number" min="1" max="100" placeholder="1">
+                            <input type="hidden" name="id" value="${drug.id}">
+                            <input type="number" class="quantity-num" value="1" name="number" min="1" max="${drug.number}">
                             <button type="submit" class="button"><fmt:message key="drug.addtocart"/></button>
                         </form>
                     </c:if>

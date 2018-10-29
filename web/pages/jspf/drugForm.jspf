@@ -1,0 +1,107 @@
+<input type="hidden" name="page" value="${pagePass}">
+<div class="form-group">
+    <label for="name"><fmt:message key="drug.name"/> </label>
+    <input class="form-control" name="name" type="text" id="name">
+    <small id="name-helper" class="small"></small>
+    <small class="small"><c:if test="${requestScope.nameError != null && requestScope.nameError != ''}">
+        <c:out value="${requestScope.nameError}"/>
+    </c:if></small><br>
+</div>
+<div class="form-group">
+    <label for="inn"><fmt:message key="drug.inn"/> </label>
+    <input type="text" class="form-control" name="inn" id="inn">
+    <small class="small"><c:if test="${requestScope.innError != null && requestScope.innError != ''}">
+        <c:out value="${requestScope.innError}"/>
+    </c:if></small>
+</div>
+<div class="form-group">
+    <label for="composite"><fmt:message key="drug.composite"/></label>
+    <input class="form-control" type="text" name="composite" id="composite">
+    <small class="small"><c:if test="${requestScope.compositeError != null && requestScope.compositeError != ''}">
+        <c:out value="${requestScope.compositeError}"/>
+    </c:if></small>
+</div>
+<div class="form-group">
+    <label for="drugForm"><fmt:message key="drug.form"/></label>
+    <select class="form-select-button" id="drugForm" name="drugForm">
+        <option name="pill"  value="pill"><fmt:message key="drug.form.pill" /></option>
+        <option name="solution"  value="solution"><fmt:message key="drug.form.solution" /></option>
+        <option name="powder"  value="powder"><fmt:message key="drug.form.powder" /></option>
+        <option name="cream"  value="cream"><fmt:message key="drug.form.cream" /></option>
+        <option name="gel"  value="gel"><fmt:message key="drug.form.gel" /></option>
+    </select><br>
+</div>
+<div class="form-group">
+    <label for="dose"><fmt:message key="drug.dose"/> </label>
+    <input type="number" class="form-control" name="dose" id="dose">
+    <small class="small"><c:if test="${requestScope.doseError != null && requestScope.doseError != ''}">
+        <c:out value="${requestScope.doseError}"/>
+    </c:if></small>
+</div>
+<div class="form-group">
+    <label for="number"><fmt:message key="drug.number"/> </label>
+    <input type="number" class="form-control" name="number" id="number">
+    <small class="small"><c:if test="${requestScope.numberError != null && requestScope.numberError != ''}">
+        <c:out value="${requestScope.numberError}"/>
+    </c:if></small>
+</div>
+<div class="form-group">
+    <label for="shelfLife"><fmt:message key=""/> </label>
+    <input type="text" class="form-control" onclick="
+                                                                        $(function(){
+                                                                        $('#date').daterangepicker({
+                                                                        singleDatePicker: true,
+                                                                        locale: {
+                                                                        format: 'DD.MM.YYYY'
+                                                                                    }
+                                                                                    });
+                                                                                    });
+                                                                " name="shelfLife" id="shelfLife">
+    <small class="small"><c:if test="${requestScope.shelfLifeError != null && requestScope.shelfLifeError != ''}">
+        <c:out value="${requestScope.shelfLifeError}"/>
+    </c:if></small>
+</div>
+<div class="form-group">
+    <label for="price"><fmt:message key="drug.price"/> </label>
+    <input type="number" class="form-control" name="price" id="price">
+    <small class="small"><c:if test="${requestScope.priceError != null && requestScope.priceError != ''}">
+        <c:out value="${requestScope.priceError}"/>
+    </c:if></small>
+</div>
+<div class="form-group">
+    <label for="recipeType"><fmt:message key="drug.recipe"/> </label>
+    <select class="form-select-button" id="recipeType" name="recipeType">
+        <option name="without"  value="without"><fmt:message key="drug.recipe.without" /></option>
+        <option name="regular"  value="regular"><fmt:message key="drug.recipe.regular" /></option>
+        <option name="narcotic"  value="narcotic"><fmt:message key="drug.recipe.narcotic" /></option>
+    </select><br>
+</div>
+<div class="form-group">
+    <label for="availability"><fmt:message key="drug.availability"/> </label>
+    <select class="form-select-button" id="availability" name="availability">
+        <option name="without"  value="without"><fmt:message key="drug.availability.stock" /></option>
+        <option name="regular"  value="regular"><fmt:message key="drug.availability.order" /></option>
+        <option name="narcotic"  value="narcotic"><fmt:message key="drug.availability.not" /></option>
+    </select><br>
+</div>
+<div class="form-group">
+    <label for="amount"><fmt:message key="drug.amount"/> </label>
+    <input type="number" class="form-control" name="amount" id="amount">
+    <small class="small"><c:if test="${requestScope.amountError != null && requestScope.amountError != ''}">
+        <c:out value="${requestScope.amountError}"/>
+    </c:if></small>
+</div>
+<div class="form-group">
+    <label for="orderTime"><fmt:message key="drug.ordertime"/> </label>
+    <input type="number" class="form-control" name="orderTime" id="orderTime">
+    <small class="small"><c:if test="${requestScope.orderTimeError != null && requestScope.orderTimeError != ''}">
+        <c:out value="${requestScope.orderTimeError}"/>
+    </c:if></small>
+</div>
+<div class="form-group">
+    <label for="annotation"><fmt:message key="drug.annotation"/> </label>
+    <input type="text" class="form-control" name="annotation" id="annotation">
+    <small class="small"><c:if test="${requestScope.annotationError != null && requestScope.annotationError != ''}">
+        <c:out value="${requestScope.annotationError}"/>
+    </c:if></small>
+</div>

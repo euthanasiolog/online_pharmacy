@@ -18,6 +18,8 @@ public final class PagePath {
     public static final String REGISTRATION_SUCCESSFUL_PAGE = "pages/registrationSuccessfulPage.jsp";
     public static final String REGISTRATION_CONFIRM_PAGE = "pages/registrationConfirm.jsp";
     public static final String PRG_PAGE = "pages/prg.jsp";
+    public static final String PAYMENT = "pages/payment.jsp";
+    public static final String ADD_DRUG = "pages/pharmacist/drugAdd.jsp";
     private PagePath(){
         throw new IllegalStateException("Utility class");
     }

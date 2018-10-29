@@ -1,0 +1,79 @@
+<div>
+    <table class="table-sm table-hover">
+        <c:set var="totalCountRecipe" value="${fn:length(recipes)}"/>
+        <c:set var="stepRecipe" value="${20}" scope="page"/>
+        <c:set var="startRecipe" value="${0}" scope="page"/>
+        <c:if test="${param.startRecipe > 0}">
+            <c:set var="startRecipe" scope="page" value="${param.startRecipe}"/>
+        </c:if>
+        <thead>
+        <tr>
+            <th scope="col">N%</th>
+            <th scope="col"><fmt:message key="drug.name"/> </th>
+            <th scope="col"><fmt:message key="drug.dose"/> </th>
+            <th scope="col"><fmt:message key="drug.form"/> </th>
+            <th scope="col"><fmt:message key="recipe.from"/> </th>
+            <th scope="col"><fmt:message key="recipe.to"/> </th>
+            <th scope="col"><fmt:message key="recipe.doctor"/> </th>
+        </tr>
+        </thead>
+        <c:forEach  var="recipe" items="${recipes}" varStatus="recipeCount" begin="${startRecipe}" end="${startRecipe + stepRecipe - 1}">
+            <c:if test="${recipe.used == 0 || recipe.to > now}">
+                <tr>
+                    <th scope="row">${recipeCount.index+1}</th>
+                    <td>${e:forHtml(recipe.drug.name)}</td>
+                    <td>${e:forHtml(recipe.drug.form)}</td>
+                    <td><fmt:formatNumber value="${e:forHtml(recipe.drug.dose)}" type="number"/> </td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${e:forHtml(recipe.drug.form).equalsIgnoreCase('pill')}" >
+                                <fmt:message key="drug.form.pill"/>
+                            </c:when>
+                            <c:when test="${e:forHtml(recipe.drug.form).equalsIgnoreCase('solution')}" >
+                                <fmt:message key="drug.form.solution"/>
+                            </c:when>
+                            <c:when test="${e:forHtml(recipe.drug.form).equalsIgnoreCase('powder')}" >
+                                <fmt:message key="drug.form.powder"/>
+                            </c:when>
+                            <c:when test="${e:forHtml(recipe.drug.form).equalsIgnoreCase('cream')}" >
+                                <fmt:message key="drug.form.cream"/>
+                            </c:when>
+                            <c:when test="${e:forHtml(recipe.drug.form).equalsIgnoreCase('gel')}" >
+                                <fmt:message key="drug.form.gel"/>
+                            </c:when>
+                        </c:choose>
+                    </td>
+                    <td>
+                        <fmt:formatDate type="date" value="${recipe.from}"/>
+                    </td>
+                    <td>
+                        <fmt:formatDate type="date" value="${recipe.to}"/>
+                    </td>
+                    <td>
+                            ${e:forHtml(recipe.doctor.lastname)}
+                    </td>
+                </tr>
+            </c:if>
+        </c:forEach>
+    </table>
+    <div>
+        <c:if test="${totalCountRecipe > step}">
+            <c:forEach begin="0" step="${stepRecipe}" end="${totalCountRecipe - 1}" varStatus="page">
+                <c:choose>
+                    <c:when test="${startRecipe==(page.count*stepRecipe - stepRecipe)}">
+                        <a class="btn btn-dark"
+                           href="${pageContext.request.contextPath}/main?command=refresh&startRecipe=${page.count*stepRecipe - stepRecipe}&page=${pagePass}"
+                           role="button">
+                                ${page.count}</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="btn btn-primary"
+                           href="${pageContext.request.contextPath}/main?command=refresh&startRecipe=${page.count*stepRecipe - stepRecipe}&page=${pagePass}"
+                           role="button">
+                                ${page.count}</a>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </c:if>
+    </div>
+</div>

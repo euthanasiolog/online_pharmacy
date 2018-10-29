@@ -16,7 +16,7 @@
                 <fmt:message key="user.table.email"/>
             </td>
             <td>
-                <%--${user.eMail}--%>
+                ${e:forHtml(user.email)}
             </td>
         </tr>
         <tr>
