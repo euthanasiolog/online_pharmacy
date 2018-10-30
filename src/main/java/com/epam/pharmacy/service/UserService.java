@@ -102,6 +102,7 @@ public interface UserService extends AbstractService {
 
         if (requestContent.getRequestParameter("firstname") != null) {
             String firstName = requestContent.getRequestParameter("firstname");
+
             user.setFirstName(firstName);
         }
 
