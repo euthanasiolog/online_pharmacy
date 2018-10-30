@@ -13,10 +13,15 @@ import org.apache.logging.log4j.Logger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public interface UserService extends AbstractService {
 
@@ -29,7 +34,6 @@ public interface UserService extends AbstractService {
     CommandResult exit (RequestContent requestContent);
 
     CommandResult endSignIn (User user, RequestContent requestContent, Role role) throws ApplicationException;
-
 
     default boolean isEmailNotExist (RequestContent requestContent) throws ApplicationException {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("ValidationMessages",
@@ -77,8 +81,9 @@ public interface UserService extends AbstractService {
         return false;
     }
 
-    default void createUserAttributes(User user, RequestContent requestContent){
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("ValidationMessages");
+    default boolean createUserAttributes(User user, RequestContent requestContent) throws ApplicationException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("ValidationMessages",
+                (Locale) requestContent.getSessionAttribute(ProjectConstant.LOCALE));
 
         if (requestContent.getRequestParameter("id") != null) {
             int id = Integer.parseInt(requestContent.getRequestParameter("id"));
@@ -110,45 +115,23 @@ public interface UserService extends AbstractService {
             user.setPatronymic(patronymic);
         }
 
-        if (requestContent.getRequestParameter("year") != null &&
-                requestContent.getRequestParameter("month") != null &&
-                requestContent.getRequestParameter("day") != null) {
-
-            int year = 0;
-            int month = 0;
-            int day = 0;
-
-            try {
-                year = Integer.parseInt(requestContent.getRequestParameter("year"));
-            } catch (NumberFormatException e) {
-                requestContent.insertAttribute("yearError", resourceBundle.getString("User.dateofbirth.year"));
+        if (requestContent.getRequestParameter(ProjectConstant.DATE_OF_BIRTH) != null) {
+            Pattern date = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
+            Matcher matcher = date.matcher(requestContent.getRequestParameter(ProjectConstant.DATE_OF_BIRTH));
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            if (matcher.matches()) {
+                try {
+                    Date dateOfBirth = dateFormat.parse(requestContent.getRequestParameter(ProjectConstant.DATE_OF_BIRTH));
+                    user.setDateOfBirth(dateOfBirth);
+                } catch (ParseException e) {
+                    throw new ApplicationException("error parse Date", e);
+                }
+            } else {
+                requestContent.insertAttribute("dateOfBirthPatterError", resourceBundle.getString("date.wrong.pattern"));
+                return false;
             }
-
-            try {
-                month = Integer.parseInt(requestContent.getRequestParameter("month"));
-            } catch (NumberFormatException e) {
-                requestContent.insertAttribute("monthError", resourceBundle.getString("User.dateofbirth.month"));
-            }
-
-            try {
-                day = Integer.parseInt(requestContent.getRequestParameter("day"));
-            } catch (NumberFormatException e) {
-                requestContent.insertAttribute("dayError", resourceBundle.getString("User.dateofbirth.day"));
-            }
-
-            Date dateOfBirth = null;
-
-            try {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(year, month, day);
-                dateOfBirth = calendar.getTime();
-            } catch (IllegalArgumentException e) {
-                requestContent.insertAttribute("dateOfBirthError", resourceBundle.getString("User.dateofbirth"));
-            }
-
-                user.setDateOfBirth(dateOfBirth);
         }
-
+        return true;
     }
 
     default String hashPassword(String pass, Logger log){

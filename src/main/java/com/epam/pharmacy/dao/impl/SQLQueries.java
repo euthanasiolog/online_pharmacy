@@ -11,6 +11,8 @@ final class SQLQueries {
     static final String CREATE_USER = "INSERT INTO USER " +
             "(nickname, PASSWORD, email, firstname, lastname, patronymic, TYPE, birthdate) " +
             "VALUE (?, sha2(?, 512), ?, ?, ?, ?, ?, ?)";
+    static final String CREATE_USER_QUERY = "INSERT INTO USER r (r.nickname, r.PASSWORD, r.email, r.firstname, r.lastname, r.patronymic, r.TYPE, r.birthdate, r.archive)\n" +
+            "VALUE (?, SHA2(?, 512), ?, ?, ?, ?, ?, ?, 2)";
     static final String GET_LAST_ID = "SELECT LAST_INSERT_ID()";
     static final String CREATE_CLIENT = "INSERT INTO CLIENT (id, discount)\n" +
             "VALUES (LAST_INSERT_ID(), ?)";
@@ -65,6 +67,18 @@ final class SQLQueries {
             "r.`from`, r.`to`, r.`used` FROM recipe r WHERE r.`id`=?";
     static final String DELETE_DRUG = "UPDATE drug d SET d.`archive`=1 WHERE d.`id`=?";
     static final String RESET_DATE_IN_RECIPE = "UPDATE recipe r SET r.`from`=NULL, r.`to`=NULL WHERE r.`id`=?";
+    static final String GET_DOCTORS = "SELECT u.`id`, u.email, u.nickname, u.`firstname`, u.`lastname`, u.`patronymic`, u.`birthdate`, d.specialization, d.workplace FROM USER u \n" +
+            "JOIN doctor d ON u.id = d.id WHERE u.`archive`=0";
+    static final String FIND_DOCTOR_BY_ID = "SELECT u.`id`, u.email, u.nickname, u.`firstname`, u.`lastname`, u.`patronymic`, u.`birthdate`, d.specialization, d.workplace FROM USER u \n" +
+            "JOIN doctor d ON u.id = d.id WHERE u.`archive`=0 AND u.`id`=?";
+    static final String GET_DOCTORS_QUERIES = "SELECT u.`id`, u.email, u.nickname, u.`firstname`, u.`lastname`, u.`patronymic`, u.`birthdate`, d.specialization, d.workplace FROM USER u \n" +
+            "JOIN doctor d ON u.id = d.id WHERE u.`archive`=2";
+    static final String GET_PHARMACISTS = "SELECT u.id, u.nickname, u.email, u.firstname, u.lastname, u.patronymic, u.birthdate, u.type\n" +
+            "FROM USER u WHERE u.`type`='pharmacist' AND u.`archive`='0'";
+    static final String GET_PHARMACISTS_QUERIES = "SELECT u.id, u.nickname, u.email, u.firstname, u.lastname, u.patronymic, u.birthdate, u.type\n" +
+            "FROM USER u WHERE u.`type`='pharmacist' AND u.`archive`='2'";
+    static final String CONFIRM_USER_QUERY = "UPDATE USER u SET u.`archive`=0 WHERE u.`id`=? ";
+
 
 
     private SQLQueries(){

@@ -33,7 +33,7 @@
                 <c:out value="${requestScope.specializationError}"/>
             </c:if></small>
         </div>
-        <button type="submit" class="btn btn-primary"><fmt:message key="registrationuserform.submit"/></button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="send.request"/></button>
     </form>
 </div>
 </body>

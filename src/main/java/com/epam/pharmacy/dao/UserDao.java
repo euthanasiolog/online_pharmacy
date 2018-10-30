@@ -31,11 +31,7 @@ public interface UserDao<T extends User> extends AbstractDao<T> {
         return executeQueryResult(query, userParams);
     }
 
-    default void readUserAttributes(User user, ResultSetWrapper resultSetWrapper) {
-        List<Map<String, Object>> result = resultSetWrapper.getResult();
-        if (!result.isEmpty()) {
-            Map<String, Object> resultSet = result.get(0);
-
+    default void readUserAttributes(User user, Map<String, Object> resultSet) {
             user.setId((Integer) resultSet.get("id"));
             user.setEmail((String) resultSet.get("email"));
             user.setNickName((String) resultSet.get("nickname"));
@@ -44,8 +40,7 @@ public interface UserDao<T extends User> extends AbstractDao<T> {
             if (resultSet.get("patronymic")!=null){
                 user.setPatronymic((String) resultSet.get("patronymic"));
             }
-            user.setDateOfBirth((Date) resultSet.get("dateofbirth"));
-        }
+            user.setDateOfBirth((Date) resultSet.get("birthdate"));
     }
 
     default List<Object> createUserAttributes(User user, String password, Role role) {

@@ -23,12 +23,6 @@
                 <input type="text" id="login" name="login"><br>
                 <label for="password"><fmt:message key="startpage.label.password"/> </label><br>
                 <input type="password" id="password" name="password"><br>
-                <label for="role"><fmt:message key="startpage.label.role"/></label><br>
-                <select id="role" name="role">
-                    <option name="client" value="client"><fmt:message key="startpage.label.role.client"/> </option>
-                    <option name="doctor" value="doctor" disabled><fmt:message key="startpage.label.role.doctor" /></option>
-                    <option name="pharmacist" value="pharmacist" disabled><fmt:message key="startpage.label.role.pharmacist"/> </option>
-                </select><br>
                 <input type="submit">
             </form>
         </div>

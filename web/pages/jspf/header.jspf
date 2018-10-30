@@ -14,6 +14,10 @@
                     <%--<a class="nav-link" href="#"><fmt:message key="navbar.profile"/></a>--%>
                 <%--</li>--%>
             </c:if>
+            <c:if test="${role == 'PHARMACIST'}">
+                <a class="nav-link" href="${pageContext.request.contextPath}/main?command=go_to_add_drug"><fmt:message key="navbar.cabinet"/><span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/main?command=go_to_manage_drug"><fmt:message key="navbar.cabinet"/><span class="sr-only">(current)</span></a>
+            </c:if>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <fmt:message key="navbar.changelang"/>
@@ -25,7 +29,9 @@
                 </div>
             </li>
             <c:if test="${role == 'CLIENT' || role == 'DOCTOR' || role == 'PHARMACIST' }">
-                <fmt:message key="navbar.sign.in.as"/> ${e:forHtml(user.nickName)}
+                <li class="nav-item">
+                    <a class="nav-link disabled"><fmt:message key="navbar.sign.in.as"/> ${e:forHtml(user.nickName)}</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/main?command=exit&page=${pagePass}"><fmt:message key="navbar.exit"/></a>
                 </li>
@@ -55,7 +61,7 @@
                             <button type="submit" class="btn btn-primary">Sign in</button>
                         </form>
                         <div class="dropdown-divider"></div>
-                        <form action="${pageContext.request.contextPath}/main" method="get">
+                        <form action="${pageContext.request.contextPath}/main" method="get" class="px-4 py-3">
                             <div class="form-group">
                                 <input type="hidden" name="command" value="registration">
                                 <label for="roleReg"><fmt:message key="startpage.label.register"/></label><br>

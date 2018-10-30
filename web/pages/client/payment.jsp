@@ -8,12 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <%@include file="jspf/import.jspf"%>
+    <%@include file="../jspf/import.jspf"%>
     <title>Title</title>
 </head>
 <body>
-<%@include file="jspf/header.jspf"%>
-<c:set var="pagePass" value="pages/payment.jsp"/>
+<%@include file="../jspf/header.jspf"%>
+<c:set var="pagePass" value="pages/client/payment.jsp"/>
 <div>
     <form action="${pageContext.request.contextPath}/main" method="post">
         <input type="hidden" name="command" value="do_payment">

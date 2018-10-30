@@ -39,6 +39,8 @@ public class UserDaoFactoryImpl implements UserDaoFactory {
                 return new DoctorDaoImpl();
             case PHARMACIST:
                 return new PharmacistDaoImpl();
+            case ADMIN:
+                return new AdminDaoImpl();
             default:
                return null;
         }

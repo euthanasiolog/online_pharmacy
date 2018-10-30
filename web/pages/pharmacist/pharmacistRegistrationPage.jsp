@@ -21,7 +21,7 @@
             <form action="${pageContext.request.contextPath}/main" method="post" id="registration_pharmacist">
                 <input type="hidden" name="role" value="pharmacist">
                 <%@include file="../jspf/registratinUserForm.jspf"%>
-                <button type="submit" class="btn btn-primary"><fmt:message key="registrationuserform.submit"/> </button>
+                <button type="submit" class="btn btn-primary"><fmt:message key="send.request"/> </button>
             </form>
         </div>
     </div>

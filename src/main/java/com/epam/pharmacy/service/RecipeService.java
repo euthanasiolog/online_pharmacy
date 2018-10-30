@@ -16,4 +16,8 @@ public interface RecipeService extends AbstractService{
 
     CommandResult requestToExtendRecipe (RequestContent requestContent) throws ApplicationException;
 
+    CommandResult startRecipeRequest (RequestContent requestContent);
+
+    CommandResult endRecipeRequest (RequestContent requestContent) throws ApplicationException;
+
 }

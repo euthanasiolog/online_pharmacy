@@ -43,6 +43,19 @@ public final class ProjectConstant {
     public static final String RECIPE = "recipe";
     public static final String RECIPES = "recipes";
     public static final String NO_SUCH_DRUG = "no_such_drug";
+    public static final String REQUEST_DRUG_ID = "requestDrugId";
+    public static final String REQUEST_RECIPE_TYPE = "requestRecipeType";
+    public static final String RECIPE_REQUEST = "recipeRequest";
+    public static final String CLINT_ID = "clientId";
+    public static final String DOCTORS = "doctors";
+    public static final String DOCTOR_QUERIES = "doctorsQueries";
+    public static final String PHARMACIST_QUERIES = "pharmacistQueries";
+    public static final String DATE_OF_BIRTH = "dateOfBirth";
+    public static final String NAME = "name";
+    public static final String INN = "inn";
+    public static final String COMPOSITE = "composite";
+    public static final String FORM = "form";
+
 
     private ProjectConstant(){
         throw new IllegalStateException("Utility class");

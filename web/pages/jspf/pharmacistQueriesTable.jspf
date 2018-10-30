@@ -1,0 +1,76 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
+<c:if test="${pharmacistsQueries != null}">
+    <c:set var="totalCountPharmacistQueries" value="${fn:length(pharmacistsQueries)}"/>
+    <c:set var="stepPharmacistQueries" value="${5}" scope="page"/>
+    <c:set var="startPharmacistQueries" value="${0}" scope="page"/>
+    <c:if test="${param.startDoctorQueries > 0}">
+        <c:set var="startPharmacistQueries" scope="page" value="${param.startPharmacistQueries}"/>
+    </c:if>
+    <table class="table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">N%</th>
+            <th scope="col"><fmt:message key="registrationuserform.input.nickname"/> </th>
+            <th scope="col"><fmt:message key="user.table.fullname"/> </th>
+            <th scope="col"><fmt:message key="registrationuserform.input.email"/> </th>
+            <th scope="col"><fmt:message key="registrationuserform.input.dateofbirth"/> </th>
+            <th scope="col"><fmt:message key="action"/></th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="pharmacist" items="${pharmacistsQueries}" varStatus="pharmacistCountQueries" begin="${startPharmacistQueries}" end="${startPharmacistQueries + stepPharmacistQueries - 1}">
+            <tr>
+                <th scope="row">${pharmacistCountQueries.index+1}</th>
+                <td>
+                        ${e:forHtml(pharmacist.nickname)}
+                </td>
+                <td>
+                    <strong>${e:forHtml(pharmacist.firstName)}<br> ${e:forHtml(pharmacist.lastName)}
+                        <c:if test="${pharmacist.patronymic != null}">${e:forHtml(pharmacist.patronymic)}</c:if></strong>
+                </td>
+                <td>
+                        ${e:forHtml(pharmacist.email)}
+                </td>
+                <td>
+                    <fmt:formatDate value="${pharmacist.dateOfBirth}" type="date"/>
+                </td>
+                <td>
+                    <form action="${pageContext.request.contextPath}/main" method="post">
+                        <input type="hidden" name="command" value="confirm_query">
+                        <input type="hidden" name="doctorId" value="${pharmacist.id}">
+                        <button type="submit" class="btn btn-primary"><fmt:message key="accept"/></button>
+                    </form>
+                    <form action="${pageContext.request.contextPath}/main" method="post">
+                        <input type="hidden" name="command" value="delete_user">
+                        <input type="hidden" name="doctorId" value="${pharmacist.id}">
+                        <button type="submit" class="btn btn-primary"><fmt:message key="deny"/></button>
+                    </form>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    <div>
+        <c:if test="${totalCountPharmacistQueries > stepPharmacistQueries}">
+            <c:forEach begin="0" step="${stepPharmacistQueries}" end="${totalCountPharmacistQueries - 1}" varStatus="page">
+                <c:choose>
+                    <c:when test="${startPharmacistQueries==(page.count*stepPharmacistQueries - stepPharmacistQueries)}">
+                        <a class="btn btn-dark"
+                           href="${pageContext.request.contextPath}/main?command=refresh&startPharmacistQueries=${page.count*stepPharmacistQueries - stepPharmacistQueries}&page=${pagePass}"
+                           role="button">
+                                ${page.count}</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="btn btn-primary"
+                           href="${pageContext.request.contextPath}/main?command=refresh&startPharmacistQueries=${page.count*stepPharmacistQueries - stepPharmacistQueries}&page=${pagePass}"
+                           role="button">
+                                ${page.count}</a>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </c:if>
+    </div>
+</c:if>

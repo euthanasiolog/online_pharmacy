@@ -1,0 +1,65 @@
+<c:if test="${doctors != null}">
+    <c:set var="totalCountDoctor" value="${fn:length(doctors)}"/>
+    <c:set var="stepDoctor" value="${5}" scope="page"/>
+    <c:set var="startDoctor" value="${0}" scope="page"/>
+    <c:if test="${param.startDoctor > 0}">
+        <c:set var="startDoctor" scope="page" value="${param.startDoctor}"/>
+    </c:if>
+    <table class="table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">N%</th>
+            <th scope="col"><fmt:message key="user.table.fullname"/> </th>
+            <th scope="col"><fmt:message key="doctor.registration.specialization"/> </th>
+            <th scope="col"><fmt:message key="doctor.registration.workplace"/> </th>
+            <c:if test="${role == 'CLIENT'}">
+                <th scope="col">
+                    <fmt:message key="check"/>
+                </th>
+            </c:if>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="doctor" items="${doctors}" varStatus="doctorCount" begin="${startDoctor}" end="${startDoctor + stepDoctor - 1}">
+            <tr>
+                <th scope="row">${doctorCount.index+1}</th>
+                <td>
+                    <strong>${e:forHtml(doctor.firstName)}<br> ${e:forHtml(doctor.lastName)}
+                        <c:if test="${doctor.patronymic != null}">${e:forHtml(doctor.patronymic)}</c:if></strong>
+                </td>
+                <td>
+                    ${e:forHtml(doctor.specialization)}
+                </td>
+                <td>
+                    ${e:forHtml(doctor.workplace)}
+                </td>
+                <c:if test="${role == 'CLIENT'}">
+                    <td>
+                        <input type="radio" name="doctorId" value="${doctor.id}"/>
+                    </td>
+                </c:if>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    <div>
+        <c:if test="${totalCountDoctor > stepDoctor}">
+            <c:forEach begin="0" step="${stepDoctor}" end="${totalCountDoctor - 1}" varStatus="page">
+                <c:choose>
+                    <c:when test="${startDoctor==(page.count*stepDoctor - stepDoctor)}">
+                        <a class="btn btn-dark"
+                           href="${pageContext.request.contextPath}/main?command=refresh&startDoctor=${page.count*stepDoctor - stepDoctor}&page=${pagePass}"
+                           role="button">
+                                ${page.count}</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="btn btn-primary"
+                           href="${pageContext.request.contextPath}/main?command=refresh&startDoctor=${page.count*stepDoctor - stepDoctor}&page=${pagePass}"
+                           role="button">
+                                ${page.count}</a>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </c:if>
+    </div>
+</c:if>

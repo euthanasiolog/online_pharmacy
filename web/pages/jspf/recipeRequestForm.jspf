@@ -1,0 +1,25 @@
+    <table class="table-info" id="recipe-request-table">
+        <thead>
+        <tr>
+            <th scope="col"><fmt:message key="drug.name"/> </th>
+            <th scope="col"><fmt:message key="drug.dose"/> </th>
+            <th scope="col"><fmt:message key="drug.form"/> </th>
+        </tr>
+        </thead>
+        <tbody id="recipe-request-form-body">
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <input type="hidden" name="command" value="start_recipe_request">
+    <input type="hidden" name="requestDrugId" id="request-drug-id" value="">
+    <input type="hidden" name="requestRecipeType" id="request-drug-recipe" value="">
+

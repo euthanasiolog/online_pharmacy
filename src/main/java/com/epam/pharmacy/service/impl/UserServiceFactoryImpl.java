@@ -18,6 +18,8 @@ public class UserServiceFactoryImpl implements UserServiceFactory {
                 return new DoctorServiceImpl();
             case PHARMACIST:
                 return new PharmacistServiceImpl();
+            case ADMIN:
+                return new AdminServiceImpl();
             default:
                 return null;
         }
