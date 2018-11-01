@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
             requestContent.getSession().invalidate();
         }
 
-        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.START_PAGE);
+        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.START_PAGE);
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 

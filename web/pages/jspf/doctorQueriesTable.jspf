@@ -9,7 +9,7 @@
     <c:if test="${param.startDoctorQueries > 0}">
         <c:set var="startDoctorQueries" scope="page" value="${param.startDoctorQueries}"/>
     </c:if>
-    <table class="table-bordered">
+    <table class="table-bordered table-dark" style="opacity: 0.8">
         <thead>
         <tr>
             <th scope="col">N%</th>

@@ -44,11 +44,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md">
+        <div class="col">
             <%@include file="../jspf/drugTable.jspf"%>
         </div>
-        <div class="col-md">
-
+        <div class="col">
         </div>
     </div>
 </div>

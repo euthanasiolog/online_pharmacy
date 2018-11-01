@@ -14,11 +14,6 @@
 
         </div>
         <div class="col-md-auto">
-            <form action="${pageContext.request.contextPath}/main" name="showalldrugs">
-                <input type="hidden" name="command" value="show_all_drugs">
-                <%--<input type="hidden" name="page" value="${pagePass}">--%>
-                <button type="submit" class="btn btn-primary"><fmt:message key="drug.showalldrugs"/></button>
-            </form>
             <%@include file="jspf/drugTable.jspf"%>
         </div>
     </div>

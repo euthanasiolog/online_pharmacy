@@ -15,7 +15,7 @@ public final class PagePath {
     public static final String REGISTRATION_SUCCESSFUL_PAGE = "pages/registrationSuccessfulPage.jsp";
     public static final String REGISTRATION_CONFIRM_PAGE = "pages/registrationConfirm.jsp";
     public static final String PRG_PAGE = "pages/prg.jsp";
-    public static final String PAYMENT = "pages/payment.jsp";
+    public static final String PAYMENT = "pages/client/payment.jsp";
     public static final String ADD_DRUG = "pages/pharmacist/drugAdd.jsp";
     public static final String RECIPE_REQUEST_CONFIRM = "pages/client/recipeRequestConfirm.jsp";
     public static final String ADMIN_CABINET = "pages/admin/adminCabinet.jsp";

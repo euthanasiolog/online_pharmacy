@@ -1,12 +1,12 @@
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #202326">
     <a class="navbar-brand" href="${pageContext.request.contextPath}/main?command=start"><fmt:message key="navbar.title"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <c:if test="${role == 'CLIENT' || role == 'DOCTOR' || role == 'PHARMACIST' }">
+            <c:if test="${role == 'CLIENT' || role == 'DOCTOR' || role == 'PHARMACIST' || role == 'ADMIN' }">
                 <li class="nav-item active">
                     <a class="nav-link" href="${pageContext.request.contextPath}/main?command=go_to_cabinet"><fmt:message key="navbar.cabinet"/><span class="sr-only">(current)</span></a>
                 </li>
@@ -15,7 +15,7 @@
                 <%--</li>--%>
             </c:if>
             <c:if test="${role == 'PHARMACIST'}">
-                <a class="nav-link" href="${pageContext.request.contextPath}/main?command=go_to_add_drug"><fmt:message key="navbar.cabinet"/><span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/main?command=go_to_add_drug"><fmt:message key="drug.add"/><span class="sr-only">(current)</span></a>
                 <a class="nav-link" href="${pageContext.request.contextPath}/main?command=go_to_manage_drug"><fmt:message key="navbar.cabinet"/><span class="sr-only">(current)</span></a>
             </c:if>
             <li class="nav-item dropdown">
@@ -28,7 +28,7 @@
                     <a class="dropdown-item" href="${pageContext.request.contextPath}/main?command=change_locale&locale=ru&page=${pagePass}">RU</a>
                 </div>
             </li>
-            <c:if test="${role == 'CLIENT' || role == 'DOCTOR' || role == 'PHARMACIST' }">
+            <c:if test="${role == 'CLIENT' || role == 'DOCTOR' || role == 'PHARMACIST' || role == 'ADMIN'}">
                 <li class="nav-item">
                     <a class="nav-link disabled"><fmt:message key="navbar.sign.in.as"/> ${e:forHtml(user.nickName)}</a>
                 </li>
@@ -37,46 +37,68 @@
                 </li>
             </c:if>
             <c:if test="${role == 'GUEST'}">
-                <li class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Sign in
+                <li class="nav-item">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        <fmt:message key="sign.in"/>
                     </button>
-                    <div class="dropdown-menu">
-                        <form action="${pageContext.request.contextPath}/main" method="post" class="px-4 py-3">
-                            <div class="form-group">
-                                <input type="hidden" name="command" value="sign_in">
-                                <label for="login"><fmt:message key="startpage.label.login"/> </label><br>
-                                <input type="text" id="login" name="login"><br>
-                                <small class="small"><c:if test="${requestScope.loginError != null && requestScope.loginError != ''}">
-                                    <c:out value="${requestScope.loginError}"/>
-                                </c:if></small><br>
+
+                    <!-- Modal -->
+                    <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content" style="background-color: #17a2b8; opacity: 0.8;  margin-left: auto; margin-right: auto;">
+                                <div class="modal-header" style="background-color: #202326">
+                                    <h5 class="modal-title" id="exampleModalLabel"><fmt:message key="sign.in"/> </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="${pageContext.request.contextPath}/main" method="post" class="px-4 py-3">
+                                        <div class="form-group">
+                                            <input type="hidden" name="command" value="sign_in">
+                                            <label for="login"><fmt:message key="startpage.label.login"/> </label><br>
+                                            <input class="form-control" type="text" id="login" name="login"><br>
+                                            <small class="small"><c:if test="${requestScope.loginError != null && requestScope.loginError != ''}">
+                                                <c:out value="${requestScope.loginError}"/>
+                                            </c:if></small><br>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password"><fmt:message key="startpage.label.password"/> </label><br>
+                                            <input class="form-control" type="password" id="password" name="password"><br>
+                                            <small class="small"><c:if test="${requestScope.passwordError != null && requestScope.passwordError != ''}">
+                                                <c:out value="${requestScope.passwordError}"/>
+                                            </c:if></small>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"><fmt:message key="sign.in"/> </button>
+                                    </form>
+                                    <div class="dropdown-divider"></div>
+                                    <form action="${pageContext.request.contextPath}/main" method="get" class="px-4 py-3">
+                                        <div class="form-group">
+                                            <input type="hidden" name="command" value="registration">
+                                            <label for="roleReg"><fmt:message key="startpage.label.register"/></label><br>
+                                            <select class="form-select-button" id="roleReg" name="role">
+                                                <option name="client" value="client"><fmt:message key="startpage.label.role.client"/> </option>
+                                                <option name="doctor" value="doctor"><fmt:message key="startpage.label.role.doctor" /></option>
+                                                <option name="pharmacist" value="pharmacist"><fmt:message key="startpage.label.role.pharmacist"/> </option>
+                                            </select><br>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"><fmt:message key="startpage.label.register"/> </button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="cancel"/> </button>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="password"><fmt:message key="startpage.label.password"/> </label><br>
-                                <input type="password" id="password" name="password"><br>
-                                <small class="small"><c:if test="${requestScope.passwordError != null && requestScope.passwordError != ''}">
-                                    <c:out value="${requestScope.passwordError}"/>
-                                </c:if></small>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Sign in</button>
-                        </form>
-                        <div class="dropdown-divider"></div>
-                        <form action="${pageContext.request.contextPath}/main" method="get" class="px-4 py-3">
-                            <div class="form-group">
-                                <input type="hidden" name="command" value="registration">
-                                <label for="roleReg"><fmt:message key="startpage.label.register"/></label><br>
-                                <select id="roleReg" name="role">
-                                    <option name="client" value="client"><fmt:message key="startpage.label.role.client"/> </option>
-                                    <option name="doctor" value="doctor"><fmt:message key="startpage.label.role.doctor" /></option>
-                                    <option name="pharmacist" value="pharmacist"><fmt:message key="startpage.label.role.pharmacist"/> </option>
-                                </select><br>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Registration</button>
-                        </form>
+                        </div>
                     </div>
                 </li>
             </c:if>
         </ul>
+        <form class="form-inline" action="${pageContext.request.contextPath}/main" name="showalldrugs">
+            <input type="hidden" name="command" value="show_all_drugs">
+            <input type="hidden" name="page" value="${pagePass}">
+            <button type="submit" class="btn btn-primary"><fmt:message key="drug.showalldrugs"/></button>
+        </form>
         <form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/main" method="get">
             <input type="hidden" name="command" value="search_drug">
             <input type="hidden" name="page" value="${pagePass}">

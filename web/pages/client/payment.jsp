@@ -19,7 +19,7 @@
         <div class="col-md">
             <form action="${pageContext.request.contextPath}/main" method="post">
                 <input type="hidden" name="command" value="do_payment">
-                <table class="table-sm table-hover">
+                <table class="table-dark table-hover" cellspacing="3">
                     <c:set var="totalCountOrder" value="${fn:length(cart.orders)}"/>
                     <c:set var="stepOrder" value="${20}" scope="page"/>
                     <c:set var="startOrder" value="${0}" scope="page"/>
@@ -53,19 +53,19 @@
                             <td><fmt:formatNumber value="${e:forHtml(order.drug.dose)}" type="number"/> </td>
                             <td>
                                 <c:choose>
-                                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('pill')}" >
+                                    <c:when test="${e:forHtml(order.drug.drugForm).equalsIgnoreCase('pill')}" >
                                         <fmt:message key="drug.form.pill"/>
                                     </c:when>
-                                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('solution')}" >
+                                    <c:when test="${e:forHtml(order.drug.drugForm).equalsIgnoreCase('solution')}" >
                                         <fmt:message key="drug.form.solution"/>
                                     </c:when>
-                                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('powder')}" >
+                                    <c:when test="${e:forHtml(order.drug.drugForm).equalsIgnoreCase('powder')}" >
                                         <fmt:message key="drug.form.powder"/>
                                     </c:when>
-                                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('cream')}" >
+                                    <c:when test="${e:forHtml(order.drug.drugForm).equalsIgnoreCase('cream')}" >
                                         <fmt:message key="drug.form.cream"/>
                                     </c:when>
-                                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('gel')}" >
+                                    <c:when test="${e:forHtml(order.drug.drugForm).equalsIgnoreCase('gel')}" >
                                         <fmt:message key="drug.form.gel"/>
                                     </c:when>
                                 </c:choose>

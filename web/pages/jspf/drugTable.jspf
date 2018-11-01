@@ -1,13 +1,4 @@
 <div>
-    <%--<script>--%>
-        <%--function addVarsToRecipeRequest() {--%>
-            <%--document.getElementById('request-drug-id').value = ${drug.id};--%>
-            <%--document.getElementById('request-drug-recipe').value = ${drug.recipe};--%>
-            <%--$('#recipe-request-form-body td').eq(0).html('${drug.name}');--%>
-            <%--$('#recipe-request-form-body td').eq(1).html('${drug.form}');--%>
-            <%--$('#recipe-request-form-body td').eq(2).html('${drug.dose}');--%>
-        <%--}--%>
-    <%--</script>--%>
 <c:if test="${drugs != null}">
     <c:set var="totalCount" value="${fn:length(drugs)}"/>
     <c:set var="step" value="${5}" scope="page"/>
@@ -15,7 +6,7 @@
     <c:if test="${param.start > 0}">
         <c:set var="start" scope="page" value="${param.start}"/>
     </c:if>
-    <table class="table-bordered">
+    <table class="table-bordered table-dark" width="100%" cellspacing="3">
         <thead>
         <tr>
             <th scope="col">N%</th>
@@ -93,16 +84,16 @@
             </c:choose>
         <td>${e:forHtml(drug.orderTime)} <fmt:message key="drug.availability.order.time"/> </td>
         <td>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#annotationModal">
                 <fmt:message key="read"/>
             </button>
 
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+            <div class="modal fade" id="annotationModal" tabindex="-1" role="dialog" aria-labelledby="annotationModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel2">Modal title</h5>
+                            <h5 class="modal-title" id="annotationModalLabel"><fmt:message key="drug.annotation"/> </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -127,7 +118,7 @@
                             <input type="hidden" name="page" value="${pagePass}">
                             <input type="hidden" name="id" value="${drug.id}">
                             <input type="number" class="quantity-num" value="1" name="number" min="1" max="${drug.number}">
-                            <button type="submit" class="button"><fmt:message key="drug.addtocart"/></button>
+                            <button type="submit" class="btn btn-secondary"><fmt:message key="drug.addtocart"/></button>
                         </form>
                     </c:if>
                 </td>
@@ -139,16 +130,16 @@
         <c:if test="${role == 'CLIENT' && drug.recipeType != 'WITHOUT'}">
             <td>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#recipeRequest">
                     <fmt:message key="send.recipe.request"/>
                 </button>
 
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="recipeRequest" tabindex="-1" role="dialog" aria-labelledby="recipeRequestlLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 class="modal-title" id="recipeRequestLabel"><fmt:message key="send.recipe.request"/></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>

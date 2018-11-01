@@ -5,7 +5,7 @@
 <div>
     <script>
         $( function() {
-            var dateFormat = "dd-mm-yy",
+            var dateFormat = "yy-mm-dd",
                 from = $( "#from" )
                     .datepicker({
                         defaultDate: "+1w",
@@ -31,7 +31,6 @@
                 } catch( error ) {
                     date = null;
                 }
-
                 return date;
             }
         } );
@@ -79,13 +78,39 @@
                         </c:choose>
                     </td>
                     <td>
-                        <form action="${pageContext.request.contextPath}/main" method="post">
-                            <input type="hidden" name="page" value="${pagePass}">
-                            From <input type="text" id="from" name="from"> To <input type="text" name="to" id="to">
-                            <input type="hidden" name="command" value="confirm_recipe">
-                            <input type="hidden" name="id" value="${recipeRequest.id}">
-                            <button type="submit" class="btn btn-primary"><fmt:message key="accept"/></button>
-                        </form>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            <fmt:message key="send.recipe.request"/>
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="${pageContext.request.contextPath}/main" method="post">
+                                            <input type="hidden" name="page" value="${pagePass}">
+                                            <label for="from"><fmt:message key="recipe.from"/> </label>
+                                            <input type="text" id="from" name="from" autocomplete="off" required>
+                                            <label for="to"><fmt:message key="recipe.to"/> </label>
+                                            <input type="text" name="to" id="to" autocomplete="off" required>
+                                            <input type="hidden" name="command" value="confirm_recipe">
+                                            <input type="hidden" name="id" value="${recipeRequest.id}">
+                                            <button type="submit" class="btn btn-primary"><fmt:message key="accept"/></button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="cancel"/> </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <form action="${pageContext.request.contextPath}/main" method="post">
                             <input type="hidden" name="page" value="${pagePass}">
                             <input type="hidden" name="command" value="delete_recipe">

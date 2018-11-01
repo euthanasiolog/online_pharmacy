@@ -1,5 +1,5 @@
 <div>
-<table class="table-sm table-hover">
+<table class="table-dark table-hover" style="opacity: 0.8">
     <c:set var="totalCountOrder" value="${fn:length(cart.orders)}"/>
     <c:set var="stepOrder" value="${20}" scope="page"/>
     <c:set var="startOrder" value="${0}" scope="page"/>
@@ -10,15 +10,9 @@
     <tr>
         <th scope="col">N%</th>
         <th scope="col"><fmt:message key="drug.name"/> </th>
-        <th scope="col"><fmt:message key="drug.inn"/> </th>
         <th scope="col"><fmt:message key="drug.dose"/> </th>
         <th scope="col"><fmt:message key="drug.form"/> </th>
-        <th scope="col"><fmt:message key="drug.composite"/> </th>
         <th scope="col"><fmt:message key="drug.number"/> </th>
-        <th scope="col"><fmt:message key="drug.price"/> </th>
-        <th scope="col"><fmt:message key="drug.recipe"/> </th>
-        <th scope="col"><fmt:message key="drug.availability"/> </th>
-        <th scope="col"><fmt:message key="drug.ordertime"/> </th>
         <th scope="col"><fmt:message key="cart.table.number"/> </th>
         <th scope="col"><fmt:message key="cart.table.payment"/> </th>
     </tr>
@@ -27,56 +21,29 @@
         <tr>
             <th scope="row">${orderCount.index+1}</th>
             <td>${e:forHtml(order.drug.name)}</td>
-            <td>${e:forHtml(order.drug.inn)}</td>
             <td><fmt:formatNumber value="${e:forHtml(order.drug.dose)}" type="number"/> </td>
             <td>
                 <c:choose>
-                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('pill')}" >
+                    <c:when test="${e:forHtml(order.drug.drugForm).equalsIgnoreCase('pill')}" >
                         <fmt:message key="drug.form.pill"/>
                     </c:when>
-                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('solution')}" >
+                    <c:when test="${e:forHtml(order.drug.drugForm).equalsIgnoreCase('solution')}" >
                         <fmt:message key="drug.form.solution"/>
                     </c:when>
-                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('powder')}" >
+                    <c:when test="${e:forHtml(order.drug.drugForm).equalsIgnoreCase('powder')}" >
                         <fmt:message key="drug.form.powder"/>
                     </c:when>
-                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('cream')}" >
+                    <c:when test="${e:forHtml(order.drug.drugForm).equalsIgnoreCase('cream')}" >
                         <fmt:message key="drug.form.cream"/>
                     </c:when>
-                    <c:when test="${e:forHtml(order.drug.form).equalsIgnoreCase('gel')}" >
+                    <c:when test="${e:forHtml(order.drug.drugForm).equalsIgnoreCase('gel')}" >
                         <fmt:message key="drug.form.gel"/>
                     </c:when>
                 </c:choose>
             </td>
-            <td>${e:forHtml(order.drug.composite)}</td>
-            <td>${e:forHtml(order.drug.number)}</td>
-            <td><fmt:formatNumber value="${e:forHtml(order.drug.price)}" type="currency"/></td>
             <td>
-                <c:choose>
-                    <c:when test="${e:forHtml(order.drug.recipeType).equalsIgnoreCase('without')}" >
-                        <fmt:message key="drug.recipe.without"/>
-                    </c:when>
-                    <c:when test="${e:forHtml(order.drug.recipeType).equalsIgnoreCase('regular')}" >
-                        <fmt:message key="drug.recipe.regular"/>
-                    </c:when>
-                    <c:when test="$${e:forHtml(order.drug.recipeType).equalsIgnoreCase('narcotic')}" >
-                        <strong><fmt:message key="drug.recipe.narcotic"/></strong>
-                    </c:when>
-                </c:choose>
-                    ${e:forHtml(order.drug.recipeType)}</td>
-            <td>
-                <c:choose>
-                <c:when test="${e:forHtml(order.drug.availability).equalsIgnoreCase('stock')}" >
-                    <fmt:message key="drug.availability.stock"/>
-                </c:when>
-                <c:when test="${e:forHtml(order.drug.availability).equalsIgnoreCase('order')}" >
-                    <fmt:message key="drug.availability.order"/>
-                </c:when>
-                <c:when test="${e:forHtml(order.drug.availability).equalsIgnoreCase('not')}" >
-                    <fmt:message key="drug.availability.not"/>
-                </c:when>
-                </c:choose>
-            <td>${e:forHtml(order.drug.orderTime)} <fmt:message key="drug.availability.order.time"/> </td>
+                    ${e:forHtml(order.drug.number)}
+            </td>
             <td>
                 <fmt:formatNumber type="number" value="${order.number}"/>
             </td>
@@ -87,7 +54,7 @@
                             <input name="order" value="${order.id}" type="hidden">
                             <input name="drug" type="hidden" value="${order.drug.id}">
                             <input type="hidden" name="command" value="delete_from_cart">
-                            <button type="submit" class="button"><fmt:message key="cart.table.delete"/> </button>
+                            <button type="submit" class="btn btn-primary"><fmt:message key="cart.table.delete"/> </button>
                         </form>
                     </c:when>
                     <c:otherwise>
@@ -96,7 +63,7 @@
                             <input name="drug" type="hidden" value="${order.drug.id}">
                             <input type="hidden" name="command" value="payment">
                             <c:set var="thisOrder" value="${order}" scope="request"/>
-                            <button type="submit" class="button"><fmt:message key="cart.table.do.payment"/> </button>
+                            <button type="submit" class="btn btn-primary"><fmt:message key="cart.table.do.payment"/> </button>
                         </form>
                     </c:otherwise>
                 </c:choose>

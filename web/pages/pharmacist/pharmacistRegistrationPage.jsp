@@ -16,12 +16,10 @@
 <%@include file="../jspf/header.jspf"%>
 <div class="container">
     <div class="row">
-        <div class="col-md-auto">
-            <h3><label for="registration_pharmacist"><fmt:message key="registration.pharmacist.title"/></label></h3>
-            <form action="${pageContext.request.contextPath}/main" method="post" id="registration_pharmacist">
-                <input type="hidden" name="role" value="pharmacist">
+        <div class="col-md">
+            <c:set var="type" value="pharmacist" scope="page"/>
+            <form action="${pageContext.request.contextPath}/main" class="form-group" method="post">
                 <%@include file="../jspf/registratinUserForm.jspf"%>
-                <button type="submit" class="btn btn-primary"><fmt:message key="send.request"/> </button>
             </form>
         </div>
     </div>

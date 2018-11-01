@@ -35,8 +35,6 @@ public class PharmacistServiceImpl extends UserServiceImpl implements Pharmacist
                         log.error("error create pharmacist", e);
                         throw new ApplicationException("error create pharmacist", e);
                     }
-                    insertUserSessionAttributes(requestContent, user, Role.PHARMACIST);
-
                     requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.REGISTRATION_SUCCESSFUL_PAGE);
                     return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
                 }

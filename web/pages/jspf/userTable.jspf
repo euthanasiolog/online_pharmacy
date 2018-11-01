@@ -1,12 +1,34 @@
-    <table class="table-bordered">
+    <table class="table-bordered table-dark" width="100%" cellspacing="10">
         <thead>
         <tr>
             <th>
-                <strong><fmt:message key="user.table.fullname"/></strong>
+                <strong><fmt:message key="registrationuserform.input.firstname"/></strong>
             </th>
             <th>
-                <strong>${e:forHtml(user.firstName)} ${e:forHtml(user.lastName)}
-                    <c:if test="${user.patronymic != null}">${e:forHtml(user.patronymic)}</c:if></strong>
+                <strong>${e:forHtml(user.firstName)}
+                </strong>
+            </th>
+        </tr>
+        <c:if test="${user.patronymic != null}">
+            <tr>
+                <th>
+                   <fmt:message key="registrationuserform.input.patronimyc"/>
+                </th>
+                <th>
+                   ${e:forHtml(user.patronymic)}
+                </th>
+            </tr>
+        </c:if>
+        <tr>
+            <th>
+                <strong>
+                    <fmt:message key="registrationuserform.input.lastname"/>
+                </strong>
+            </th>
+            <th>
+                <strong>
+                    ${e:forHtml(user.lastName)}
+                </strong>
             </th>
         </tr>
         </thead>

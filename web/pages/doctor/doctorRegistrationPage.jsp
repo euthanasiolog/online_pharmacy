@@ -15,26 +15,14 @@
 <body>
 <%@include file="../jspf/header.jspf"%>
 <div class="container">
-    <label for="registration_doctor"><fmt:message key="registration.doctor.title"/> </label>
-    <form action="${pageContext.request.contextPath}/main" name="registration_doctor" id="registration_doctor" method="post">
-        <input type="hidden" name="role" value="doctor">
-        <%@include file="../jspf/registratinUserForm.jspf"%>
-        <div class="form-group">
-            <label for="workplace"><fmt:message key="doctor.registration.workplace"/></label>
-            <input class="form-control" type="text" name="workplace" id="workplace">
-            <small class="small"><c:if test="${requestScope.workplaceError != null && requestScope.workplaceError != ''}">
-                <c:out value="${requestScope.workplaceError}"/>
-            </c:if></small>
+    <div class="row">
+        <div class="col-md">
+            <c:set var="type" value="doctor" scope="page"/>
+            <form action="${pageContext.request.contextPath}/main" class="form-group" method="post">
+                <%@include file="../jspf/registratinUserForm.jspf"%>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="specialization"><fmt:message key="doctor.registration.specialization"/></label>
-            <input class="form-control" type="text" name="specialization" id="specialization">
-            <small class="small"><c:if test="${requestScope.specializationError != null && requestScope.specializationError != ''}">
-                <c:out value="${requestScope.specializationError}"/>
-            </c:if></small>
-        </div>
-        <button type="submit" class="btn btn-primary"><fmt:message key="send.request"/></button>
-    </form>
+    </div>
 </div>
 </body>
 </html>

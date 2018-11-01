@@ -14,6 +14,10 @@
 <script src="${pageContext.request.contextPath}/assets/js/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/datepicker-be.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/datepicker-ru.js"></script>
-
+<style>
+    body {
+        background: #17a2b8 url("${pageContext.request.contextPath}/assets/mental-health-23.jpg");
+    }
+</style>
 
 <%--<script src="${pageContext.request.contextPath}/assets/js/tooltip.js"></script>--%>

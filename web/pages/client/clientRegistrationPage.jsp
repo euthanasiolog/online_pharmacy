@@ -17,11 +17,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md">
-            <label for="registrationclient"><fmt:message key="clientregistrationpage.registrationform.label"/> </label>
-            <form action="${pageContext.request.contextPath}/main" name="registration_client" accept-charset="UTF-8" id="registrationclient" method="post">
-                <input type="hidden" name="role" value="client">
+            <c:set var="type" value="client" scope="page"/>
+            <form action="${pageContext.request.contextPath}/main" class="form-group" method="post">
                 <%@include file="../jspf/registratinUserForm.jspf"%>
-                <button type="submit" class="btn btn-primary"><fmt:message key="registrationuserform.submit"/></button>
             </form>
         </div>
     </div>

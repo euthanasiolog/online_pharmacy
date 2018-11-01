@@ -91,7 +91,7 @@ public class DrugDaoImpl implements DrugDao {
             drug.setComposite((String) resultSet.get(ProjectConstant.COMPOSITE));
         }
         try {
-            drug.setDrugForm(DrugForm.valueOf((String) resultSet.get(ProjectConstant.FORM)));
+            drug.setDrugForm(DrugForm.valueOf(((String) resultSet.get(ProjectConstant.FORM)).toUpperCase()));
         } catch (EnumConstantNotPresentException e) {
             log.error("No enum for drug form " + resultSet.get(ProjectConstant.FORM), e);
         }
@@ -106,12 +106,12 @@ public class DrugDaoImpl implements DrugDao {
         try {
             drug.setRecipeType(RecipeType.valueOf(((String) resultSet.get(ProjectConstant.RECIPE)).toUpperCase()));
         } catch (EnumConstantNotPresentException e) {
-            log.error("No enum for drug form " + resultSet.get(ProjectConstant.RECIPE), e);
+            log.error("No enum for recipe type " + resultSet.get(ProjectConstant.RECIPE), e);
         }
         try {
             drug.setAvailability(Availability.valueOf(((String) resultSet.get(ProjectConstant.AVAILABILITY)).toUpperCase()));
         } catch (EnumConstantNotPresentException e) {
-            log.error("No enum for drug form " + resultSet.get(ProjectConstant.AVAILABILITY), e);
+            log.error("No enum for availability " + resultSet.get(ProjectConstant.AVAILABILITY), e);
         }
         drug.setAmount((int) resultSet.get(ProjectConstant.AMOUNT));
         if (resultSet.get(ProjectConstant.ORDER_TIME) != null) {

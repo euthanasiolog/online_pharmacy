@@ -13,7 +13,7 @@
     <title><fmt:message key="admin.cabinet.title"/> </title>
 </head>
 <body>
-<%@include file="../jspf/adminHeader.jspf"%>
+<%@include file="../jspf/header.jspf"%>
 <div class="container">
     <div class="row">
         <div class="col-md">

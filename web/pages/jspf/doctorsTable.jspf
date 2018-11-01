@@ -5,7 +5,7 @@
     <c:if test="${param.startDoctor > 0}">
         <c:set var="startDoctor" scope="page" value="${param.startDoctor}"/>
     </c:if>
-    <table class="table-bordered">
+    <table class="table-bordered table-dark" style="opacity: 0.8">
         <thead>
         <tr>
             <th scope="col">N%</th>
