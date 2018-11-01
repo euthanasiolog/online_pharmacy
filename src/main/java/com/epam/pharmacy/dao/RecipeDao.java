@@ -3,6 +3,7 @@ package com.epam.pharmacy.dao;
 import com.epam.pharmacy.model.recipe.Recipe;
 import com.epam.pharmacy.model.recipe.RecipeType;
 
+import java.util.Date;
 import java.util.List;
 
 public interface RecipeDao extends AbstractDao<Recipe>{
@@ -17,5 +18,6 @@ public interface RecipeDao extends AbstractDao<Recipe>{
 
     boolean resetDateInRecipe (int id) throws DaoException;
 
-    public boolean create (int clientId, int drugId, int doctorId, RecipeType recipeType) throws DaoException;
+    boolean create (int clientId, int drugId, int doctorId, RecipeType recipeType) throws DaoException;
+
 }

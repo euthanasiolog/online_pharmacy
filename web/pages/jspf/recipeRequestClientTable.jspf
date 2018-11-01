@@ -47,6 +47,7 @@
                             ${e:forHtml(recipe.doctor.lastname)}
                     </td>
                     <form action="${pageContext.request.contextPath}/main" method="post">
+                        <input type="hidden" name="page" value="${pagePass}">
                         <input type="hidden" name="command" value="delete_recipe">
                         <input type="hidden" name="id" value="${recipe.id}">
                         <button type="submit" class="btn btn-primary"><fmt:message key="cancel"/></button>

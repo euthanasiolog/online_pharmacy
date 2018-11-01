@@ -1,13 +1,13 @@
 <div>
-    <script>
-        function addVarsToRecipeRequest() {
-            document.getElementById('request-drug-id').value = ${drug.id};
-            document.getElementById('request-drug-recipe').value = ${drug.recipe};
-            $('#recipe-request-form-body td').eq(0).html('${drug.name}');
-            $('#recipe-request-form-body td').eq(1).html('${drug.form}');
-            $('#recipe-request-form-body td').eq(2).html('${drug.dose}');
-        }
-    </script>
+    <%--<script>--%>
+        <%--function addVarsToRecipeRequest() {--%>
+            <%--document.getElementById('request-drug-id').value = ${drug.id};--%>
+            <%--document.getElementById('request-drug-recipe').value = ${drug.recipe};--%>
+            <%--$('#recipe-request-form-body td').eq(0).html('${drug.name}');--%>
+            <%--$('#recipe-request-form-body td').eq(1).html('${drug.form}');--%>
+            <%--$('#recipe-request-form-body td').eq(2).html('${drug.dose}');--%>
+        <%--}--%>
+    <%--</script>--%>
 <c:if test="${drugs != null}">
     <c:set var="totalCount" value="${fn:length(drugs)}"/>
     <c:set var="step" value="${5}" scope="page"/>
@@ -29,6 +29,7 @@
             <th scope="col"><fmt:message key="drug.recipe"/> </th>
             <th scope="col"><fmt:message key="drug.availability"/> </th>
             <th scope="col"><fmt:message key="drug.ordertime"/> </th>
+            <th scope="col"><fmt:message key="drug.annotation"/> </th>
             <c:if test="${role == 'CLIENT'}">
                 <th scope="col">
 
@@ -45,19 +46,19 @@
         <td><fmt:formatNumber value="${e:forHtml(drug.dose)}" type="number"/> </td>
         <td>
                 <c:choose>
-                    <c:when test="${e:forHtml(drug.form).equalsIgnoreCase('pill')}" >
+                    <c:when test="${e:forHtml(drug.drugForm).equalsIgnoreCase('pill')}" >
                         <fmt:message key="drug.form.pill"/>
                     </c:when>
-                    <c:when test="${e:forHtml(drug.form).equalsIgnoreCase('solution')}" >
+                    <c:when test="${e:forHtml(drug.drugForm).equalsIgnoreCase('solution')}" >
                         <fmt:message key="drug.form.solution"/>
                     </c:when>
-                    <c:when test="${e:forHtml(drug.form).equalsIgnoreCase('powder')}" >
+                    <c:when test="${e:forHtml(drug.drugForm).equalsIgnoreCase('powder')}" >
                         <fmt:message key="drug.form.powder"/>
                     </c:when>
-                    <c:when test="${e:forHtml(drug.form).equalsIgnoreCase('cream')}" >
+                    <c:when test="${e:forHtml(drug.drugForm).equalsIgnoreCase('cream')}" >
                         <fmt:message key="drug.form.cream"/>
                     </c:when>
-                    <c:when test="${e:forHtml(drug.form).equalsIgnoreCase('gel')}" >
+                    <c:when test="${e:forHtml(drug.drugForm).equalsIgnoreCase('gel')}" >
                         <fmt:message key="drug.form.gel"/>
                     </c:when>
                 </c:choose>
@@ -91,6 +92,32 @@
                 </c:when>
             </c:choose>
         <td>${e:forHtml(drug.orderTime)} <fmt:message key="drug.availability.order.time"/> </td>
+        <td>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <fmt:message key="read"/>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel2">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h3>${e:forHtml(drug.name)} <fmt:message key="drug.annotation"/> </h3><br>
+                            ${e:forHtml(drug.annotation)}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="cancel"/> </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
         <c:choose>
             <c:when test="${role == 'CLIENT'}">
                 <td scope="col">
@@ -110,33 +137,71 @@
             </c:when>
         </c:choose>
         <c:if test="${role == 'CLIENT' && drug.recipeType != 'WITHOUT'}">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" onclick="addVarsToRecipeRequest()" data-target="#exampleModal">
-            Do payment
-        </button>
+            <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    <fmt:message key="send.recipe.request"/>
+                </button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form action="${pageContext.request.contextPath}/main" method="post" id="recipe-request-form">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="${pageContext.request.contextPath}/main" method="post" id="recipe-request-form">
+                                    <input type="hidden" name="command" value="start_recipe_request">
+                                    <input type="hidden" name="page" value="${pagePass}">
+                                    <input type="hidden" name="requestDrugId" value="${drug.id}">
+                                    <input type="hidden" name="requestRecipeType" id="request-drug-recipe" value="${drug.recipeType}">
+                                    <table class="table-info" id="recipe-request-table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col"><fmt:message key="drug.name"/> </th>
+                                            <th scope="col"><fmt:message key="drug.dose"/> </th>
+                                            <th scope="col"><fmt:message key="drug.form"/> </th>
+                                            <th scope="col"><fmt:message key="drug.recipe"/> </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="recipe-request-form-body">
+                                        <tr>
+                                            <td>
+                                                ${e:forHtml(drug.name)}
+                                            </td>
+                                            <td>
+                                                <fmt:formatNumber value="${drug.dose}"/>
+                                            </td>
+                                            <td>
+                                                ${e:forHtml(drug.drugForm)}
+                                            </td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${e:forHtml(drug.recipeType).equalsIgnoreCase('regular')}" >
+                                                        <fmt:message key="drug.recipe.regular"/>
+                                                    </c:when>
+                                                    <c:when test="$${e:forHtml(drug.recipeType).equalsIgnoreCase('narcotic')}" >
+                                                        <strong><fmt:message key="drug.recipe.narcotic"/></strong>
+                                                    </c:when>
+                                                </c:choose>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <button type="submit" class="btn btn-primary"><fmt:message key="send.recipe.request"/></button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="cancel"/> </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                            <%@include file="recipeRequestForm.jspf"%>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary"><fmt:message key="send.recipe.request"/></button>
-                    </div>
-                    </form>
                 </div>
-            </div>
-        </div>
+            </td>
         </c:if>
     </tr>
 </c:forEach>

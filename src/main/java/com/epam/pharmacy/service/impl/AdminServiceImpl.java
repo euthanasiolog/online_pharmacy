@@ -27,8 +27,8 @@ public class AdminServiceImpl extends UserServiceImpl implements AdminService {
         DoctorDao doctorDao = new DoctorDaoImpl();
         PharmacistDao pharmacistDao = new PharmacistDaoImpl();
 
-        List<Doctor> doctorsQueries = new ArrayList<>();
-        List<User> pharmacistQueries = new ArrayList<>();
+        List<Doctor> doctorsQueries;
+        List<User> pharmacistQueries;
         try {
             doctorsQueries = doctorDao.getDoctorsQueries();
             pharmacistQueries = pharmacistDao.getPharmacistQueries();
@@ -40,10 +40,9 @@ public class AdminServiceImpl extends UserServiceImpl implements AdminService {
         requestContent.insertSessionAttribute(ProjectConstant.DOCTOR_QUERIES, doctorsQueries);
         requestContent.insertSessionAttribute(ProjectConstant.PHARMACIST_QUERIES, pharmacistQueries);
 
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.ADMIN_CABINET);
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.ADMIN_CABINET);
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
-
 
     @Override
     public CommandResult confirmUserRequest(RequestContent requestContent) throws ApplicationException {
@@ -56,9 +55,7 @@ public class AdminServiceImpl extends UserServiceImpl implements AdminService {
             log.error("error confirm user request", e);
             throw new ApplicationException("error confirm user request", e);
         }
-
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
-        return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
+        return endSignIn((User) requestContent.getSessionAttribute(ProjectConstant.USER), requestContent, Role.ADMIN);
     }
 
     @Override
@@ -72,8 +69,6 @@ public class AdminServiceImpl extends UserServiceImpl implements AdminService {
             log.error("error delete user", e);
             throw new ApplicationException("error delete user", e);
         }
-
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
-        return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
+        return endSignIn((User) requestContent.getSessionAttribute(ProjectConstant.USER), requestContent, Role.ADMIN);
     }
 }

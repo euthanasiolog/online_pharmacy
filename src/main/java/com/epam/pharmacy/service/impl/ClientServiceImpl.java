@@ -45,7 +45,7 @@ public class ClientServiceImpl extends UserServiceImpl implements ClientService 
                     }
                     insertUserSessionAttributes(requestContent, client, Role.CLIENT);
                     requestContent.insertSessionAttribute(ProjectConstant.CART, new Cart(client.getId()));
-                    requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.REGISTRATION_CONFIRM_PAGE);
+                    requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.REGISTRATION_CONFIRM_PAGE);
                     return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
                 }
         }
@@ -86,7 +86,7 @@ public class ClientServiceImpl extends UserServiceImpl implements ClientService 
             throw new ApplicationException("error get client session attributes", e);
         }
 
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.CABINET_CLIENT_PAGE);
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.CABINET_CLIENT_PAGE);
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 

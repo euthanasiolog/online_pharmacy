@@ -1,5 +1,8 @@
 package com.epam.pharmacy.dao.connection;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -36,12 +39,24 @@ class DbConnectionManager {
             try {
                 preparedStatement = connection.prepareStatement("SELECT u.id FROM USER u WHERE u.nickname=? AND u.`password`=SHA2(?,512)");
                 preparedStatement.setString(1, ADMIN_NICK_NAME);
-                preparedStatement.setString(2, ADMIN_PASSWORD);
+                String adminPass = null;
+                try {
+                    MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+                    StringBuilder stringBuilder = new StringBuilder();
+                    byte[] passBytes = messageDigest.digest(ADMIN_PASSWORD.getBytes(StandardCharsets.UTF_8));
+                    for (int i = 0; i<passBytes.length;i++){
+                        stringBuilder.append(passBytes[i]);
+                    }
+                    adminPass = stringBuilder.toString();
+                    preparedStatement.setString(2, adminPass);
+                } catch (NoSuchAlgorithmException e){
+                    log.error("Can't hash password", e);
+                }
                 resultSet = preparedStatement.executeQuery();
                 if (!resultSet.next()) {
                     preparedStatement1 = connection.prepareStatement("INSERT INTO USER (nickname, firstname, lastname, PASSWORD, email, birthdate, TYPE ) VALUES (?, 'admin', 'admin', SHA2(?, 512), ? , '2000-11-11', 'admin')");
                     preparedStatement1.setString(1, ADMIN_NICK_NAME);
-                    preparedStatement1.setString(2, ADMIN_PASSWORD);
+                    preparedStatement1.setString(2, adminPass);
                     preparedStatement1.setString(3, ADMIN_EMAIL);
                     preparedStatement1.executeUpdate();
                 }
@@ -74,11 +89,6 @@ class DbConnectionManager {
             throw new RuntimeException("DB driver not found!");
         }
         try {
-//            Properties properties = new Properties();
-//            properties.setProperty(USER, user);
-//            properties.setProperty(PASSWORD, password);
-//            properties.setProperty("useUnicode","true");
-//            properties.setProperty("characterEncoding","UTF-8");
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             throw new RuntimeException("Failed get connection to DB!");

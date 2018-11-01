@@ -39,11 +39,13 @@
                 </td>
                 <td>
                     <form action="${pageContext.request.contextPath}/main" method="post">
+                        <input type="hidden" name="page" value="${pagePass}">
                         <input type="hidden" name="command" value="confirm_query">
-                        <input type="hidden" name="doctorId" value="${pharmacist.id}">
+                        <input type="hidden" name="id" value="${pharmacist.id}">
                         <button type="submit" class="btn btn-primary"><fmt:message key="accept"/></button>
                     </form>
                     <form action="${pageContext.request.contextPath}/main" method="post">
+                        <input type="hidden" name="page" value="${pagePass}">
                         <input type="hidden" name="command" value="delete_user">
                         <input type="hidden" name="doctorId" value="${pharmacist.id}">
                         <button type="submit" class="btn btn-primary"><fmt:message key="deny"/></button>

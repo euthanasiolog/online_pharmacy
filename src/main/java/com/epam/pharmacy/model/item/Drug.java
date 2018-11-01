@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -37,15 +37,11 @@ public class Drug extends Entity {
     @NotBlank
     private DrugForm drugForm;
 
-    @NotBlank(message = "{notblank}")
-    @Size(min = 3, max = 30, message = "{User.nickname.size}")
-    @Pattern(regexp = "[a-zA-Z]+", message = "{User.nickname.pattern}")
-    private String form;
-
     private float dose;
 
     @PositiveOrZero
     private int number;
+
 
     private Date shelfLife;
 
@@ -64,7 +60,4 @@ public class Drug extends Entity {
 
     private String annotation;
 
-    public void setDrugForm(String drugForm) {
-        this.drugForm = DrugForm.valueOf(drugForm.toUpperCase());
-    }
 }

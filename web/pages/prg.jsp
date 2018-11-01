@@ -12,6 +12,6 @@
     <title>Title</title>
 </head>
 <body>
-<c:redirect url="${requestScope.redirectPath}"/>
+<c:redirect url="${sessionScope.redirectPath}"/>
 </body>
 </html>

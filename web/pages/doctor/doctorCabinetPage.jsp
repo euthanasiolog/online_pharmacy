@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Title</title>
+    <title><fmt:message key="doctor.cabinet.title"/> </title>
     <%@include file="../jspf/import.jspf"%>
     <c:set var="pagePass" value="pages/doctor/doctorCabinetPage.jsp" scope="request"/>
 </head>

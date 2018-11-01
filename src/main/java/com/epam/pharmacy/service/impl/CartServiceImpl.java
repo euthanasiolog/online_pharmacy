@@ -74,7 +74,7 @@ public class CartServiceImpl implements CartService {
         }
 
         requestContent.insertSessionAttribute(ProjectConstant.CART, cart);
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 
@@ -84,7 +84,7 @@ public class CartServiceImpl implements CartService {
 
         Order order = new Order();
         if (requestContent.getRequestParameter(ProjectConstant.NUMBER) != null && !requestContent.getRequestParameter(ProjectConstant.NUMBER).equals("")) {
-            int drugId = Integer.parseInt(requestContent.getRequestParameter(ProjectConstant.DRUG));
+            int drugId = Integer.parseInt(requestContent.getRequestParameter(ProjectConstant.ID));
             int number = Integer.parseInt(requestContent.getRequestParameter(ProjectConstant.NUMBER));
 
             DrugDao drugDao = new DrugDaoImpl();
@@ -103,8 +103,7 @@ public class CartServiceImpl implements CartService {
                 requestContent.insertSessionAttribute(ProjectConstant.CART, cart);
             }
         }
-
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 
@@ -124,7 +123,6 @@ public class CartServiceImpl implements CartService {
                 log.error("error put order in db", e);
                 throw new ApplicationException("error put order in db", e);
             }
-
         return new CommandResult(ResponseType.FORWARD, requestContent.getRequestParameter(ProjectConstant.PAGE));
     }
 
@@ -132,6 +130,7 @@ public class CartServiceImpl implements CartService {
     public CommandResult payment(RequestContent requestContent) throws ApplicationException {
         Cart cart = (Cart) requestContent.getSessionAttribute(ProjectConstant.CART);
         int id = cart.getClientId();
+
         CartDao cartDao = new CartDaoImpl();
         try {
             cartDao.create(cart, null);
@@ -140,9 +139,8 @@ public class CartServiceImpl implements CartService {
             log.error("error update cart", e);
             throw new ApplicationException("error update cart", e);
         }
-
         requestContent.insertSessionAttribute(ProjectConstant.CART, cart);
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
         return new CommandResult(ResponseType.FORWARD, PagePath.PAYMENT);
     }
 
@@ -150,7 +148,6 @@ public class CartServiceImpl implements CartService {
     public CommandResult doPayment(RequestContent requestContent) throws ApplicationException {
         Cart cart = (Cart) requestContent.getSessionAttribute(ProjectConstant.CART);
         String[] idStr = requestContent.getRequestParameters(ProjectConstant.ID);
-
 
         if (idStr.length != 0) {
             int[] id = Stream.of(idStr).mapToInt(Integer::parseInt).toArray();
@@ -165,9 +162,8 @@ public class CartServiceImpl implements CartService {
                 throw new ApplicationException("error do payment", e);
             }
         }
-
         requestContent.insertSessionAttribute(ProjectConstant.CART, cart);
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.PAYMENT);
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.PAYMENT);
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 

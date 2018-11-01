@@ -21,6 +21,7 @@ import lombok.extern.log4j.Log4j2;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -51,8 +52,7 @@ public class DoctorServiceImpl extends UserServiceImpl implements DoctorService 
                         log.error("error create doctor", e);
                         throw new ApplicationException("error create doctor", e);
                     }
-                    insertUserSessionAttributes(requestContent, doctor, Role.CLIENT);
-                    requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.REGISTRATION_SUCCESSFUL_PAGE);
+                    requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.REGISTRATION_SUCCESSFUL_PAGE);
                     return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
                 }
         }
@@ -87,47 +87,40 @@ public class DoctorServiceImpl extends UserServiceImpl implements DoctorService 
         }
 
         requestContent.insertSessionAttribute(ProjectConstant.RECIPE_REQUEST, recipeRequests);
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.START_DOCTOR_PAGE);
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.CABINET_DOCTOR_PAGE);
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 
     @Override
     public CommandResult confirmRecipe(RequestContent requestContent) throws ApplicationException {
         int id = Integer.parseInt(requestContent.getRequestParameter(ProjectConstant.ID));
-        Date fromDate = null;
-        Date toDate = null;
+
         if (requestContent.getRequestParameter(ProjectConstant.FROM) != null && requestContent.getRequestParameter(ProjectConstant.TO) != null) {
-            DateFormat dateFormat = DateFormat.getDateInstance();
+            DateFormat dateFormat = new SimpleDateFormat(ProjectConstant.DATE_FORMAT);
             try {
-                fromDate = dateFormat.parse(requestContent.getRequestParameter(ProjectConstant.FROM));
-                toDate = dateFormat.parse(requestContent.getRequestParameter(ProjectConstant.TO));
+                Date fromDate = dateFormat.parse(requestContent.getRequestParameter(ProjectConstant.FROM));
+                Date toDate = dateFormat.parse(requestContent.getRequestParameter(ProjectConstant.TO));
+                RecipeDao recipeDao = new RecipeDaoImpl();
+
+                if (fromDate != null && toDate != null) {
+                    try {
+                        Recipe recipe = recipeDao.findById(id);
+                        if (recipe != null) {
+                            recipe.setFrom(fromDate);
+                            recipe.setTo(toDate);
+                            recipeDao.update(recipe);
+                        }
+                    } catch (DaoException e) {
+                        log.error("error confirm recipe", e);
+                        throw new ApplicationException("error confirm recipe", e);
+                    }
+                }
             } catch (ParseException e) {
                 log.error("error parse Date when confirm recipe", e);
                 throw new ApplicationException("error parse Date when confirm recipe", e);
             }
         }
-
-        RecipeDao recipeDao = new RecipeDaoImpl();
-        if (fromDate != null && toDate != null) {
-            Recipe recipe;
-            try {
-                recipe = recipeDao.findById(id);
-            } catch (DaoException e) {
-                log.error("error find recipe", e);
-                throw new ApplicationException("error find recipe", e);
-            }
-            if (recipe != null) {
-                recipe.setFrom(fromDate);
-                recipe.setTo(toDate);
-                try {
-                    recipeDao.update(recipe);
-                } catch (DaoException e) {
-                    log.error("error update recipe", e);
-                    throw new ApplicationException("error update recipe", e);
-                }
-            }
-        }
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 }

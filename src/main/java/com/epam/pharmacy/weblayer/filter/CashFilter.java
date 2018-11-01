@@ -5,7 +5,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//@WebFilter("*.jsp")
+@WebFilter("*.jsp")
 public class CashFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {

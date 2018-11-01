@@ -3,9 +3,6 @@ package com.epam.pharmacy.util.constant;
 public final class PagePath {
     public static final String INDEX = "index.jsp";
     public static final String START_PAGE = "pages/startPage.jsp";
-    public static final String START_DOCTOR_PAGE = "pages/client/clientStartPage.jsp";
-    public static final String START_CLIENT_PAGE = "pages/client/clientStartPage.jsp";
-    public static final String START_PHARMACIST_PAGE = "pages/pharmacist/pharmacistStartPage.jsp";
     public static final String REGISTRATION_CLIENT_PAGE = "pages/client/clientRegistrationPage.jsp";
     public static final String REGISTRATION_DOCTOR_PAGE = "pages/doctor/doctorRegistrationPage.jsp";
     public static final String REGISTRATION_PHARMACIST_PAGE = "pages/pharmacist/pharmacistRegistrationPage.jsp";

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//@WebFilter( urlPatterns = { "/jsp/*" },
-//        initParams = { @WebInitParam(name = ProjectConstant.INDEX, value = PagePath.INDEX) })
+@WebFilter( urlPatterns = { "/jsp/*" },
+        initParams = { @WebInitParam(name = ProjectConstant.INDEX, value = PagePath.INDEX) })
 public class PageSecurityFilter implements Filter {
     private String indexPath;
 

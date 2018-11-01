@@ -1,0 +1,19 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="prop.pagecontent"/>
+<jsp:useBean id="now" class="java.util.Date"/>
+<link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/css/jquery-ui.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/assets/js/jquery-3.3.1.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/popper.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/datepicker-be.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/datepicker-ru.js"></script>
+
+
+<%--<script src="${pageContext.request.contextPath}/assets/js/tooltip.js"></script>--%>

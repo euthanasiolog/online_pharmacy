@@ -37,7 +37,7 @@ public class PharmacistServiceImpl extends UserServiceImpl implements Pharmacist
                     }
                     insertUserSessionAttributes(requestContent, user, Role.PHARMACIST);
 
-                    requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.REGISTRATION_SUCCESSFUL_PAGE);
+                    requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.REGISTRATION_SUCCESSFUL_PAGE);
                     return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
                 }
         }
@@ -61,7 +61,7 @@ public class PharmacistServiceImpl extends UserServiceImpl implements Pharmacist
 
     @Override
     public CommandResult endSignIn(User user, RequestContent requestContent, Role role) {
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.START_PHARMACIST_PAGE);
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.CABINET_PHARMACIST_PAGE);
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 }

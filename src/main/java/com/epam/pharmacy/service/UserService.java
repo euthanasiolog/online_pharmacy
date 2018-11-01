@@ -111,9 +111,19 @@ public interface UserService extends AbstractService {
             user.setLastName(lastName);
         }
 
-        if (requestContent.getRequestParameter("patronymic") != null) {
-            String patronymic = requestContent.getRequestParameter("patronymic");
-            user.setPatronymic(patronymic);
+        if (requestContent.getRequestParameter(ProjectConstant.PATRONYMIC) != null) {
+            String patronymic = requestContent.getRequestParameter(ProjectConstant.PATRONYMIC);
+            Pattern p = Pattern.compile("[a-zA-Zа-яА-ЯёЁўЎіІ']+");
+            Matcher matcher = p.matcher(requestContent.getRequestParameter(ProjectConstant.PATRONYMIC));
+            if (matcher.matches()) {
+                if (patronymic.length()<200&&patronymic.length()>1) {
+                    user.setPatronymic(patronymic);
+                } else {
+                    requestContent.insertAttribute("patronymicError", resourceBundle.getString("User.patronymic.size"));
+                }
+            } else {
+                requestContent.insertAttribute("patronymicError", resourceBundle.getString("User.patronymic.pattern"));
+            }
         }
 
         if (requestContent.getRequestParameter(ProjectConstant.DATE_OF_BIRTH) != null) {
@@ -128,7 +138,7 @@ public interface UserService extends AbstractService {
                     throw new ApplicationException("error parse Date", e);
                 }
             } else {
-                requestContent.insertAttribute("dateOfBirthPatterError", resourceBundle.getString("date.wrong.pattern"));
+                requestContent.insertAttribute("dateOfBirthError", resourceBundle.getString("date.wrong.pattern"));
                 return false;
             }
         }

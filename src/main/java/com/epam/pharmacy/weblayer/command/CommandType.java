@@ -25,8 +25,11 @@ public enum CommandType {
     DO_PAYMENT(new CartServiceImpl()::doPayment),
     ADD_DRUG_PAGE(requestContent -> new CommandResult(ResponseType.FORWARD, PagePath.ADD_DRUG)),
     ADD_DRUG(new DrugServiceImpl()::create),
+    START_RECIPE_REQUEST(new RecipeServiceImpl()::startRecipeRequest),
+    END_RECIPE_REQUEST(new RecipeServiceImpl()::endRecipeRequest),
     REQUEST_TO_EXTEND_RECIPE(new RecipeServiceImpl()::requestToExtendRecipe),
     DELETE_RECIPE(new RecipeServiceImpl()::delete),
+    CONFIRM_RECIPE(new DoctorServiceImpl()::confirmRecipe),
     CONFIRM_USER_QUERY(new AdminServiceImpl()::confirmUserRequest),
     DELETE_USER(new AdminServiceImpl()::deleteUser),
     SHOW_ALL_DRUGS(new DrugServiceImpl()::showAllDrugs);

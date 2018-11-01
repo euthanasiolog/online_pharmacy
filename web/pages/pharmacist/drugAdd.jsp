@@ -18,6 +18,7 @@
     <div class="col-md-auto">
         <div class="row">
             <form action="${pageContext.request.contextPath}/main" method="post">
+                <input type="hidden" name="page" value="${pagePass}">
                 <input type="hidden" name="command" value="add_drug">
                 <%@include file="../jspf/drugForm.jspf"%>
                 <button type="submit" class="btn btn-primary"><fmt:message key="drug.add"/> </button>

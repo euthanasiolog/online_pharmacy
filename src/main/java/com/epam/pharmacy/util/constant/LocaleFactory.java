@@ -1,7 +1,10 @@
 package com.epam.pharmacy.util.constant;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.util.Locale;
 
+@Log4j2
 public class LocaleFactory {
 
     public static Locale getLocale (String locale) {
@@ -23,6 +26,7 @@ public class LocaleFactory {
                 return new Locale(ProjectConstant.RU_LOCALE_LANG, ProjectConstant.RU_LOCALE_COUNTRY);
             default:
                 return Locale.getDefault();
+
         }
     }
 }

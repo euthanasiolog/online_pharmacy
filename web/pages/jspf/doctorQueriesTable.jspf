@@ -27,7 +27,7 @@
             <tr>
                 <th scope="row">${doctorCountQueries.index+1}</th>
                 <td>
-                    ${e:forHtml(doctor.nickname)}
+                    ${e:forHtml(doctor.nickName)}
                 </td>
                 <td>
                     <strong>${e:forHtml(doctor.firstName)}<br> ${e:forHtml(doctor.lastName)}
@@ -47,11 +47,13 @@
                 </td>
                 <td>
                     <form action="${pageContext.request.contextPath}/main" method="post">
-                        <input type="hidden" name="command" value="confirm_query">
-                        <input type="hidden" name="doctorId" value="${doctor.id}">
+                        <input type="hidden" name="page" value="${pagePass}">
+                        <input type="hidden" name="command" value="confirm_user_query">
+                        <input type="hidden" name="id" value="${doctor.id}">
                         <button type="submit" class="btn btn-primary"><fmt:message key="accept"/></button>
                     </form>
                     <form action="${pageContext.request.contextPath}/main" method="post">
+                        <input type="hidden" name="page" value="${pagePass}">
                         <input type="hidden" name="command" value="delete_user">
                         <input type="hidden" name="doctorId" value="${doctor.id}">
                         <button type="submit" class="btn btn-primary"><fmt:message key="deny"/></button>

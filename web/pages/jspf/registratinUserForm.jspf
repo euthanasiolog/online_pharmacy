@@ -43,8 +43,18 @@
     </c:if></small>
 </div>
 <div class="form-group">
+    <script>
+        $(function(){
+            $( "#dateOfBirth" ).datepicker({
+                dateFormat: "yy-mm-dd",
+                changeMonth: true,
+                changeYear: true,
+                maxDate: "0"
+            });
+        });
+    </script>
     <label for="dateOfBirth"><fmt:message key="registrationuserform.input.dateofbirth"/> </label>
-    <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth">
+    <input type="text" name="dateOfBirth" id="dateOfBirth">
     <small class="small"><c:if test="${requestScope.dateOfBirthError != null && requestScope.dateOfBirthError != ''}">
         <c:out value="${requestScope.dateOfBirthError}"/>
     </c:if></small>

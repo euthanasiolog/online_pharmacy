@@ -11,7 +11,7 @@ final class SQLQueries {
     static final String CREATE_USER = "INSERT INTO USER " +
             "(nickname, PASSWORD, email, firstname, lastname, patronymic, TYPE, birthdate) " +
             "VALUE (?, sha2(?, 512), ?, ?, ?, ?, ?, ?)";
-    static final String CREATE_USER_QUERY = "INSERT INTO USER r (r.nickname, r.PASSWORD, r.email, r.firstname, r.lastname, r.patronymic, r.TYPE, r.birthdate, r.archive)\n" +
+    static final String CREATE_USER_QUERY = "INSERT INTO USER (nickname, PASSWORD, email, firstname, lastname, patronymic, type, birthdate, archive)\n" +
             "VALUE (?, SHA2(?, 512), ?, ?, ?, ?, ?, ?, 2)";
     static final String GET_LAST_ID = "SELECT LAST_INSERT_ID()";
     static final String CREATE_CLIENT = "INSERT INTO CLIENT (id, discount)\n" +

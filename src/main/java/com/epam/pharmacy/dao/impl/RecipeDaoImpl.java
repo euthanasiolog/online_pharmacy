@@ -24,7 +24,7 @@ public class RecipeDaoImpl implements RecipeDao {
 
     @Override
     public boolean create (int clientId, int drugId, int doctorId, RecipeType recipeType) throws DaoException {
-        List<Object> params = putParameters(clientId, drugId, doctorId, null, recipeType, null, null, null);
+        List<Object> params = putParameters(clientId, drugId, doctorId, null, recipeType, null, null);
 
         return executeQueryUpdate(SQLQueries.CREATE_RECIPE, params);
      }

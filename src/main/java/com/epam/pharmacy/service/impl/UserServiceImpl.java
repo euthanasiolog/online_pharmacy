@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
             String login = requestContent.getRequestParameter(ProjectConstant.LOGIN);
 
             UserDaoFactory userDaoFactory = UserDaoFactoryImpl.getInstance();
-            Role role = null;
+            Role role;
             try {
                 role = userDaoFactory.checkUserRole(login, password);
             } catch (DaoException e) {
@@ -74,13 +74,13 @@ public class UserServiceImpl implements UserService {
             Role role = Role.valueOf(requestContent.getRequestParameter(ProjectConstant.ROLE).toUpperCase());
             switch (role){
                 case CLIENT:
-                    requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.REGISTRATION_CLIENT_PAGE);
+                    requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.REGISTRATION_CLIENT_PAGE);
                     return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
                 case DOCTOR:
-                    requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.REGISTRATION_DOCTOR_PAGE);
+                    requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.REGISTRATION_DOCTOR_PAGE);
                     return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
                 case PHARMACIST:
-                    requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.REGISTRATION_PHARMACIST_PAGE);
+                    requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.REGISTRATION_PHARMACIST_PAGE);
                     return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
                 default:
                     return new CommandResult(ResponseType.FORWARD, PagePath.START_PAGE);
@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
             requestContent.getSession().invalidate();
         }
 
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.START_PAGE);
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.START_PAGE);
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 

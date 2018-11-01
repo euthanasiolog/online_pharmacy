@@ -10,7 +10,7 @@
 <head>
     <%@include file="../jspf/import.jspf"%>
     <c:set var="pagePass" value="pages/client/clientCabinetPage.jsp" scope="request"/>
-    <title><fmt:message key="registration.client.title"/></title>
+    <title><fmt:message key="client.cabinet.title"/></title>
 </head>
 <body>
 <%@include file="../jspf/header.jspf"%>

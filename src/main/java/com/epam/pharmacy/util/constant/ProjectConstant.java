@@ -55,7 +55,17 @@ public final class ProjectConstant {
     public static final String INN = "inn";
     public static final String COMPOSITE = "composite";
     public static final String FORM = "form";
-
+    public static final String PATRONYMIC = "patronymic";
+    public static final String DOSE = "dose";
+    public static final String SHELFLIFE = "shelfLife";
+    public static final String PRICE = "price";
+    public static final String RECIPE_TYPE = "recipeType";
+    public static final String AVAILABILITY = "availability";
+    public static final String AMOUNT = "amount";
+    public static final String ORDER_TIME = "orderTime";
+    public static final String ANNOTATION = "annotation";
+    public static final String ARCHIVE = "archive";
+    public static final String DATE_FORMAT = "dd-MM-yyyy";
 
     private ProjectConstant(){
         throw new IllegalStateException("Utility class");

@@ -40,7 +40,7 @@ public class RecipeServiceImpl implements RecipeService {
             throw new ApplicationException("error create recipe", e);
         }
 
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 
@@ -74,7 +74,7 @@ public class RecipeServiceImpl implements RecipeService {
             throw new ApplicationException("error update recipe", e);
         }
 
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 
@@ -92,7 +92,7 @@ public class RecipeServiceImpl implements RecipeService {
             throw new ApplicationException("error delete message", e);
         }
 
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 
@@ -108,7 +108,7 @@ public class RecipeServiceImpl implements RecipeService {
             throw new ApplicationException("error use recipe", e);
         }
 
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 
@@ -124,7 +124,7 @@ public class RecipeServiceImpl implements RecipeService {
             throw new ApplicationException("error request to extend recipe", e);
         }
 
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, requestContent.getRequestParameter(ProjectConstant.PAGE));
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 
@@ -137,7 +137,7 @@ public class RecipeServiceImpl implements RecipeService {
         request.setDrugId(drugId);
         request.setRecipeType(recipeType);
 
-        requestContent.insertAttribute(ProjectConstant.RECIPE_REQUEST, request);
+        requestContent.insertSessionAttribute(ProjectConstant.RECIPE_REQUEST, request);
         return new CommandResult(ResponseType.FORWARD, PagePath.RECIPE_REQUEST_CONFIRM);
     }
 
@@ -158,7 +158,7 @@ public class RecipeServiceImpl implements RecipeService {
             throw new ApplicationException("error create recipe request", e);
         }
         requestContent.insertSessionAttribute(ProjectConstant.RECIPES, recipes);
-        requestContent.insertAttribute(ProjectConstant.REDIRECT_PATH, PagePath.CABINET_CLIENT_PAGE);
+        requestContent.insertSessionAttribute(ProjectConstant.REDIRECT_PATH, PagePath.CABINET_CLIENT_PAGE);
         return new CommandResult(ResponseType.FORWARD, PagePath.PRG_PAGE);
     }
 
