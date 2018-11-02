@@ -18,10 +18,10 @@
     <div class="row">
         <div class="col-lg">
             <form action="${pageContext.request.contextPath}/main" method="post">
-                <input type="hidden" name="command" value="confirm_recipe_request">
-                <input type="hidden" name="drug_id" value="${requestScope.recipeRequest.drugId}">
-                <input type="hidden" name="requestRecipeType" value="${requestScope.recipeRequest.recipeType}">
-                <input type="hidden" name="clientId" value="${sessionScope.user.id}">
+                <input type="hidden" name="command" value="end_recipe_request">
+                <input type="hidden" name="drug_id" value="${recipeRequests.drugId}">
+                <input type="hidden" name="requestRecipeType" value="${recipeRequests.recipeType}">
+                <input type="hidden" name="clientId" value="${user.id}">
                 <%@include file="../jspf/doctorsTable.jspf"%>
                 <button type="submit" class="btn btn-primary"><fmt:message key="send.recipe.request"/></button>
             </form>

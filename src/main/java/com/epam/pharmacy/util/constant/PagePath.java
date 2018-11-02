@@ -20,6 +20,7 @@ public final class PagePath {
     public static final String RECIPE_REQUEST_CONFIRM = "pages/client/recipeRequestConfirm.jsp";
     public static final String ADMIN_CABINET = "pages/admin/adminCabinet.jsp";
     public static final String MANAGE_DRUG = "pages/pharmacist/manageDrug.jsp";
+    public static final String RECIPES = "pages/client/recipes.jsp";
 
     private PagePath(){
         throw new IllegalStateException("Utility class");

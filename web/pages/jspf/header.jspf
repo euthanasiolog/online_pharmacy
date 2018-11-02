@@ -10,9 +10,11 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="${pageContext.request.contextPath}/main?command=go_to_cabinet"><fmt:message key="navbar.cabinet"/><span class="sr-only">(current)</span></a>
                 </li>
-                <%--<li class="nav-item">--%>
-                    <%--<a class="nav-link" href="#"><fmt:message key="navbar.profile"/></a>--%>
-                <%--</li>--%>
+            </c:if>
+            <c:if test="${role == 'CLIENT'}">
+                <li class="nav-item active">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/main?command=go_to_recipes"><fmt:message key="client.recipes.page"/><span class="sr-only">(current)</span></a>
+                </li>
             </c:if>
             <c:if test="${role == 'PHARMACIST'}">
                 <a class="nav-link" href="${pageContext.request.contextPath}/main?command=go_to_add_drug"><fmt:message key="drug.add"/><span class="sr-only">(current)</span></a>
@@ -76,7 +78,7 @@
                                         <div class="form-group">
                                             <input type="hidden" name="command" value="registration">
                                             <label for="roleReg"><fmt:message key="startpage.label.register"/></label><br>
-                                            <select class="form-select-button" id="roleReg" name="role">
+                                            <select class="custom-select" id="roleReg" name="role">
                                                 <option name="client" value="client"><fmt:message key="startpage.label.role.client"/> </option>
                                                 <option name="doctor" value="doctor"><fmt:message key="startpage.label.role.doctor" /></option>
                                                 <option name="pharmacist" value="pharmacist"><fmt:message key="startpage.label.role.pharmacist"/> </option>
@@ -94,7 +96,7 @@
                 </li>
             </c:if>
         </ul>
-        <form class="form-inline" action="${pageContext.request.contextPath}/main" name="showalldrugs">
+        <form class="form-inline my-2 my-lg-2" style="margin-right: 10px" action="${pageContext.request.contextPath}/main" name="showalldrugs">
             <input type="hidden" name="command" value="show_all_drugs">
             <input type="hidden" name="page" value="${pagePass}">
             <button type="submit" class="btn btn-primary"><fmt:message key="drug.showalldrugs"/></button>

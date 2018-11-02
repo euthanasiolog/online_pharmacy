@@ -19,6 +19,7 @@ public enum CommandType {
     SEARCH_DRUG(new DrugServiceImpl()::searchDrug),
     GO_TO_START(requestContent -> new CommandResult(ResponseType.FORWARD, PagePath.START_PAGE)),
     GO_TO_CABINET(new UserServiceImpl()::goToCabinet),
+    GO_TO_RECIPES(requestContent -> new CommandResult(ResponseType.FORWARD, PagePath.RECIPES)),
     GO_TO_ADD_DRUG(requestContent -> new CommandResult(ResponseType.FORWARD, PagePath.ADD_DRUG)),
     GO_TO_MANAGE_DRUG(requestContent -> new CommandResult(ResponseType.FORWARD, PagePath.MANAGE_DRUG)),
     EXIT(new UserServiceImpl()::exit),

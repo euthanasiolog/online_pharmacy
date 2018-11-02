@@ -22,6 +22,8 @@ public class AdminDaoImpl implements AdminDao {
         return null;
     }
 
+
+
     @Override
     public boolean confirmUserRegistrationQuery(int userId) throws DaoException {
         List<Object> params = putParameters(userId);

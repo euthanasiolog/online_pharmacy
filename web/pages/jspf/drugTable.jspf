@@ -117,7 +117,7 @@
                             <input type="hidden" name="command" value="put_drug_in_cart">
                             <input type="hidden" name="page" value="${pagePass}">
                             <input type="hidden" name="id" value="${drug.id}">
-                            <input type="number" class="quantity-num" value="1" name="number" min="1" max="${drug.number}">
+                            <input type="text" class="form-control bfh-number" value="1" name="number" min="1" max="${drug.number}">
                             <button type="submit" class="btn btn-secondary"><fmt:message key="drug.addtocart"/></button>
                         </form>
                     </c:if>

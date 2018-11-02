@@ -37,6 +37,7 @@ public final class ProjectConstant {
     public static final String DRUG_ID = "drug_id";
     public static final String TYPE = "type";
     public static final String FROM = "from";
+    public static final String DRUG_FORM = "drugForm";
     public static final String TO = "to";
     public static final String SERIALNUMBER = "serialnumber";
     public static final String USED = "used";
@@ -45,7 +46,7 @@ public final class ProjectConstant {
     public static final String NO_SUCH_DRUG = "no_such_drug";
     public static final String REQUEST_DRUG_ID = "requestDrugId";
     public static final String REQUEST_RECIPE_TYPE = "requestRecipeType";
-    public static final String RECIPE_REQUEST = "recipeRequest";
+    public static final String RECIPE_REQUEST = "recipeRequests";
     public static final String CLINT_ID = "clientId";
     public static final String DOCTORS = "doctors";
     public static final String DOCTOR_QUERIES = "doctorsQueries";

@@ -6,6 +6,7 @@
 <fmt:setBundle basename="prop.pagecontent"/>
 <jsp:useBean id="now" class="java.util.Date"/>
 <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/css/bootstrap-formhelpers.min.css">
 <link href="${pageContext.request.contextPath}/assets/css/jquery-ui.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/assets/js/jquery-3.3.1.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/popper.js"></script>
@@ -14,9 +15,10 @@
 <script src="${pageContext.request.contextPath}/assets/js/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/datepicker-be.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/datepicker-ru.js"></script>
+
 <style>
     body {
-        background: #17a2b8 url("${pageContext.request.contextPath}/assets/mental-health-23.jpg");
+        background: #17a2b8 url("${pageContext.request.contextPath}/assets/img/mental-health-23.jpg");
     }
 </style>
 

@@ -1,5 +1,5 @@
 <div>
-    <table class="table-sm table-hover">
+    <table class="table-dark table-hover">
         <c:set var="totalCountRecipe" value="${fn:length(recipes)}"/>
         <c:set var="stepRecipe" value="${20}" scope="page"/>
         <c:set var="startRecipe" value="${0}" scope="page"/>
@@ -19,27 +19,27 @@
         </tr>
         </thead>
         <c:forEach  var="recipe" items="${recipes}" varStatus="recipeCount" begin="${startRecipe}" end="${startRecipe + stepRecipe - 1}">
-            <c:if test="${recipe.used == 1 || recipe.to < now }">
+            <c:if test="${recipe.used}">
                 <tr>
                     <th scope="row">${recipeCount.index+1}</th>
                     <td>${e:forHtml(recipe.drug.name)}</td>
-                    <td>${e:forHtml(recipe.drug.form)}</td>
+                    <td>${e:forHtml(recipe.drug.drugForm)}</td>
                     <td><fmt:formatNumber value="${e:forHtml(recipe.drug.dose)}" type="number"/> </td>
                     <td>
                         <c:choose>
-                            <c:when test="${e:forHtml(recipe.drug.form).equalsIgnoreCase('pill')}" >
+                            <c:when test="${e:forHtml(recipe.drug.drugForm).equalsIgnoreCase('pill')}" >
                                 <fmt:message key="drug.form.pill"/>
                             </c:when>
-                            <c:when test="${e:forHtml(recipe.drug.form).equalsIgnoreCase('solution')}" >
+                            <c:when test="${e:forHtml(recipe.drug.drugForm).equalsIgnoreCase('solution')}" >
                                 <fmt:message key="drug.form.solution"/>
                             </c:when>
-                            <c:when test="${e:forHtml(recipe.drug.form).equalsIgnoreCase('powder')}" >
+                            <c:when test="${e:forHtml(recipe.drug.drugForm).equalsIgnoreCase('powder')}" >
                                 <fmt:message key="drug.form.powder"/>
                             </c:when>
-                            <c:when test="${e:forHtml(recipe.drug.form).equalsIgnoreCase('cream')}" >
+                            <c:when test="${e:forHtml(recipe.drug.drugForm).equalsIgnoreCase('cream')}" >
                                 <fmt:message key="drug.form.cream"/>
                             </c:when>
-                            <c:when test="${e:forHtml(recipe.drug.form).equalsIgnoreCase('gel')}" >
+                            <c:when test="${e:forHtml(recipe.drug.drugForm).equalsIgnoreCase('gel')}" >
                                 <fmt:message key="drug.form.gel"/>
                             </c:when>
                         </c:choose>
@@ -51,7 +51,7 @@
                         <fmt:formatDate type="date" value="${recipe.to}"/>
                     </td>
                     <td>
-                            ${e:forHtml(recipe.doctor.lastname)}
+                            ${e:forHtml(recipe.doctor.lastName)}
                     </td>
                     <td>
                         <form action="${pageContext.request.contextPath}/main" method="post">

@@ -11,6 +11,25 @@
         </jsp-property-group>
     </jsp-config>
 
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/pages/error_pages/error404.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/pages/error_pages/error403.jsp</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/pages/error_pages/error500.jsp</location>
+    </error-page>
+
     <filter>
         <filter-name>encodingfilter</filter-name>
         <filter-class>com.epam.pharmacy.weblayer.filter.EncodingFilter</filter-class>

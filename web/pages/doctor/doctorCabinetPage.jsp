@@ -8,8 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title><fmt:message key="doctor.cabinet.title"/> </title>
     <%@include file="../jspf/import.jspf"%>
+    <title><fmt:message key="doctor.cabinet.title"/> </title>
     <c:set var="pagePass" value="pages/doctor/doctorCabinetPage.jsp" scope="request"/>
 </head>
 <body>
@@ -38,7 +38,7 @@
             </table>
         </div>
         <div class="col-md-auto">
-
+            <%@include file="../jspf/recipeRequestsDoctorTable.jsp"%>
         </div>
     </div>
     <div class="row">

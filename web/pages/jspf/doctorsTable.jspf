@@ -5,7 +5,7 @@
     <c:if test="${param.startDoctor > 0}">
         <c:set var="startDoctor" scope="page" value="${param.startDoctor}"/>
     </c:if>
-    <table class="table-bordered table-dark" style="opacity: 0.8">
+    <table class="table-bordered table-dark">
         <thead>
         <tr>
             <th scope="col">N%</th>
@@ -35,7 +35,7 @@
                 </td>
                 <c:if test="${role == 'CLIENT'}">
                     <td>
-                        <input type="radio" name="doctorId" value="${doctor.id}"/>
+                        <input type="radio" name="doctor_id" value="${doctor.id}" required/>
                     </td>
                 </c:if>
             </tr>

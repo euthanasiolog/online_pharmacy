@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -29,12 +26,12 @@ public class Drug extends Entity {
     @Pattern(regexp = "[a-zA-Z ]+", message = "{User.nickname.pattern}")
     private String inn;
 
-    @NotBlank(message = "{notblank}")
-    @Size(min = 3, max = 20, message = "{User.nickname.size}")
-    @Pattern(regexp = "[^\\f\\n\\r\\t\\v/?!@#$%^&*()<>_+=№{}\\[\\]]+", message = "{User.nickname.pattern}")
+//    @NotBlank(message = "{notblank}")
+//    @Size(min = 3, max = 20, message = "{User.nickname.size}")
+//    @Pattern(regexp = "[^\\f\\n\\r\\t\\v/?!@#$%^&*()<>_+=№{}\\[\\]]+", message = "{User.nickname.pattern}")
     private String composite;
 
-    @NotBlank
+    @NotNull
     private DrugForm drugForm;
 
     private float dose;
@@ -42,14 +39,16 @@ public class Drug extends Entity {
     @PositiveOrZero
     private int number;
 
-
+    @NotNull
     private Date shelfLife;
 
     @PositiveOrZero
     private BigDecimal price;
 
+    @NotNull
     private RecipeType recipeType;
 
+    @NotNull
     private Availability availability;
 
     @PositiveOrZero

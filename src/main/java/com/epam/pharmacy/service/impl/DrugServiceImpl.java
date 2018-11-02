@@ -115,7 +115,7 @@ public class DrugServiceImpl implements DrugService {
             drug.setComposite(composite);
         }
         try {
-             DrugForm drugForm = DrugForm.valueOf(requestContent.getRequestParameter(ProjectConstant.FORM));
+             DrugForm drugForm = DrugForm.valueOf(requestContent.getRequestParameter(ProjectConstant.DRUG_FORM).toUpperCase());
              drug.setDrugForm(drugForm);
         } catch (IllegalArgumentException e) {
              log.error("illegal drug form");
@@ -150,14 +150,14 @@ public class DrugServiceImpl implements DrugService {
         drug.setPrice(price);
 
         try {
-            RecipeType recipeType = RecipeType.valueOf(requestContent.getRequestParameter(ProjectConstant.RECIPE_TYPE));
+            RecipeType recipeType = RecipeType.valueOf(requestContent.getRequestParameter(ProjectConstant.RECIPE_TYPE).toUpperCase());
             drug.setRecipeType(recipeType);
         } catch (IllegalArgumentException e) {
             log.error("illegal recipe type");
         }
 
         try {
-            Availability availability = Availability.valueOf(requestContent.getRequestParameter(ProjectConstant.AVAILABILITY));
+            Availability availability = Availability.valueOf(requestContent.getRequestParameter(ProjectConstant.AVAILABILITY).toUpperCase());
             drug.setAvailability(availability);
         } catch (IllegalArgumentException e) {
             log.error("illegal availability type");
@@ -166,8 +166,10 @@ public class DrugServiceImpl implements DrugService {
         int amount = Integer.parseInt(requestContent.getRequestParameter(ProjectConstant.AMOUNT));
         drug.setAmount(amount);
 
-        int orderTime = Integer.parseInt(requestContent.getRequestParameter(ProjectConstant.ORDER_TIME));
-        drug.setOrderTime(orderTime);
+        if (requestContent.getRequestParameter(ProjectConstant.ORDER_TIME) != "") {
+            int orderTime = Integer.parseInt(requestContent.getRequestParameter(ProjectConstant.ORDER_TIME));
+            drug.setOrderTime(orderTime);
+        }
 
         String annotation = requestContent.getRequestParameter(ProjectConstant.ANNOTATION);
         if (annotation != null) {

@@ -108,14 +108,39 @@
                                 <c:set var="isPayed" value="${0}" scope="page"/>
                                 <c:choose>
                                     <c:when test="${!order.payment}">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="id"
-                                                   onclick="payList.push(${order.id})"
-                                                   value="${order.id}" id="add-to-payment">
-                                            <label class="form-check-label" for="add-to-payment">
-                                                Add to payment
-                                            </label>
-                                        </div>
+                                        <c:choose>
+                                            <c:when test="${order.drug.recipeType == 'WITHOUT'}">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="id"
+                                                           value="${order.id}" id="add-to-payment">
+                                                    <label class="form-check-label" for="add-to-payment">
+                                                        Add to payment
+                                                    </label>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="recipeId" value="${0}" scope="page"/>
+                                                <c:forEach var="rec" items="${recipes}">
+                                                    <c:if test="${!rec.used && rec.from != null && rec.to > now}">
+                                                        <c:if test="${rec.drug.id == order.drug.id}">
+                                                            <c:out value="${'you have recipe <br>'}"/>
+                                                            <c:set var="recipeId" value="${1}"/>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="id"
+                                                                       value="${order.id}" id="add-payment">
+                                                                <label class="form-check-label" for="add-payment">
+                                                                    Add to payment
+                                                                </label>
+                                                            </div>
+                                                        </c:if>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <c:if test="${recipeId == 0}">
+                                                    you haven't recipe
+                                                </c:if>
+                                                <c:set var="recipeId" value="${0}" scope="page"/>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:when>
                                     <c:otherwise>
                                         <div class="form-check">
@@ -166,6 +191,11 @@
                                 </button>
                             </div>
                             <div class="modal-body">
+                                <select class="custom-select" id="roleReg" name="role">
+                                    <option name="client" value="client"><fmt:message key="startpage.label.role.client"/> </option>
+                                    <option name="doctor" value="doctor"><fmt:message key="startpage.label.role.doctor" /></option>
+                                    <option name="pharmacist" value="pharmacist"><fmt:message key="startpage.label.role.pharmacist"/> </option>
+                                </select><br>
                                 <%--<div class="container-fluid py-3">--%>
                                 <%--<div class="row">--%>
                                 <%--<div class="col-12 col-sm-8 col-md-6 col-lg-4 mx-auto">--%>

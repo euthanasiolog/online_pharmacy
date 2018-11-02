@@ -1,15 +1,11 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
-<c:if test="${pharmacistsQueries != null}">
-    <c:set var="totalCountPharmacistQueries" value="${fn:length(pharmacistsQueries)}"/>
+<c:if test="${pharmacistQueries != null}">
+    <c:set var="totalCountPharmacistQueries" value="${fn:length(pharmacistQueries)}"/>
     <c:set var="stepPharmacistQueries" value="${5}" scope="page"/>
     <c:set var="startPharmacistQueries" value="${0}" scope="page"/>
-    <c:if test="${param.startDoctorQueries > 0}">
+    <c:if test="${param.startPharmacistQueries > 0}">
         <c:set var="startPharmacistQueries" scope="page" value="${param.startPharmacistQueries}"/>
     </c:if>
-    <table class="table-bordered">
+    <table class="table-dark table-bordered" style="opacity: 0.8">
         <thead>
         <tr>
             <th scope="col">N%</th>
@@ -21,11 +17,11 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="pharmacist" items="${pharmacistsQueries}" varStatus="pharmacistCountQueries" begin="${startPharmacistQueries}" end="${startPharmacistQueries + stepPharmacistQueries - 1}">
+        <c:forEach var="pharmacist" items="${pharmacistQueries}" varStatus="pharmacistCountQueries" begin="${startPharmacistQueries}" end="${startPharmacistQueries + stepPharmacistQueries - 1}">
             <tr>
                 <th scope="row">${pharmacistCountQueries.index+1}</th>
                 <td>
-                        ${e:forHtml(pharmacist.nickname)}
+                        ${e:forHtml(pharmacist.nickName)}
                 </td>
                 <td>
                     <strong>${e:forHtml(pharmacist.firstName)}<br> ${e:forHtml(pharmacist.lastName)}
@@ -40,7 +36,7 @@
                 <td>
                     <form action="${pageContext.request.contextPath}/main" method="post">
                         <input type="hidden" name="page" value="${pagePass}">
-                        <input type="hidden" name="command" value="confirm_query">
+                        <input type="hidden" name="command" value="confirm_user_query">
                         <input type="hidden" name="id" value="${pharmacist.id}">
                         <button type="submit" class="btn btn-primary"><fmt:message key="accept"/></button>
                     </form>

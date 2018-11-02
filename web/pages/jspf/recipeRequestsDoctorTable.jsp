@@ -1,42 +1,15 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 <div>
     <script>
-        $( function() {
-            var dateFormat = "yy-mm-dd",
-                from = $( "#from" )
-                    .datepicker({
-                        defaultDate: "+1w",
-                        changeMonth: true,
-                        numberOfMonths: 3
-                    })
-                    .on( "change", function() {
-                        to.datepicker( "option", "minDate", getDate( this ) );
-                    }),
-                to = $( "#to" ).datepicker({
-                    defaultDate: "+1w",
-                    changeMonth: true,
-                    numberOfMonths: 3
-                })
-                    .on( "change", function() {
-                        from.datepicker( "option", "maxDate", getDate( this ) );
-                    });
-
-            function getDate( element ) {
-                var date;
-                try {
-                    date = $.datepicker.parseDate( dateFormat, element.value );
-                } catch( error ) {
-                    date = null;
-                }
-                return date;
-            }
-        } );
+        $(function(){
+            $( "#dateOfBirth" ).datepicker({
+                dateFormat: "yy-mm-dd",
+                changeMonth: true,
+                minDate: "0"
+            });
+        });
     </script>
 
-    <table class="table-sm table-hover">
+    <table class="table-dark table-hover">
         <c:set var="totalCountRecipe" value="${fn:length(recipeRequests)}"/>
         <c:set var="stepRecipeRequests" value="${20}" scope="page"/>
         <c:set var="startRecipeRequests" value="${0}" scope="page"/>
@@ -52,27 +25,27 @@
             <th scope="col"><fmt:message key="action"/> </th>
         </tr>
         </thead>
+
         <c:forEach  var="recipeRequest" items="${recipeRequests}" varStatus="recipeRequestsCount" begin="${startRecipeRequests}" end="${startRecipeRequests + stepRecipeRequests - 1}">
-            <c:if test="${recipeRequests.used == 0 || recipeRequests.to > now}">
                 <tr>
                     <th scope="row">${recipeRequestsCount.index+1}</th>
                     <td>${e:forHtml(recipeRequest.drug.name)}</td>
                     <td><fmt:formatNumber value="${e:forHtml(recipeRequest.drug.dose)}" type="number"/> </td>
                     <td>
                         <c:choose>
-                            <c:when test="${e:forHtml(recipeRequest.drug.form).equalsIgnoreCase('pill')}" >
+                            <c:when test="${e:forHtml(recipeRequest.drug.drugForm).equalsIgnoreCase('pill')}" >
                                 <fmt:message key="drug.form.pill"/>
                             </c:when>
-                            <c:when test="${e:forHtml(recipeRequest.drug.form).equalsIgnoreCase('solution')}" >
+                            <c:when test="${e:forHtml(recipeRequest.drug.drugForm).equalsIgnoreCase('solution')}" >
                                 <fmt:message key="drug.form.solution"/>
                             </c:when>
-                            <c:when test="${e:forHtml(recipeRequest.drug.form).equalsIgnoreCase('powder')}" >
+                            <c:when test="${e:forHtml(recipeRequest.drug.drugForm).equalsIgnoreCase('powder')}" >
                                 <fmt:message key="drug.form.powder"/>
                             </c:when>
-                            <c:when test="${e:forHtml(recipeRequest.drug.form).equalsIgnoreCase('cream')}" >
+                            <c:when test="${e:forHtml(recipeRequest.drug.drugForm).equalsIgnoreCase('cream')}" >
                                 <fmt:message key="drug.form.cream"/>
                             </c:when>
-                            <c:when test="${e:forHtml(recipeRequest.drug.form).equalsIgnoreCase('gel')}" >
+                            <c:when test="${e:forHtml(recipeRequest.drug.drugForm).equalsIgnoreCase('gel')}" >
                                 <fmt:message key="drug.form.gel"/>
                             </c:when>
                         </c:choose>
@@ -80,7 +53,7 @@
                     <td>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            <fmt:message key="send.recipe.request"/>
+                            <fmt:message key="accept"/>
                         </button>
 
                         <!-- Modal -->
@@ -95,9 +68,17 @@
                                     </div>
                                     <div class="modal-body">
                                         <form action="${pageContext.request.contextPath}/main" method="post">
+                                            <script>
+                                                $(function(){
+                                                    $( "#to" ).datepicker({
+                                                        dateFormat: "yy-mm-dd",
+                                                        changeMonth: true,
+                                                        changeYear: true,
+                                                        minDate: "0"
+                                                    });
+                                                });
+                                            </script>
                                             <input type="hidden" name="page" value="${pagePass}">
-                                            <label for="from"><fmt:message key="recipe.from"/> </label>
-                                            <input type="text" id="from" name="from" autocomplete="off" required>
                                             <label for="to"><fmt:message key="recipe.to"/> </label>
                                             <input type="text" name="to" id="to" autocomplete="off" required>
                                             <input type="hidden" name="command" value="confirm_recipe">
@@ -119,7 +100,6 @@
                         </form>
                     </td>
                 </tr>
-            </c:if>
         </c:forEach>
     </table>
     <div>

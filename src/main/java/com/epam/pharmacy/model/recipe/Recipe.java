@@ -25,7 +25,7 @@ public class Recipe extends Entity {
 
     private  boolean used;
 
-    private String recipeType;
+//    private String recipeType;
 
     private RecipeType type;
 
@@ -35,7 +35,4 @@ public class Recipe extends Entity {
 
     private Drug drug;
 
-    public void setType(String recipeType) {
-        this.type = RecipeType.valueOf(recipeType);
-    }
 }

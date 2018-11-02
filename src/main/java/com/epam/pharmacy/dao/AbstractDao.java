@@ -193,7 +193,9 @@ public interface AbstractDao<T extends Entity> {
 
     default List<Object> putParameters (Object... params) {
         List<Object> paramList = new ArrayList<>();
-        paramList.addAll(Arrays.asList(params));
+        for (Object o : params) {
+            paramList.add(o);
+        }
         return paramList;
     }
 

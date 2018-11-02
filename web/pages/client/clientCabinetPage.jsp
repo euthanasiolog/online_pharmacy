@@ -13,6 +13,7 @@
     <title><fmt:message key="client.cabinet.title"/></title>
 </head>
 <body>
+<script src="${pageContext.request.contextPath}/assets/js/bootstrap-formhelpers.min.js"></script>
 <%@include file="../jspf/header.jspf"%>
 <div class="container">
     <div class="row">

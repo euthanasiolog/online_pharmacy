@@ -24,7 +24,7 @@ public class RecipeDaoImpl implements RecipeDao {
 
     @Override
     public boolean create (int clientId, int drugId, int doctorId, RecipeType recipeType) throws DaoException {
-        List<Object> params = putParameters(clientId, drugId, doctorId, null, recipeType, null, null);
+        List<Object> params = putParameters(clientId, drugId, doctorId, null, recipeType.toString().toLowerCase(), null, null);
 
         return executeQueryUpdate(SQLQueries.CREATE_RECIPE, params);
      }
@@ -121,7 +121,7 @@ public class RecipeDaoImpl implements RecipeDao {
         int drugId = recipe.getDrug().getId();
         int doctorId = recipe.getDoctor().getId();
         int serialnumber = recipe.getSerialNumber();
-        String recipeType = recipe.getRecipeType();
+        String recipeType = recipe.getType().toString().toLowerCase();
         Date from = null;
         if (recipe.getFrom() != null) {
             from = recipe.getFrom();
@@ -140,31 +140,32 @@ public class RecipeDaoImpl implements RecipeDao {
 
     private Recipe readRecipeParams (Recipe recipe, Map<String, Object> res) throws DaoException {
         int id = (int) res.get(ProjectConstant.ID);
+        recipe.setId(id);
+
         int clientId = (int) res.get(ProjectConstant.PATIENT_ID);
         int drugId = (int) res.get(ProjectConstant.DRUG_ID);
         int doctorId = (int) res.get(ProjectConstant.DOCTOR_ID);
-        int serialnumber = (int) res.get(ProjectConstant.SERIALNUMBER);
-        String type = (String) res.get(ProjectConstant.TYPE);
 
-        Date from = (Date) res.get(ProjectConstant.FROM);
-
-        Date to = (Date) res.get(ProjectConstant.TO);
-        int used = (int) res.get(ProjectConstant.USED);
-
-        recipe.setId(id);
-        if (serialnumber != 0) {
+        if (res.get(ProjectConstant.SERIALNUMBER) != null) {
+            int serialnumber = (int) res.get(ProjectConstant.SERIALNUMBER);
             recipe.setSerialNumber(serialnumber);
         }
-        recipe.setType(type);
-        if (from != null) {
+
+        String type = (String) res.get(ProjectConstant.TYPE);
+        recipe.setType(RecipeType.valueOf(type.toUpperCase()));
+
+        if (res.get(ProjectConstant.FROM) != null) {
+            Date from = (Date) res.get(ProjectConstant.FROM);
             recipe.setFrom(from);
         }
-        if (to != null) {
+
+        if (res.get(ProjectConstant.TO) != null) {
+            Date to = (Date) res.get(ProjectConstant.TO);
             recipe.setTo(to);
         }
-        if (used==1) {
-            recipe.setUsed(true);
-        }
+
+        boolean used = (boolean) res.get(ProjectConstant.USED);
+        recipe.setUsed(used);
 
         DrugDao drugDao = new DrugDaoImpl();
         ClientDao clientDao = new ClientDaoImpl();

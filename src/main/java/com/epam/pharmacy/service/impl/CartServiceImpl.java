@@ -134,7 +134,7 @@ public class CartServiceImpl implements CartService {
         CartDao cartDao = new CartDaoImpl();
         try {
             cartDao.create(cart, null);
-            cart = (cartDao.findById(id));
+            cart = cartDao.findById(id);
         } catch (DaoException e) {
             log.error("error update cart", e);
             throw new ApplicationException("error update cart", e);

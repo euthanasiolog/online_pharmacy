@@ -71,4 +71,9 @@ public class AdminServiceImpl extends UserServiceImpl implements AdminService {
         }
         return endSignIn((User) requestContent.getSessionAttribute(ProjectConstant.USER), requestContent, Role.ADMIN);
     }
+
+    @Override
+    public CommandResult goToCabinet(RequestContent requestContent) {
+        return new CommandResult(ResponseType.FORWARD, PagePath.ADMIN_CABINET);
+    }
 }

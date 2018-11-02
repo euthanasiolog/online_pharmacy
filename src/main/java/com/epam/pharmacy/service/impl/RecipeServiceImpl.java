@@ -12,8 +12,10 @@ import com.epam.pharmacy.model.recipe.RecipeRequest;
 import com.epam.pharmacy.model.recipe.RecipeType;
 import com.epam.pharmacy.model.user.Client;
 import com.epam.pharmacy.model.user.Doctor;
+import com.epam.pharmacy.model.user.User;
 import com.epam.pharmacy.util.constant.PagePath;
 import com.epam.pharmacy.util.constant.ProjectConstant;
+import com.epam.pharmacy.util.constant.Role;
 import com.epam.pharmacy.weblayer.command.CommandResult;
 import com.epam.pharmacy.weblayer.command.RequestContent;
 import com.epam.pharmacy.service.RecipeService;
@@ -87,6 +89,14 @@ public class RecipeServiceImpl implements RecipeService {
         RecipeDao recipeDao = new RecipeDaoImpl();
         try {
             recipeDao.delete(recipe);
+            if (Role.CLIENT.equals(requestContent.getSessionAttribute(ProjectConstant.ROLE))) {
+                List<Recipe> recipes = recipeDao.findClientRecipes(((User)requestContent.getSessionAttribute(ProjectConstant.USER)).getId());
+                requestContent.insertSessionAttribute(ProjectConstant.RECIPES, recipes);
+            }
+            if (Role.DOCTOR.equals(requestContent.getSessionAttribute(ProjectConstant.ROLE))) {
+                List<Recipe> recipes = recipeDao.findDoctorEmptyRecipes(((User)requestContent.getSessionAttribute(ProjectConstant.USER)).getId());
+                requestContent.insertSessionAttribute(ProjectConstant.RECIPE_REQUEST, recipes);
+            }
         } catch (DaoException e) {
             log.error("error delete message", e);
             throw new ApplicationException("error delete message", e);
@@ -146,12 +156,12 @@ public class RecipeServiceImpl implements RecipeService {
         int clientId = Integer.parseInt(requestContent.getRequestParameter(ProjectConstant.CLINT_ID));
         int doctorId = Integer.parseInt(requestContent.getRequestParameter(ProjectConstant.DOCTOR_ID));
         int drugId = Integer.parseInt(requestContent.getRequestParameter(ProjectConstant.DRUG_ID));
-        RecipeType recipeType = RecipeType.valueOf(requestContent.getRequestParameter(ProjectConstant.REQUEST_RECIPE_TYPE));
+        RecipeType recipeType = RecipeType.valueOf(requestContent.getRequestParameter(ProjectConstant.REQUEST_RECIPE_TYPE).toUpperCase());
 
         RecipeDao recipeDao = new RecipeDaoImpl();
         List<Recipe> recipes;
         try {
-            recipeDao.create(clientId, doctorId, drugId, recipeType);
+            recipeDao.create(clientId, drugId, doctorId, recipeType);
             recipes = recipeDao.findClientRecipes(clientId);
         } catch (DaoException e) {
             log.error("error create recipe request", e);
@@ -231,7 +241,7 @@ public class RecipeServiceImpl implements RecipeService {
         if (serialnumber != 0) {
             recipe.setSerialNumber(serialnumber);
         }
-        recipe.setType(type);
+        recipe.setType(RecipeType.valueOf(type));
         if (from != null) {
             recipe.setFrom(from);
         }

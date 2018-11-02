@@ -20,7 +20,7 @@ final class SQLQueries {
             "VALUES (LAST_INSERT_ID(), ?, ?)";
     static final String CREATE_DRUG = "INSERT INTO drug (name, inn, composition, form, dose, number, shelflife," +
             " price, recipe, availability, amount, ordertime, archive, annotation) " +
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,'0',?)";
     static  final String UPDATE_DRUG = "update drug d set d.name=?, d.inn=?, d.composition=?, d.form=?, d.dose=?, d.number=?, d.shelflife=?, d.price=?, \n" +
             "d.recipe=?, d.availability=?, d.amount=?, d.ordertime=?, d.archive=?, d.annotation=? where d.id=?";
     static final String FIND_DRUG_BY_ID = "SELECT id, name, inn, composition, form, dose, number, shelflife, price," +
@@ -45,16 +45,16 @@ final class SQLQueries {
     static final String GET_CLIENT_RECIPES = "SELECT r.`id`, r.`patient_id`, r.`drug_id`, r.`doctor_id`, r.serialnumber, r.`type`, r.`from`, r.`to`, r.`used` \n" +
             "FROM recipe r \n" +
             "WHERE r.`patient_id`=? AND r.`archive`=0";
-    static final String USE_RECIPE = "UPDATE recipe r ON r.`used`='1' \n" +
-            "WHERE r.`id`=?";
-    static final String DELETE_RECIPE = "UPDATE recipe r ON r.`archive`='1' \n" +
-            "WHERE r.`id`=?";
+    static final String USE_RECIPE = "UPDATE recipe SET `used`='1' \n" +
+            "WHERE `id`=?";
+    static final String DELETE_RECIPE = "UPDATE recipe SET `archive`='1' \n" +
+            "WHERE `id`=?";
     static final String GET_CLIENT_CART = "SELECT c.`id`, c.`id_drug`, c.`number`, c.`payment` \n" +
             "FROM cart c WHERE c.`id_client`=?";
     static final String GET_ORDER_BY_ID = "SELECT c.`id_client`cart, c.`id_drug`, c.`number`, c.`payment` FROM cart c WHERE c.id=?";
     static final String CHECK_USER_ROLE ="SELECT u.`type` FROM USER u WHERE u.`nickname`=? AND u.`password`=sha2(?,512) and u.`archive`='0'";
     static final String FIND_DOCTOR_EMPTY_RECIPES = "SELECT r.`id`, r.`patient_id`, r.`drug_id`, r.`doctor_id`, r.serialnumber, r.`type`, r.`from`, r.`to`, r.`used` \n" +
-            "FROM recipe r WHERE r.`doctor_id`=? AND r.`from`=NULL AND r.`to`=NULL";
+            "FROM recipe r WHERE r.`doctor_id`=? AND r.`archive`='0' AND r.`from` IS NULL AND r.`to` IS NULL";
     static final String FIND_ALL_DOCTOR_RECIPES = "SELECT r.`id`, r.`patient_id`, r.`doctor_id`, r.`drug_id`, r.`type`, r.`serialnumber`, \n" +
             "r.`from`, r.`to`, r.`used`\n" +
             "FROM recipe r WHERE r.`doctor_id`=? AND r.`archive`=0";
@@ -77,7 +77,7 @@ final class SQLQueries {
             "FROM USER u WHERE u.`type`='pharmacist' AND u.`archive`='0'";
     static final String GET_PHARMACISTS_QUERIES = "SELECT u.id, u.nickname, u.email, u.firstname, u.lastname, u.patronymic, u.birthdate, u.type\n" +
             "FROM USER u WHERE u.`type`='pharmacist' AND u.`archive`='2'";
-    static final String CONFIRM_USER_QUERY = "UPDATE USER u SET u.`archive`=0 WHERE u.`id`=? ";
+    static final String CONFIRM_USER_QUERY = "UPDATE USER SET `archive`='0' WHERE `id`=? ";
 
 
 

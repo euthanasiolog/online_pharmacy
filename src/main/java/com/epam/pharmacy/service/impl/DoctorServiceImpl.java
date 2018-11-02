@@ -95,20 +95,21 @@ public class DoctorServiceImpl extends UserServiceImpl implements DoctorService 
     public CommandResult confirmRecipe(RequestContent requestContent) throws ApplicationException {
         int id = Integer.parseInt(requestContent.getRequestParameter(ProjectConstant.ID));
 
-        if (requestContent.getRequestParameter(ProjectConstant.FROM) != null && requestContent.getRequestParameter(ProjectConstant.TO) != null) {
+        if (requestContent.getRequestParameter(ProjectConstant.TO) != null) {
             DateFormat dateFormat = new SimpleDateFormat(ProjectConstant.DATE_FORMAT);
             try {
-                Date fromDate = dateFormat.parse(requestContent.getRequestParameter(ProjectConstant.FROM));
                 Date toDate = dateFormat.parse(requestContent.getRequestParameter(ProjectConstant.TO));
                 RecipeDao recipeDao = new RecipeDaoImpl();
 
-                if (fromDate != null && toDate != null) {
+                if (toDate != null) {
                     try {
                         Recipe recipe = recipeDao.findById(id);
                         if (recipe != null) {
-                            recipe.setFrom(fromDate);
+                            recipe.setFrom(new Date());
                             recipe.setTo(toDate);
                             recipeDao.update(recipe);
+                            List<Recipe> recipes = recipeDao.findDoctorEmptyRecipes(((User)requestContent.getSessionAttribute(ProjectConstant.USER)).getId());
+                            requestContent.insertSessionAttribute(ProjectConstant.RECIPE_REQUEST, recipes);
                         }
                     } catch (DaoException e) {
                         log.error("error confirm recipe", e);

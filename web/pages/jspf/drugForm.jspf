@@ -46,7 +46,7 @@
         <td>
             <div class="form-group">
                 <label for="drugForm"><fmt:message key="drug.form"/></label>
-                <select class="form-select-button" id="drugForm" name="drugForm">
+                <select class="custom-select" id="drugForm" name="drugForm">
                     <option name="pill"  value="pill"><fmt:message key="drug.form.pill" /></option>
                     <option name="solution"  value="solution"><fmt:message key="drug.form.solution" /></option>
                     <option name="powder"  value="powder"><fmt:message key="drug.form.powder" /></option>
@@ -74,9 +74,18 @@
                 </c:if></small>
             </div>
             <div class="form-group">
-                <label for="shelfLife"><fmt:message key=""/> </label>
-                <input type="text" class="form-control" name="shelfLife" id="shelfLife">
-
+                <script>
+                    $(function(){
+                        $( "#shelfLife" ).datepicker({
+                            dateFormat: "yy-mm-dd",
+                            changeMonth: true,
+                            changeYear: true,
+                            minDate: "0"
+                        });
+                    });
+                </script>
+                <label for="shelfLife"><fmt:message key="drug.shelflife"/> </label>
+                <input type="text"  name="shelfLife" id="shelfLife" autocomplete="off" required>
                 <small class="small"><c:if test="${requestScope.shelfLifeError != null && requestScope.shelfLifeError != ''}">
                     <c:out value="${requestScope.shelfLifeError}"/>
                 </c:if></small>
@@ -94,7 +103,7 @@
             </div>
             <div class="form-group">
                 <label for="recipeType"><fmt:message key="drug.recipe"/> </label>
-                <select class="form-select-button" id="recipeType" name="recipeType">
+                <select class="custom-select" id="recipeType" name="recipeType">
                     <option name="without"  value="without"><fmt:message key="drug.recipe.without" /></option>
                     <option name="regular"  value="regular"><fmt:message key="drug.recipe.regular" /></option>
                     <option name="narcotic"  value="narcotic"><fmt:message key="drug.recipe.narcotic" /></option>
@@ -106,10 +115,10 @@
         <td>
             <div class="form-group">
                 <label for="availability"><fmt:message key="drug.availability"/> </label>
-                <select class="form-select-button" id="availability" name="availability">
-                    <option name="without"  value="without"><fmt:message key="drug.availability.stock" /></option>
-                    <option name="regular"  value="regular"><fmt:message key="drug.availability.order" /></option>
-                    <option name="narcotic"  value="narcotic"><fmt:message key="drug.availability.not" /></option>
+                <select class="custom-select" id="availability" name="availability">
+                    <option name="without"  value="stock"><fmt:message key="drug.availability.stock" /></option>
+                    <option name="regular"  value="order"><fmt:message key="drug.availability.order" /></option>
+                    <option name="narcotic"  value="not"><fmt:message key="drug.availability.not" /></option>
                 </select><br>
             </div>
             <div class="form-group">
@@ -125,7 +134,7 @@
         <td>
             <div class="form-group">
                 <label for="orderTime"><fmt:message key="drug.ordertime"/> </label>
-                <input type="number" class="form-control" name="orderTime" id="orderTime">
+                <input type="number" class="form-control" name="orderTime" value="0" id="orderTime">
                 <small class="small"><c:if test="${requestScope.orderTimeError != null && requestScope.orderTimeError != ''}">
                     <c:out value="${requestScope.orderTimeError}"/>
                 </c:if></small>
