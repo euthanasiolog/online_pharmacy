@@ -11,7 +11,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md">
-
+<c:if test="${requestScope.loginError != null && requestScope.loginError != ''}">
+    <strong></strong><c:out value="${requestScope.loginError}"/><strong></strong></c:if>
         </div>
         <div class="col-md-auto">
             <%@include file="jspf/drugTable.jspf"%>
